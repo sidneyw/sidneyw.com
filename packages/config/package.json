@@ -1,0 +1,8 @@
+{
+  "name": "@sidneyw/config",
+  "version": "1.0.0",
+  "description": "A configuration wrapper",
+  "main": "index.js",
+  "author": "sidney wijngaarde",
+  "license": "MIT"
+}
