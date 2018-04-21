@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Contact Form Sends an email 1`] = `
+Array [
+  Array [
+    Object {
+      "Destination": Object {
+        "ToAddresses": Array [
+          "sidney.recipient@test.com",
+        ],
+      },
+      "Message": Object {
+        "Body": Object {
+          "Html": Object {
+            "Charset": "UTF-8",
+            "Data": "Let's work together",
+          },
+          "Text": Object {
+            "Charset": "UTF-8",
+            "Data": "Let's work together",
+          },
+        },
+        "Subject": Object {
+          "Charset": "UTF-8",
+          "Data": "sidneyw.com - Contact Form",
+        },
+      },
+      "Source": "Test User <sidney.sender@test.com>",
+    },
+  ],
+]
+`;

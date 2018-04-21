@@ -1,0 +1,22 @@
+{
+  "name": "@sidneyw/email",
+  "version": "1.0.0",
+  "description": "serverless email sending and signup",
+  "main": "index.js",
+  "author": "sidney wijngaarde",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "serverless-offline": "^3.20.3"
+  },
+  "dependencies": {
+    "@sidneyw/config": "^1.0.0",
+    "aws-sdk": "^2.226.1",
+    "axios": "^0.18.0"
+  }
+}
