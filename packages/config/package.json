@@ -4,5 +4,8 @@
   "description": "A configuration wrapper",
   "main": "index.js",
   "author": "sidney wijngaarde",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }
