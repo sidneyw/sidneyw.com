@@ -43,7 +43,7 @@ class MailChimp {
     }
 
     return this.client.post(listEndpoint(list), {
-      emailaddress: email,
+      email_address: email,
       status: 'subscribed'
     });
   }

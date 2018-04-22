@@ -24,6 +24,7 @@ async function contact({ mailClient, sender, recipient }, event) {
       body: 'Contact Form Recieved'
     };
   } catch (err) {
+    console.error('sendMail error', err);
     return {
       statusCode: err.statusCode || 500,
       body: err.details || 'Internal Server Error'
