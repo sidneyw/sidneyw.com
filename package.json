@@ -3,7 +3,7 @@
   "scripts": {
     "lint": "eslint **/*.js",
     "lint:fix": "eslint **/*.js --fix",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
