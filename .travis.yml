@@ -20,11 +20,9 @@ script:
   - yarn run test
   - lerna run build
 
-  - cd $TRAVIS_BUILD_DIR
-  - chmod +x ./deploy.sh
-
 deploy:
+  skip_cleanup: true
   provider: script
-  script: ./deploy.sh
+  script: lerna run deploy
   on:
     branch: master
