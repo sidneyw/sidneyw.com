@@ -8,9 +8,18 @@ cache:
   directories:
     - node_modules
 
+before_install:
+  - yarn config set workspaces-experimental true
+
 script:
   - lerna bootstrap
-  - yarn run lint
+  - lerna run symlink
+  - lerna run lint
   - yarn run test
   - lerna run build
-  - lerna run deploy
+
+deploy:
+  provider: script
+  script: lerna run deploy
+  on:
+    branch: master
