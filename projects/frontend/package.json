@@ -24,7 +24,9 @@
     "react-helmet": "^5.2.0",
     "styled-components": "^2.4.0"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "jest": {
     "rootDir": "./src"
   },
@@ -34,13 +36,13 @@
     "symlink": "rm -rf node_modules; ln -s ../../node_modules node_modules",
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint --fix src/**/*.js",
-    "deploy":
-      "netlify deploy -s $NETLIFY_FREELANCE_SITE_ID -p public/ -t $NETLIFY_TOKEN",
+    "deploy": "netlify deploy -s $NETLIFY_FREELANCE_SITE_ID -p public/ -t $NETLIFY_TOKEN",
     "develop": "gatsby develop",
     "test": "jest"
   },
   "devDependencies": {
     "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.1"
+    "babel-preset-env": "^1.6.1",
+    "netlify-cli": "^1.2.2"
   }
 }
