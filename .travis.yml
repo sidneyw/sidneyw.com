@@ -12,5 +12,5 @@ script:
   - lerna bootstrap
   - yarn run lint
   - yarn run test
-  # - lerna run build
+  - lerna run build
   - lerna run deploy
