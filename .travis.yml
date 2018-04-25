@@ -20,8 +20,11 @@ script:
   - yarn run test
   - lerna run build
 
+  - cd $TRAVIS_BUILD_DIR
+  - chmod +x ./deploy.sh
+
 deploy:
   provider: script
-  script: lerna run deploy
+  script: ./deploy.sh
   on:
     branch: master
