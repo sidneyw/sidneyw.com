@@ -39,7 +39,7 @@ const NewsLetterFail = () => (
 export default () => (
   <NewsLetterStyles>
     <FormBuilder
-      endpoint="/chimp-signup"
+      endpoint="/signup"
       form={NewsLetterJoin}
       success={NewsLetterSuccess}
       error={NewsLetterFail}

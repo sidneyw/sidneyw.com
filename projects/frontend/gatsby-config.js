@@ -8,7 +8,7 @@ module.exports = {
     email: 'sidneywijngaarde@gmail.com',
   },
   proxy: {
-    prefix: '/localhost:9000',
+    prefix: '/localhost:3000',
     url: 'http:/',
   },
   plugins: [

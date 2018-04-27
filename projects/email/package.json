@@ -9,7 +9,8 @@
     "access": "public"
   },
   "scripts": {
-    "deploy": "sls deploy -v",
+    "deploy": "serverless deploy --stage production -v",
+    "deploy:dev": "serverless deploy --stage dev -v",
     "test": "jest"
   },
   "devDependencies": {

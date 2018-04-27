@@ -28,7 +28,7 @@ export default () => (
     <CenterPiece img={chauoanShot} />
     <Section id="contact" img={chauoanBlur}>
       <FormBuilder
-        endpoint="/contact-me"
+        endpoint="/contact"
         form={ContactMe}
         success={() => <ContactMeMessage success />}
         error={() => <ContactMeMessage success={false} />}
