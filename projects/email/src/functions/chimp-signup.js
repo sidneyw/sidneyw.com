@@ -1,4 +1,4 @@
-const { bodyParser } = require('./modules/common');
+const { bodyParser } = require('../modules/common');
 
 async function signup({ chimpClient, list }, event) {
   try {

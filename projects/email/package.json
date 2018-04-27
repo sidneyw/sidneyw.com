@@ -11,6 +11,8 @@
   "scripts": {
     "deploy": "serverless deploy --stage production -v",
     "deploy:dev": "serverless deploy --stage dev -v",
+    "develop": "serverless offline start",
+    "webpack": "serverless webpack --out dist",
     "test": "jest"
   },
   "devDependencies": {

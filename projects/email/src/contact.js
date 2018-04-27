@@ -1,12 +1,8 @@
 const aws = require('aws-sdk');
-const axios = require('axios');
 const Config = require('@sidneyw/config');
-
-const MailChimp = require('./modules/mailchimp');
 const SimpleMailer = require('./modules/simple-mail');
 
-const chimpSignup = require('./chimp-signup');
-const contactMe = require('./contact-me');
+const contactMe = require('./functions/contact-me');
 
 const config = new Config({
   awsSES: {
@@ -29,28 +25,10 @@ const config = new Config({
         recipient: process.env.AWS_SES_RECIPIENT
       }
     }
-  },
-  mailChimp: {
-    init: conf => axios.create(conf.client),
-    default: {
-      list: process.env.MAILCHIMP_LIST,
-      client: {
-        baseURL: 'https://us12.api.mailchimp.com/3.0',
-        auth: {
-          username: process.env.MAILCHIMP_USER,
-          password: process.env.MAILCHIMP_PASS
-        }
-      }
-    }
   }
 });
 
-exports.signup = chimpSignup.bind(null, {
-  chimpClient: new MailChimp(config.createClient('mailChimp')),
-  list: config.get('mailChimp').list
-});
-
-exports.contact = contactMe.bind(null, {
+exports.handler = contactMe.bind(null, {
   ...config.get('awsSES').params,
   mailClient: new SimpleMailer(config.createClient('awsSES'))
 });
