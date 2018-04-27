@@ -1,7 +1,7 @@
 class Config {
   constructor(configuration) {
     this.configuration = configuration;
-    this.env = process.env.NODEENV;
+    this.env = process.env.NODE_ENV;
   }
 
   get(key) {

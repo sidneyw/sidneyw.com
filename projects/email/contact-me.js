@@ -21,12 +21,20 @@ async function contact({ mailClient, sender, recipient }, event) {
 
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
+      },
       body: 'Contact Form Recieved'
     };
   } catch (err) {
     console.error('sendMail error', err);
     return {
       statusCode: err.statusCode || 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
+      },
       body: err.details || 'Internal Server Error'
     };
   }
