@@ -33,7 +33,7 @@ NewsLetterJoin.propTypes = {
 const NewsLetterSuccess = () => <div>Thanks for joining!</div>;
 
 const NewsLetterFail = () => (
-  <div>Something wen&apos;t wrong on my end. Try again later</div>
+  <div>Something went wrong on my end. Try again later</div>
 );
 
 export default () => (
