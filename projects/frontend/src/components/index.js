@@ -9,7 +9,6 @@ import Img from 'gatsby-image';
 
 import styled, { css, keyframes } from 'styled-components';
 
-
 import { Center, Rounded, ZDepth1, ZDepth3 } from './mixins';
 
 const BgWrap = styled.div`
