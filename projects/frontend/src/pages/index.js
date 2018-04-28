@@ -34,10 +34,7 @@ IndexPage.propTypes = {
 export const query = graphql`
   fragment ImgQuery on ImageSharp {
     sizes {
-      ...GatsbyImageSharpSizes
-    }
-    resolutions {
-      ...GatsbyImageSharpResolutions
+      ...GatsbyImageSharpSizes_withWebp
     }
   }
 
