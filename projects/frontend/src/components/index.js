@@ -5,7 +5,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import { Center, Rounded, ZDepth1, ZDepth3 } from './mixins';
 
@@ -137,6 +137,20 @@ export const Lighten = styled.div`
   height: 100%;
   width: 100%;
   background-color: rgba(255, 255, 255, ${({ percent }) => percent || 0.2});
+`;
+
+export const Spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+export const Loader = styled.div`
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #1d69b2; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: ${Spin} 1s ease infinite;
 `;
 
 export const SplitSection = styled(BackgroundImg)`

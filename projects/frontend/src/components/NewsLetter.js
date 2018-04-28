@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Banner, Button, Input } from '../components';
+import { Banner, Button, Input, Loader } from '../components';
 import FormBuilder from './FormBuilder';
 
 const NewsLetterJoin = ({ handleChange, handleSubmit, state }) => (
@@ -41,6 +41,7 @@ export default () => (
     <FormBuilder
       endpoint="/signup"
       form={NewsLetterJoin}
+      pending={() => <Loader />}
       success={NewsLetterSuccess}
       error={NewsLetterFail}
     />
