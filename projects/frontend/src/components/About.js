@@ -7,10 +7,7 @@ import { BackgroundImg, BlueButton } from './index';
 import ContactMe, { ContactMeMessage } from './ContactMe';
 import FormBuilder from './FormBuilder';
 
-import chauoanBlur from '../assets/chauoan-blur.png';
-import chauoanShot from '../assets/chauoan-shot1.jpg';
-
-export default () => (
+export default ({ chauoanShot, chauoanBlur }) => (
   <About>
     <Section id="about" img={chauoanBlur}>
       <h3>get to know me</h3>

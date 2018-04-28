@@ -8,8 +8,8 @@ import { Center } from './mixins';
 
 import HeadShot from '../assets/headshot2.jpg';
 
-export default () => (
-  <Jumbo img={HeadShot}>
+export default ({ headshot }) => (
+  <Jumbo img={headshot}>
     <IndexJumbo>
       <TagLine>I&apos;m Sidney,</TagLine>
       <TagLine>but they call me</TagLine>

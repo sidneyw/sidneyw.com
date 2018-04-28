@@ -6,14 +6,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import Img from 'gatsby-image';
 
 import { Center, Rounded, ZDepth1, ZDepth3 } from './mixins';
 
-export const BackgroundImg = styled.div`
-  background-image: url(${props => props.img});
-  background-position: center;
-  background-size: cover;
+const BgWrap = styled.div`
+  position: relative;
+  // Make sure children display on top of the image
+  & > * {
+    z-index: 1;
+  }
 `;
+
+export const BackgroundImg = ({ img, className, children }) => (
+  <BgWrap className={className}>
+    {img && (
+      <Img
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          zIndex: 0,
+          width: '100%',
+          height: '100%',
+        }}
+        {...img}
+      />
+    )}
+    {children}
+  </BgWrap>
+);
+
+BackgroundImg.propTypes = {
+  img: PropTypes.shape({
+    resolutions: PropTypes.object,
+    sizes: PropTypes.object,
+  }),
+  className: PropTypes.string,
+  children: PropTypes.node,
+};
 
 export const Banner = styled.section`
   display: flex;
@@ -124,10 +155,10 @@ TextArea.propTypes = {
 
 export { TextArea };
 
-export const Jumbo = styled.div`
-  background-image: url(${props => props.img});
-  background-position: center;
-  background-size: cover;
+export const Jumbo = styled(BackgroundImg)`
+  // background-image: url(${props => props.img});
+  // background-position: center;
+  // background-size: cover;
   height: 100vh;
   width: 100vw;
 `;
