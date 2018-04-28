@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { BackgroundImg, BlueButton } from './index';
+import { BackgroundImg, BlueButton, Loader } from './index';
 
 import ContactMe, { ContactMeMessage } from './ContactMe';
 import FormBuilder from './FormBuilder';
@@ -30,6 +30,7 @@ export default () => (
       <FormBuilder
         endpoint="/contact"
         form={ContactMe}
+        pending={() => <Loader />}
         success={() => <ContactMeMessage success />}
         error={() => <ContactMeMessage success={false} />}
       />
