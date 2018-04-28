@@ -6,3 +6,14 @@ exports.bodyParser = event => {
 
   return event;
 };
+
+exports.response = obj =>
+  Object.assign(
+    {
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
+      }
+    },
+    obj
+  );
