@@ -1,4 +1,4 @@
-const contact = require('../contact-me');
+const contact = require('../functions/contact-me');
 const SimpleMailer = require('../modules/simple-mail');
 
 describe('Contact Form', () => {

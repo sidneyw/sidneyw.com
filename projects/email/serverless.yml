@@ -19,7 +19,9 @@ plugins:
 custom:
   webpack:
     webpackConfig: 'webpack.config.js'
-    includeModules: true
+    includeModules:
+      forceExclude:
+        - 'aws-sdk'
     packager: 'yarn'
 
 package:
@@ -29,14 +31,14 @@ package:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: src/hello.handler
     events:
       - http:
           path: /
           method: get
 
   signup:
-    handler: index.signup
+    handler: src/signup.handler
     events:
       - http:
           path: /signup
@@ -48,7 +50,7 @@ functions:
       MAILCHIMP_PASS: ${env:MAILCHIMP_PASS}
 
   contact:
-    handler: index.contact
+    handler: src/contact.handler
     events:
       - http:
           path: /contact

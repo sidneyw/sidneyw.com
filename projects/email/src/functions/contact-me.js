@@ -1,4 +1,4 @@
-const { bodyParser } = require('./modules/common');
+const { bodyParser, response } = require('../modules/common');
 
 async function contact({ mailClient, sender, recipient }, event) {
   try {
@@ -19,24 +19,16 @@ async function contact({ mailClient, sender, recipient }, event) {
       html: event.body.message // TODO: format html
     });
 
-    return {
+    return response({
       statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-        'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
-      },
       body: 'Contact Form Recieved'
-    };
+    });
   } catch (err) {
     console.error('sendMail error', err);
-    return {
+    return response({
       statusCode: err.statusCode || 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-        'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
-      },
       body: err.details || 'Internal Server Error'
-    };
+    });
   }
 }
 
