@@ -11,11 +11,11 @@ import Services from '../components/Services';
 
 const IndexPage = ({ data }) => (
   <div>
-    <IndexJumbo />
+    <IndexJumbo headshot={data.headshot} />
 
     <Services />
 
-    <About />
+    <About chauoanBlur={data.chauoanBlur} chauoanShot={data.chauoanShot} />
 
     <Experience exp={data.allMarkdownRemark.edges} />
 
@@ -32,7 +32,25 @@ IndexPage.propTypes = {
 };
 
 export const query = graphql`
+  fragment ImgQuery on ImageSharp {
+    sizes {
+      ...GatsbyImageSharpSizes_withWebp
+    }
+  }
+
   query IndexQuery {
+    headshot: imageSharp(id: { regex: "/headshot2.jpg/" }) {
+      ...ImgQuery
+    }
+
+    chauoanShot: imageSharp(id: { regex: "/chauoan-shot1.jpg/" }) {
+      ...ImgQuery
+    }
+
+    chauoanBlur: imageSharp(id: { regex: "/chauoan-blur.png/" }) {
+      ...ImgQuery
+    }
+
     allMarkdownRemark {
       edges {
         node {
@@ -42,10 +60,7 @@ export const query = graphql`
             technology
             image {
               childImageSharp {
-                sizes(maxWidth: 630) {
-                  ...GatsbyImageSharpSizes
-                  srcWebp
-                }
+                ...ImgQuery
               }
             }
           }

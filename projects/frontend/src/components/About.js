@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { BackgroundImg, BlueButton, Loader } from './index';
@@ -7,10 +8,7 @@ import { BackgroundImg, BlueButton, Loader } from './index';
 import ContactMe, { ContactMeMessage } from './ContactMe';
 import FormBuilder from './FormBuilder';
 
-import chauoanBlur from '../assets/chauoan-blur.png';
-import chauoanShot from '../assets/chauoan-shot1.jpg';
-
-export default () => (
+const AboutSection = ({ chauoanShot, chauoanBlur }) => (
   <About>
     <Section id="about" img={chauoanBlur}>
       <h3>get to know me</h3>
@@ -37,6 +35,15 @@ export default () => (
     </Section>
   </About>
 );
+
+AboutSection.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  chauoanBlur: PropTypes.object,
+  // eslint-disable-next-line react/forbid-prop-types
+  chauoanShot: PropTypes.object,
+};
+
+export default AboutSection;
 
 const Section = styled(BackgroundImg)`
   display: flex;

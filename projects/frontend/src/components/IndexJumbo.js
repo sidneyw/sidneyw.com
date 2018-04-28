@@ -1,15 +1,13 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { ButtonLink, Jumbo } from './index';
-
 import { Center } from './mixins';
 
-import HeadShot from '../assets/headshot2.jpg';
-
-export default () => (
-  <Jumbo img={HeadShot}>
+const IndexJumboSection = ({ headshot }) => (
+  <Jumbo img={headshot}>
     <IndexJumbo>
       <TagLine>I&apos;m Sidney,</TagLine>
       <TagLine>but they call me</TagLine>
@@ -25,6 +23,13 @@ export default () => (
     </IndexJumbo>
   </Jumbo>
 );
+
+IndexJumboSection.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  headshot: PropTypes.object,
+};
+
+export default IndexJumboSection;
 
 const Squid = styled.h1`
   font-size: 5.5em;
