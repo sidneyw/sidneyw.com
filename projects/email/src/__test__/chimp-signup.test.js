@@ -1,4 +1,4 @@
-const signup = require('../chimp-signup');
+const signup = require('../functions/chimp-signup');
 const MailChimp = require('../modules/mailchimp');
 
 describe('Chimp Signup', () => {
