@@ -92,6 +92,15 @@ export const BlueButton = styled(Button)`
 
 export const Card = styled.div`
   ${ZDepth1} background-color: #fff;
+
+  transition: all 200ms ease;
+  ${({ hover }) =>
+    hover &&
+    css`
+      &:hover {
+        ${ZDepth3};
+      }
+    `};
 `;
 
 export const Darken = styled.div`
@@ -157,9 +166,6 @@ TextArea.propTypes = {
 export { TextArea };
 
 export const Jumbo = styled(BackgroundImg)`
-  // background-image: url(${props => props.img});
-  // background-position: center;
-  // background-size: cover;
   height: 100vh;
   width: 100vw;
 `;
