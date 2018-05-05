@@ -34,7 +34,7 @@ const Services = styled.section`
   h1 {
     margin-bottom: 15px;
   }
-`
+`;
 
 const ServiceIcon = ({ title, img }) => (
   <Icon>
@@ -87,5 +87,4 @@ const Icon = styled(Card)`
     font-weight: 400;
     font-size: 1.5em;
   }
-
 `;

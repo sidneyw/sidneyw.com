@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import About from '../components/About';
-import NewsLetter from '../components/NewsLetter';
+// import NewsLetter from '../components/NewsLetter';
 import Experience from '../components/Experience';
 import IndexJumbo from '../components/IndexJumbo';
 import Services from '../components/Services';

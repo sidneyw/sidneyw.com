@@ -74,16 +74,3 @@ const CenterPiece = styled(BackgroundImg)`
     width: 40vw;
   }
 `;
-
-const About = styled.div`
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: space-between;
-  align-items: center;
-  width: 100vw;
-
-  // pure-md
-  @media screen and (min-width: 48em) {
-    flex-flow: row nowrap;
-  }
-`;
