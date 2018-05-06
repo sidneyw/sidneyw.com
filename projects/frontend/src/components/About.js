@@ -3,28 +3,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { BackgroundImg, BlueButton, Loader } from './index';
+import { SplitSection, BackgroundImg, Loader } from './index';
 
 import ContactMe, { ContactMeMessage } from './ContactMe';
 import FormBuilder from './FormBuilder';
 
-const AboutSection = ({ chauoanShot, chauoanBlur }) => (
-  <About>
-    <Section id="about" img={chauoanBlur}>
-      <h3>get to know me</h3>
-      <p>
-        I’ve been passionate about the web since I began programming. The
-        ability to go from a blank screen to an interactive web application
-        gripped me early on and my fascination with the concept hasn’t faded.
-      </p>
-      <p>
-        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-        gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-      </p>
-      <BlueButton fullwidth>Check out my blog</BlueButton>
-    </Section>
+const AboutSection = ({ chauoanShot, newyork }) => (
+  <SplitSection>
     <CenterPiece img={chauoanShot} />
-    <Section id="contact" img={chauoanBlur}>
+    <Section img={newyork} id="contact">
       <FormBuilder
         endpoint="/contact"
         form={ContactMe}
@@ -33,12 +20,12 @@ const AboutSection = ({ chauoanShot, chauoanBlur }) => (
         error={() => <ContactMeMessage success={false} />}
       />
     </Section>
-  </About>
+  </SplitSection>
 );
 
 AboutSection.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  chauoanBlur: PropTypes.object,
+  newyork: PropTypes.object,
   // eslint-disable-next-line react/forbid-prop-types
   chauoanShot: PropTypes.object,
 };
@@ -53,7 +40,7 @@ const Section = styled(BackgroundImg)`
   width: 100vw;
   padding: 10%;
   color: #fff;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 
   h3 {
     text-align: center;
@@ -73,30 +60,17 @@ const Section = styled(BackgroundImg)`
   @media screen and (min-width: 48em) {
     height: 100vh;
     width: 30vw;
-    padding: 0 2.5%;
+    padding: 0 5%;
   }
 `;
 
 const CenterPiece = styled(BackgroundImg)`
   width: 100vw;
   height: 100vh;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+  // box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
 
   // pure-md
   @media screen and (min-width: 48em) {
     width: 40vw;
-  }
-`;
-
-const About = styled.div`
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: space-between;
-  align-items: center;
-  width: 100vw;
-
-  // pure-md
-  @media screen and (min-width: 48em) {
-    flex-flow: row nowrap;
   }
 `;

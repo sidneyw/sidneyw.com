@@ -3,11 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import About from '../components/About';
-import NewsLetter from '../components/NewsLetter';
+// import NewsLetter from '../components/NewsLetter';
 import Experience from '../components/Experience';
 import IndexJumbo from '../components/IndexJumbo';
 import Services from '../components/Services';
 // import Testimonials from '../components/Testimonials';
+import Companies from '../components/Companies';
 
 const IndexPage = ({ data }) => (
   <div>
@@ -15,18 +16,18 @@ const IndexPage = ({ data }) => (
 
     <Services />
 
-    <About chauoanBlur={data.chauoanBlur} chauoanShot={data.chauoanShot} />
+    <About newyork={data.newyork} chauoanShot={data.chauoanShot} />
 
     <Experience exp={data.allMarkdownRemark.edges} />
 
-    <NewsLetter />
+    <Companies data={[data.ibm, data.magicLeap, data.dali]} />
   </div>
 );
 
 IndexPage.propTypes = {
   data: PropTypes.shape({
     allMarkdownRemark: PropTypes.shape({
-      edges: PropTypes.object,
+      edges: PropTypes.array,
     }),
   }),
 };
@@ -47,7 +48,19 @@ export const query = graphql`
       ...ImgQuery
     }
 
-    chauoanBlur: imageSharp(id: { regex: "/chauoan-blur.png/" }) {
+    newyork: imageSharp(id: { regex: "/newyork.png/" }) {
+      ...ImgQuery
+    }
+
+    ibm: imageSharp(id: { regex: "/ibm-bw.png/" }) {
+      ...ImgQuery
+    }
+
+    magicLeap: imageSharp(id: { regex: "/magic-leap-bw.png/" }) {
+      ...ImgQuery
+    }
+
+    dali: imageSharp(id: { regex: "/dali-bw.png/" }) {
       ...ImgQuery
     }
 
