@@ -25,7 +25,10 @@ const TemplateWrapper = ({ children, data }) => (
 
     {children()}
 
-    <Footer siteMetadata={data.site.siteMetadata} />
+    <Footer
+      siteMetadata={data.site.siteMetadata}
+      images={data.allImageSharp.edges}
+    />
   </div>
 );
 
@@ -43,11 +46,20 @@ export const query = graphql`
     site {
       siteMetadata {
         title
-        github
-        linkedin
-        pinterest
-        twitter
-        email
+        social {
+          name
+          link
+        }
+      }
+    }
+    allImageSharp(filter: { id: { regex: "/.*assets/social/.*/" } }) {
+      edges {
+        node {
+          id
+          sizes {
+            ...GatsbyImageSharpSizes_withWebp
+          }
+        }
       }
     }
   }

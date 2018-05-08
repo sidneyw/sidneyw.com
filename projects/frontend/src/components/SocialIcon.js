@@ -2,36 +2,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Center } from './mixins';
+import Img from 'gatsby-image';
 
 const SocialIconStyle = styled.a`
-  ${Center} width: 20%;
-  padding: 10px 5px;
-  height: 8vh;
   transition: all 200ms ease;
 
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.14))
     drop-shadow(0 1px 5px rgba(0, 0, 0, 0.12));
 
-  :hover {
+  &:hover {
     transform: scale(1.1);
-  }
-
-  img {
-    height: 100%;
-    border-radius: 5px;
   }
 `;
 
-const SocialIcon = ({ link, img }) => (
+const SocialImg = styled(Img)`
+  height: 8vh;
+  width: 8vh;
+  margin: 0;
+  border-radius: 15%;
+`;
+
+const SocialIcon = ({ name = '', link, img }) => (
   <SocialIconStyle href={link}>
-    <img src={img} alt="" />
+    <SocialImg {...img} alt={name} />
   </SocialIconStyle>
 );
 
 SocialIcon.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  img: PropTypes.object,
   link: PropTypes.string,
-  img: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default SocialIcon;
