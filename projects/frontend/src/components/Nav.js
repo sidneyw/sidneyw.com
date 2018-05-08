@@ -42,8 +42,6 @@ export default class Navigation extends React.Component {
           <NavLink href="#services">Services</NavLink>
           <NavLink href="#contact">Contact</NavLink>
           <NavLink href="#experience">Experience</NavLink>
-          <Divider />
-          <Button color="#ffbc3d">Book Me</Button>
         </NavLinks>
       </Nav>
     );
@@ -70,6 +68,13 @@ const Nav = styled.nav`
 
 const NavLinks = styled.div`
   ${Center} height: 100%;
+  width: 100%;
+  justify-content: space-between;
+
+  // pure-md
+  @media screen and (min-width: 48em) {
+    justify-content: flex-end;
+  }
 `;
 
 const NavLink = styled.a`
