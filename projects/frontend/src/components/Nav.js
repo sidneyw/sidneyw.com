@@ -10,7 +10,7 @@ export default class Navigation extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleScroll = debounce(this.handleScroll.bind(this), 200, {
+    this.handleScroll = debounce(this.handleScroll.bind(this), 100, {
       leading: true,
       trailing: false,
       maxWait: 200,
