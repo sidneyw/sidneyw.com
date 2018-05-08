@@ -71,6 +71,7 @@ export const query = graphql`
             title
             type
             technology
+            link
             image {
               childImageSharp {
                 ...ImgQuery

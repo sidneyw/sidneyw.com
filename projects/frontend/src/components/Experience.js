@@ -1,23 +1,23 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'gatsby-link';
+// import Link from 'gatsby-link';
 import styled from 'styled-components';
 import Img from 'gatsby-image';
 
 import { Heading } from './index';
-import { Thirds, ZDepth1, ZDepth3 } from './mixins';
+import { Thirds, ZDepth1 } from './mixins';
 
 const ExperienceSection = ({ exp }) => (
   <Experience id="experience">
     <Heading>Experience</Heading>
     <ExperienceWrap>
-      {exp.map(({ node: { frontmatter, fields } }, ind) => (
+      {exp.map(({ node: { frontmatter } }, ind) => (
         <ExperienceCard
           key={ind}
           img={frontmatter.image.childImageSharp.sizes}
           title={frontmatter.title}
-          slug={fields.slug}
+          link={frontmatter.link}
         />
       ))}
     </ExperienceWrap>
@@ -39,18 +39,17 @@ ExperienceSection.propTypes = {
 
 export default ExperienceSection;
 
-const ExperienceCard = ({ slug, title, img }) => (
-  <BlogLink to={slug}>
+const ExperienceCard = ({ link, img }) => (
+  <BlogLink href={link} target="_blanc">
+    {console.log(link)}
     <Img sizes={img} />
-    <h2>{title}</h2>
   </BlogLink>
 );
 
 ExperienceCard.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   img: PropTypes.object,
-  slug: PropTypes.string,
-  title: PropTypes.string,
+  link: PropTypes.string,
 };
 
 const Experience = styled.section`
@@ -76,7 +75,7 @@ const ExperienceWrap = styled.div`
   }
 `;
 
-const BlogLink = styled(Link)`
+const BlogLink = styled.a`
   ${ZDepth1} ${Thirds}
   position: relative;
   margin: 0 0 10px 0;
@@ -84,29 +83,7 @@ const BlogLink = styled(Link)`
   transition: all 200ms ease-in;
   overflow-y: hidden;
 
-  h2 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-
-    background-color: #fff;
-    color: #333;
-    width: 100%;
-    padding: 10px 5px;
-
-    transform: translateY(40vh);
-    transition: all 200ms ease;
-  }
-
   &:visited {
     text-decoration: none;
-  }
-
-  &:hover {
-    ${ZDepth3} z-index: 5;
-
-    h2 {
-      transform: translateY(0);
-    }
   }
 `;
