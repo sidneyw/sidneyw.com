@@ -1,11 +1,14 @@
 module.exports = {
   siteMetadata: {
     title: 'Sidney Wijngaarde',
-    twitter: 'https://twitter.com/sidneywijn',
-    pinterest: 'https://br.pinterest.com/the_squidd/',
-    linkedin: 'https://www.linkedin.com/in/swijngaarde/',
-    github: 'github.com/rcrsvsquid',
-    email: 'sidneywijngaarde@gmail.com',
+    social: [
+      // Images in src/assets/social/
+      { name: 'twitter', link: 'https://twitter.com/sidneywijn' },
+      { name: 'pinterest', link: 'https://br.pinterest.com/the_squidd' },
+      { name: 'linkedin', link: 'https://www.linkedin.com/in/swijngaarde' },
+      { name: 'github', link: 'github.com/rcrsvsquid' },
+      { name: 'email', link: 'sidneywijngaarde@gmail.com' },
+    ],
   },
   proxy: {
     prefix: '/localhost:3000',

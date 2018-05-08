@@ -7,37 +7,23 @@ import styled from 'styled-components';
 
 import SocialIcon from './SocialIcon';
 
-const FooterSection = ({ siteMetadata }) => (
-  <Footer>
-    <h1>Sidney Wijngaarde</h1>
-    <SocialIconWrap>
-      <SocialIcon
-        link={siteMetadata.pinterest}
-        img={require('../assets/pinterest.png')}
-      />
+const FooterSection = ({ siteMetadata, images }) => {
+  const socialIconProps = siteMetadata.social.map(social => ({
+    ...social,
+    img: images.find(({ node: { id } }) => id.includes(social.name)).node,
+  }));
 
-      <SocialIcon
-        link={siteMetadata.twitter}
-        img={require('../assets/twitter.png')}
-      />
-
-      <SocialIcon
-        link={siteMetadata.github}
-        img={require('../assets/github.png')}
-      />
-
-      <SocialIcon
-        link={siteMetadata.linkedin}
-        img={require('../assets/linkedin.png')}
-      />
-
-      <SocialIcon
-        link={siteMetadata.email}
-        img={require('../assets/gmail.png')}
-      />
-    </SocialIconWrap>
-  </Footer>
-);
+  return (
+    <Footer>
+      <h1>Sidney Wijngaarde</h1>
+      <SocialIconWrap>
+        {socialIconProps.map((props, ind) => (
+          <SocialIcon {...props} key={props.name} />
+        ))}
+      </SocialIconWrap>
+    </Footer>
+  );
+};
 
 FooterSection.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
@@ -72,19 +58,12 @@ const SocialIconWrap = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
-
-  img {
-    height: 50px !important;
-  }
 
   // pure-md
   @media screen and (min-width: 48em) {
     width: 50%;
-    img {
-      height: 50px !important;
-    }
   }
 
   //pure-lg
