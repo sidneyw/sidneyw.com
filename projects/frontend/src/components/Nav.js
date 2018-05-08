@@ -3,7 +3,6 @@ import React from 'react';
 import styled from 'styled-components';
 import debounce from 'lodash.debounce';
 
-import { Button } from './index';
 import { Center, ZDepth1 } from './mixins';
 
 // TODO: Check out: https://github.com/fisshy/react-scroll - 03/04/18 12:42:12 sidneywijngaarde
@@ -42,8 +41,6 @@ export default class Navigation extends React.Component {
           <NavLink href="#services">Services</NavLink>
           <NavLink href="#contact">Contact</NavLink>
           <NavLink href="#experience">Experience</NavLink>
-          <Divider />
-          <Button color="#ffbc3d">Book Me</Button>
         </NavLinks>
       </Nav>
     );
@@ -70,6 +67,13 @@ const Nav = styled.nav`
 
 const NavLinks = styled.div`
   ${Center} height: 100%;
+  width: 100%;
+  justify-content: space-between;
+
+  // pure-md
+  @media screen and (min-width: 48em) {
+    justify-content: flex-end;
+  }
 `;
 
 const NavLink = styled.a`
@@ -83,11 +87,4 @@ const NavLink = styled.a`
     text-decoration: none;
     color: #000;
   }
-`;
-
-const Divider = styled.span`
-  width: 0;
-  height: 50%;
-  border: 0.5px solid rgba(0, 0, 0, 0.2);
-  margin: 0 10px;
 `;
