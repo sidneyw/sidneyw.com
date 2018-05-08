@@ -33,6 +33,12 @@ const Services = styled.section`
   margin: 3vh 0;
   h1 {
     margin-bottom: 15px;
+    font-size: 1.5em;
+  }
+
+  // pure-md
+  @media screen and (min-width: 48em) {
+    font-size: 3em;
   }
 `;
 
