@@ -41,7 +41,6 @@ export default ExperienceSection;
 
 const ExperienceCard = ({ link, img }) => (
   <BlogLink href={link} target="_blanc">
-    {console.log(link)}
     <Img sizes={img} />
   </BlogLink>
 );
