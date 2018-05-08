@@ -7,23 +7,20 @@ import styled from 'styled-components';
 
 import SocialIcon from './SocialIcon';
 
-const FooterSection = ({ siteMetadata, images }) => {
-  const socialIconProps = siteMetadata.social.map(social => ({
-    ...social,
-    img: images.find(({ node: { id } }) => id.includes(social.name)).node,
-  }));
-
-  return (
-    <Footer>
-      <h1>Sidney Wijngaarde</h1>
-      <SocialIconWrap>
-        {socialIconProps.map((props, ind) => (
-          <SocialIcon {...props} key={props.name} />
-        ))}
-      </SocialIconWrap>
-    </Footer>
-  );
-};
+const FooterSection = ({ siteMetadata, images }) => (
+  <Footer>
+    <h1>Sidney Wijngaarde</h1>
+    <SocialIconWrap>
+      {siteMetadata.social.map((social, ind) => (
+        <SocialIcon
+          {...social}
+          img={images.find(({ node: { id } }) => id.includes(social.name)).node}
+          key={social.name}
+        />
+      ))}
+    </SocialIconWrap>
+  </Footer>
+);
 
 FooterSection.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
