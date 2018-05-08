@@ -3,7 +3,6 @@ import React from 'react';
 import styled from 'styled-components';
 import debounce from 'lodash.debounce';
 
-import { Button } from './index';
 import { Center, ZDepth1 } from './mixins';
 
 // TODO: Check out: https://github.com/fisshy/react-scroll - 03/04/18 12:42:12 sidneywijngaarde
@@ -88,11 +87,4 @@ const NavLink = styled.a`
     text-decoration: none;
     color: #000;
   }
-`;
-
-const Divider = styled.span`
-  width: 0;
-  height: 50%;
-  border: 0.5px solid rgba(0, 0, 0, 0.2);
-  margin: 0 10px;
 `;
