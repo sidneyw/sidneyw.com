@@ -4,9 +4,10 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-const path = require(`path`);
+const path = require('path');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const Webpack = require('webpack');
-const { createFilePath } = require(`gatsby-source-filesystem`);
+const { createFilePath } = require('gatsby-source-filesystem');
 
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   const { createNodeField } = boundActionCreators;
