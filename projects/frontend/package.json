@@ -3,9 +3,6 @@
   "description": "Landing page for my freelance services",
   "version": "1.0.0",
   "author": "Sidney Wijngaarde <sidneywijngaarde@gmail.com>",
-  "engines": {
-    "yarn": "1"
-  },
   "dependencies": {
     "@sidneyw/config": "^1.0.0",
     "axios": "^0.18.0",
