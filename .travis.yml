@@ -15,10 +15,10 @@ before_install:
 
 script:
   - lerna bootstrap
-  - lerna run symlink
-  - lerna run lint
+  - lerna run symlink --stream
+  - lerna run lint --stream
   - yarn run test
-  - lerna run build
+  - lerna run build --stream
 
 deploy:
   skip_cleanup: true

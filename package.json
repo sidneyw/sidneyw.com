@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "develop": "lerna run develop --stream --parallel",
     "lint": "eslint **/*.js",
     "lint:fix": "eslint **/*.js --fix",
     "test": "jest --coverage",
