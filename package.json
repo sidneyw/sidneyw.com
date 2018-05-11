@@ -1,13 +1,14 @@
 {
   "private": true,
   "scripts": {
+    "develop": "lerna run develop --stream --parallel",
     "lint": "eslint **/*.js",
     "lint:fix": "eslint **/*.js --fix",
     "test": "jest --coverage",
     "test:watch": "jest --watch --notify --coverage"
   },
   "engines": {
-    "yarn": "1.5.1"
+    "yarn": "1.6.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",

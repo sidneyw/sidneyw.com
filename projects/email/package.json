@@ -12,8 +12,10 @@
     "deploy": "serverless deploy --stage production -v",
     "deploy:dev": "serverless deploy --stage dev -v",
     "develop": "serverless offline start",
-    "webpack": "serverless webpack --out dist",
-    "test": "jest"
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "eslint --fix src/**/*.js",
+    "test": "jest",
+    "webpack": "serverless webpack --out dist"
   },
   "devDependencies": {
     "serverless-offline": "^3.20.3",
