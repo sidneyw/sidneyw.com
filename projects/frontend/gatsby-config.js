@@ -34,6 +34,12 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-source-medium',
+      options: {
+        username: '@sidneywijngaarde',
+      },
+    },
+    {
       resolve: 'gatsby-transformer-remark',
       options: {
         plugins: [
