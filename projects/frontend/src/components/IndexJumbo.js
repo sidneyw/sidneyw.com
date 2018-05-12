@@ -14,7 +14,7 @@ const IndexJumboSection = ({ headshot }) => (
       <Squid>Squid.</Squid>
       <TagLine>I build web solutions for</TagLine>
       <TagLine>clients just like you.</TagLine>
-      <LearnMore href="#services" color="#ffbc3d">
+      <LearnMore href="#contact" color="#ffbc3d">
         Let&apos;s Create Together
       </LearnMore>
       <TitleWrap>

@@ -8,29 +8,40 @@ import Footer from '../components/Footer';
 
 import './index.css';
 
-const TemplateWrapper = ({ children, data }) => (
-  <div>
-    <Helmet>
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-      />
-      <link
-        href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400|Ubuntu:400,700"
-        rel="stylesheet"
-      />
-    </Helmet>
+const TemplateWrapper = ({ children, data }) => {
+  const socialIcons = data.site.siteMetadata.social.reduce((accum, social) => {
+    // eslint-disable-next-line no-param-reassign
+    accum[social.name] = {
+      ...social,
+      img: data.allImageSharp.edges.find(({ node: { id } }) =>
+        id.includes(social.name)
+      ).node,
+    };
 
-    <Nav siteMetadata={data.site.siteMetadata} />
+    return accum;
+  }, {});
 
-    {children()}
+  return (
+    <div>
+      <Helmet>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <link
+          href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400|Ubuntu:400,700"
+          rel="stylesheet"
+        />
+      </Helmet>
 
-    <Footer
-      siteMetadata={data.site.siteMetadata}
-      images={data.allImageSharp.edges}
-    />
-  </div>
-);
+      <Nav hamburger={data.hamburger} socialIcons={socialIcons} />
+
+      {children()}
+
+      <Footer socialIcons={Object.values(socialIcons)} />
+    </div>
+  );
+};
 
 TemplateWrapper.propTypes = {
   children: PropTypes.func,
@@ -48,8 +59,13 @@ export const query = graphql`
         title
         social {
           name
-          link
+          href
         }
+      }
+    }
+    hamburger: imageSharp(id: { regex: "/hamburger.png/" }) {
+      sizes {
+        ...GatsbyImageSharpSizes_withWebp
       }
     }
     allImageSharp(filter: { id: { regex: "/.*assets/social/.*/" } }) {

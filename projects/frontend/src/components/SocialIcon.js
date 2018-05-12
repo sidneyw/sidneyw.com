@@ -16,15 +16,15 @@ const SocialIconStyle = styled.a`
 `;
 
 const SocialImg = styled(Img)`
-  height: 8vh;
-  width: 8vh;
+  height: 100%;
+  width: 100%;
   margin: 0;
-  border-radius: 15%;
+  border-radius: 20%;
 `;
 
-const SocialIcon = ({ name = '', link, img }) => (
-  <SocialIconStyle href={link}>
-    <SocialImg {...img} alt={name} />
+const SocialIcon = ({ name = '', img, ...props }) => (
+  <SocialIconStyle {...props}>
+    <SocialImg alt={name} {...img} />
   </SocialIconStyle>
 );
 
