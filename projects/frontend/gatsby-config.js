@@ -3,11 +3,11 @@ module.exports = {
     title: 'Sidney Wijngaarde',
     social: [
       // Images in src/assets/social/
-      { name: 'twitter', link: 'https://twitter.com/sidneywijn' },
-      { name: 'pinterest', link: 'https://br.pinterest.com/the_squidd' },
-      { name: 'linkedin', link: 'https://www.linkedin.com/in/swijngaarde' },
-      { name: 'github', link: 'github.com/rcrsvsquid' },
-      { name: 'email', link: 'sidneywijngaarde@gmail.com' },
+      { name: 'twitter', href: 'https://twitter.com/sidneywijn' },
+      { name: 'pinterest', href: 'https://br.pinterest.com/the_squidd' },
+      { name: 'linkedin', href: 'https://www.linkedin.com/in/swijngaarde' },
+      { name: 'github', href: 'https://github.com/rcrsvsquid' },
+      { name: 'email', href: 'mailto:sidneywijngaarde@gmail.com' },
     ],
   },
   proxy: {

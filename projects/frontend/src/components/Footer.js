@@ -7,24 +7,19 @@ import styled from 'styled-components';
 
 import SocialIcon from './SocialIcon';
 
-const FooterSection = ({ siteMetadata, images }) => (
+const FooterSection = ({ socialIcons }) => (
   <Footer>
     <h1>Sidney Wijngaarde</h1>
     <SocialIconWrap>
-      {siteMetadata.social.map((social, ind) => (
-        <SocialIcon
-          {...social}
-          img={images.find(({ node: { id } }) => id.includes(social.name)).node}
-          key={social.name}
-        />
+      {socialIcons.map((social, ind) => (
+        <SocialIcon {...social} key={social.name} />
       ))}
     </SocialIconWrap>
   </Footer>
 );
 
 FooterSection.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  siteMetadata: PropTypes.object,
+  socialIcons: PropTypes.array,
 };
 
 export default FooterSection;
@@ -57,6 +52,11 @@ const SocialIconWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
+  & > a {
+    height: 8vh;
+    width: 8vh;
+  }
 
   // pure-md
   @media screen and (min-width: 48em) {

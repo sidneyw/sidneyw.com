@@ -13,14 +13,10 @@ import Companies from '../components/Companies';
 const IndexPage = ({ data }) => (
   <div>
     <IndexJumbo headshot={data.headshot} />
-
     <Services />
-
     <About newyork={data.newyork} chauoanShot={data.chauoanShot} />
-
     <Experience exp={data.allMarkdownRemark.edges} />
-
-    <Companies data={[data.ibm, data.magicLeap, data.dali]} />
+    <Companies data={[data.magicLeap, data.ibm, data.dali]} />
   </div>
 );
 

@@ -19,8 +19,8 @@ const BgWrap = styled.div`
   }
 `;
 
-export const BackgroundImg = ({ img, className, children }) => (
-  <BgWrap className={className}>
+export const BackgroundImg = ({ img, children, ...props }) => (
+  <BgWrap {...props}>
     {img && (
       <Img
         style={{
@@ -43,7 +43,8 @@ BackgroundImg.propTypes = {
     resolutions: PropTypes.object,
     sizes: PropTypes.object,
   }),
-  className: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  props: PropTypes.object,
   children: PropTypes.node,
 };
 
@@ -137,6 +138,34 @@ const FormField = styled.div`
     padding-top: 5px;
   }
 `;
+
+const IconButton = ({ img, ...props }) => (
+  <IconButtonStyle {...props}>
+    <Icon {...img} />
+  </IconButtonStyle>
+);
+
+IconButton.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  img: PropTypes.object,
+  // eslint-disable-next-line react/forbid-prop-types
+  props: PropTypes.object,
+};
+
+const IconButtonStyle = styled.button`
+  ${Center} background-color: transparent;
+  height: 5vh;
+  width: 5vh;
+  border: none;
+`;
+
+const Icon = styled(Img)`
+  height: 5vh;
+  width: 5vh;
+  opacity: 0.5;
+`;
+
+export { IconButton };
 
 const Input = ({ title, value = '', ...props }) => (
   <FormField>
