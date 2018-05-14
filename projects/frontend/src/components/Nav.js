@@ -75,7 +75,7 @@ export default class Navigation extends React.Component {
 
     return (
       <Nav show={this.state.show}>
-        <NavWrap>
+        <NavWrap show={this.state.show}>
           <p>Sidney Wijngaarde</p>
           <Hamburger onClick={this.toggleMobile}>
             <Divider />
@@ -106,8 +106,15 @@ export default class Navigation extends React.Component {
 // ------------------------------------
 const NavHeight = 10;
 
+const NavToggle = prop => css`
+  transition: all 200ms ease;
+  transform: translateY(${prop ? '0' : '-50vh'});
+`;
+
 const NavStyles = css`
-  ${ZDepth1} display: flex;
+  ${ZDepth1};
+  ${({ show }) => NavToggle(show)};
+  display: flex;
   z-index: 2;
   flex-flow: row;
   justify-content: space-between;
@@ -117,11 +124,6 @@ const NavStyles = css`
   height: ${NavHeight}vh;
   max-height: 200px;
   padding: 0 10px;
-`;
-
-const NavToggle = prop => css`
-  transition: all 200ms ease;
-  transform: translateY(${prop ? '0' : '-50vh'});
 `;
 
 const Nav = styled.nav`
@@ -136,13 +138,12 @@ const Nav = styled.nav`
   // pure-md
   @media screen and (min-width: 48em) {
     ${NavStyles};
-    ${({ show }) => NavToggle(show)};
   }
 `;
 
 const NavLinks = styled.div`
   ${ZDepth1} ${Center}
-  ${({ showMobile }) => NavToggle(showMobile)}
+  ${({ showMobile }) => NavToggle(showMobile)};
   position: fixed;
   z-index: 1;
   top: ${NavHeight}vh;
