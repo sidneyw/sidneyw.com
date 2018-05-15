@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { ButtonLink, Jumbo } from './index';
+import { ButtonLink, Jumbo, ImgPropType } from './index';
 import { Center } from './mixins';
 
 const IndexJumboSection = ({ headshot }) => (
@@ -25,8 +25,7 @@ const IndexJumboSection = ({ headshot }) => (
 );
 
 IndexJumboSection.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  headshot: PropTypes.object,
+  headshot: PropTypes.shape({ ImgPropType }),
 };
 
 export default IndexJumboSection;

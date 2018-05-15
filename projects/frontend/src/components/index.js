@@ -237,3 +237,13 @@ export const SplitSection = styled(BackgroundImg)`
     }
   }
 `;
+
+export const ImgPropType = PropTypes.shape({
+  aspectRatio: PropTypes.number,
+  base64: PropTypes.string,
+  sizes: PropTypes.string,
+  src: PropTypes.string,
+  srcSet: PropTypes.string,
+  srcSetWebp: PropTypes.string,
+  srcWebp: PropTypes.string,
+});

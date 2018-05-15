@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Img from 'gatsby-image';
+import { ImgPropType } from './index';
 
 const SocialIconStyle = styled.a`
   transition: all 200ms ease;
@@ -29,10 +30,13 @@ const SocialIcon = ({ name = '', img, ...props }) => (
 );
 
 SocialIcon.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  img: PropTypes.object,
-  link: PropTypes.string,
+  img: ImgPropType,
   name: PropTypes.string,
 };
+
+export const PropType = PropTypes.shape({
+  img: PropTypes.shape({ sizes: ImgPropType }),
+  name: PropTypes.string,
+});
 
 export default SocialIcon;
