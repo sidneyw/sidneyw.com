@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { BlueButton, Input, TextArea } from './index';
 
 const ContactMe = ({ handleSubmit, handleChange, state }) => (
-  <ContactStyle name="contact" onSubmit={handleSubmit}>
+  <ContactStyle id="contact" name="contact" onSubmit={handleSubmit}>
     <h3>what are you waiting for?</h3>
     <Input
       onChange={handleChange}
