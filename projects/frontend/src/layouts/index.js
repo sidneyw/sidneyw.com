@@ -34,7 +34,10 @@ const TemplateWrapper = ({ children, data }) => {
         />
       </Helmet>
 
-      <Nav hamburger={data.hamburger} socialIcons={socialIcons} />
+      <Nav
+        hamburger={data.hamburger}
+        socialIcons={Object.values(socialIcons)}
+      />
 
       {children()}
 
