@@ -9,7 +9,7 @@ import FormBuilder from './FormBuilder';
 const NewsLetterJoin = ({ handleChange, handleSubmit, state }) => (
   <React.Fragment>
     <p>Join my email list for updates and cool stuff</p>
-    <form onSubmit={handleSubmit}>
+    <form name="email-list" id="email-list" onSubmit={handleSubmit}>
       <Input
         onChange={handleChange}
         value={state.email}
