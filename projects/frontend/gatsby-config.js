@@ -4,10 +4,11 @@ module.exports = {
     social: [
       // Images in src/assets/social/
       { name: 'twitter', href: 'https://twitter.com/sidneywijn' },
-      { name: 'pinterest', href: 'https://br.pinterest.com/the_squidd' },
-      { name: 'linkedin', href: 'https://www.linkedin.com/in/swijngaarde' },
+      { name: 'medium', href: 'https://medium.com/@sidneywijngaarde' },
+      // { name: 'pinterest', href: 'https://br.pinterest.com/the_squidd' },
       { name: 'github', href: 'https://github.com/rcrsvsquid' },
-      { name: 'email', href: 'mailto:sidneywijngaarde@gmail.com' },
+      { name: 'linkedin', href: 'https://www.linkedin.com/in/swijngaarde' },
+      // { name: 'email', href: 'mailto:sidneywijngaarde@gmail.com' },
     ],
   },
   proxy: {

@@ -12,11 +12,7 @@ import { Center, ZDepth1 } from './mixins';
 export default class Navigation extends React.Component {
   static propTypes = {
     hamburger: SocialPropType,
-    socialIcons: PropTypes.shape({
-      twitter: SocialPropType,
-      github: SocialPropType,
-      linkedin: SocialPropType,
-    }),
+    socialIcons: PropTypes.arrayOf(SocialPropType),
   };
 
   constructor(props) {
@@ -55,7 +51,6 @@ export default class Navigation extends React.Component {
 
   render() {
     const { hamburger } = this.props;
-    const { twitter, github, linkedin } = this.props.socialIcons;
 
     return (
       <Nav show={this.state.show}>
@@ -75,9 +70,9 @@ export default class Navigation extends React.Component {
           <NavLink href="#experience">Experience</NavLink>
           <Divider />
           <SocialWrap>
-            <NavSocial {...twitter} />
-            <NavSocial {...github} />
-            <NavSocial {...linkedin} />
+            {this.props.socialIcons.map((icon, ind) => (
+              <NavSocial {...icon} key={ind} />
+            ))}
           </SocialWrap>
         </NavLinks>
       </Nav>
