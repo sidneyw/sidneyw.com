@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { SplitSection, BackgroundImg, Loader } from './index';
+import { SplitSection, BackgroundImg, Loader, ImgPropType } from './index';
 
 import ContactMe, { ContactMeMessage } from './ContactMe';
 import FormBuilder from './FormBuilder';
@@ -24,10 +24,8 @@ const AboutSection = ({ chauoanShot, newyork }) => (
 );
 
 AboutSection.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  newyork: PropTypes.object,
-  // eslint-disable-next-line react/forbid-prop-types
-  chauoanShot: PropTypes.object,
+  newyork: PropTypes.shape({ sizes: ImgPropType }),
+  chauoanShot: PropTypes.shape({ sizes: ImgPropType }),
 };
 
 export default AboutSection;

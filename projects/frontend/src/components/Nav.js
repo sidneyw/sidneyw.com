@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import debounce from 'lodash.debounce';
-import SocialIcon from './SocialIcon';
+import SocialIcon, { PropType as SocialPropType } from './SocialIcon';
 
 import { IconButton } from './index';
 import { Center, ZDepth1 } from './mixins';
@@ -11,27 +11,11 @@ import { Center, ZDepth1 } from './mixins';
 // TODO: Check out: https://github.com/fisshy/react-scroll - 03/04/18 12:42:12 sidneywijngaarde
 export default class Navigation extends React.Component {
   static propTypes = {
-    hamburger: PropTypes.shape({
-      name: PropTypes.string,
-      // eslint-disable-next-line react/forbid-prop-types
-      img: PropTypes.object,
-    }),
+    hamburger: SocialPropType,
     socialIcons: PropTypes.shape({
-      twitter: PropTypes.shape({
-        name: PropTypes.string,
-        // eslint-disable-next-line react/forbid-prop-types
-        img: PropTypes.object,
-      }),
-      github: PropTypes.shape({
-        name: PropTypes.string,
-        // eslint-disable-next-line react/forbid-prop-types
-        img: PropTypes.object,
-      }),
-      linkedin: PropTypes.shape({
-        name: PropTypes.string,
-        // eslint-disable-next-line react/forbid-prop-types
-        img: PropTypes.object,
-      }),
+      twitter: SocialPropType,
+      github: SocialPropType,
+      linkedin: SocialPropType,
     }),
   };
 
