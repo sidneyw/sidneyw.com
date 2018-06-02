@@ -1,15 +1,13 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import About from '../components/About';
-// import NewsLetter from '../components/NewsLetter';
-// import Experience from '../components/Experience';
 import IndexJumbo from '../components/IndexJumbo';
 import Services from '../components/Services';
 import { Banner } from '../components/';
 import Stack from '../components/Stack';
-// import Testimonials from '../components/Testimonials';
 import Companies from '../components/Companies';
 
 const IndexPage = ({ data }) => (
@@ -20,10 +18,11 @@ const IndexPage = ({ data }) => (
       imgs={data.servicesImgs}
     />
     <Banner>
-      <h1>The Modern Web Runs on Container Tech and Serverless Platforms</h1>
+      <Callout>
+        The Modern Web Runs on Container Tech and Serverless Platforms
+      </Callout>
     </Banner>
     <Stack stack={data.site.siteMetadata.stack} imgs={data.stackImgs} />
-    {/* <Experience exp={data.allMarkdownRemark.edges} /> */}
     <About newyork={data.newyork} chauoanShot={data.chauoanShot} />
     <Companies data={[data.magicLeap, data.ibm, data.dali]} />
   </div>
@@ -36,6 +35,11 @@ IndexPage.propTypes = {
     }),
   }),
 };
+
+const Callout = styled.h1`
+  text-align: center;
+  padding: 3rem;
+`;
 
 export const query = graphql`
   fragment ImgQuery on ImageSharp {

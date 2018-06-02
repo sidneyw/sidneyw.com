@@ -15,7 +15,7 @@ import {
 
 const StackSection = ({ stack, imgs }) => (
   <Stack id="stack">
-    <Heading>A stack for scale</Heading>
+    <Heading>A Stack for Scale</Heading>
     <p>
       Elit lorem non iure facere commodi, unde, unde, voluptatem dolorum
       consequatur. Quisquam obcaecati perspiciatis sunt ducimus beatae. Harum
@@ -96,7 +96,7 @@ const StackIconWrap = styled.div`
   // pure-md
   @media screen and (min-width: 48em) {
     margin: 0 auto;
-    width: 70vw;
+    width: 50vw;
     align-items: center;
   }
 `;
