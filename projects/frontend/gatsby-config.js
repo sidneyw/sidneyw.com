@@ -10,6 +10,36 @@ module.exports = {
       { name: 'linkedin', href: 'https://www.linkedin.com/in/swijngaarde' },
       // { name: 'email', href: 'mailto:sidneywijngaarde@gmail.com' },
     ],
+    services: [
+      {
+        name: 'Cloud Architecture',
+        text:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non lectus tincidunt, posuere mi ut, maximus orci. Sed tincidunt posuere nunc sed sagittis. Sed vulputate maximus erat sit amet bibendum. Phasellus ac nunc a turpis imperdiet sodales ut quis elit. Suspendisse fermentum hendrerit felis vel ultrices.',
+        img: 'architecture',
+      },
+      {
+        name: 'Continuous Delivery',
+        text:
+          'Praesent dapibus eu turpis a aliquet. Proin vulputate finibus magna eu imperdiet. Donec viverra et dolor eu blandit. Mauris varius ac arcu sit amet molestie. Phasellus tempus eu libero a tincidunt. Morbi nec orci venenatis, sollicitudin ligula porttitor, mollis arcu. Cras elementum porttitor malesuada.',
+        img: 'delivery',
+      },
+      {
+        name: 'Progressive Web Applications',
+        text:
+          'Fusce sollicitudin efficitur accumsan. Cras ut risus ut erat sodales mollis. Etiam et faucibus eros. Maecenas in dolor dolor. Suspendisse varius tincidunt tristique. Donec tincidunt odio a diam maximus posuere. Aliquam sit amet nisi dictum, gravida ante eget, sollicitudin lectus. Cras sodales facilisis blandit.',
+        img: 'pwa',
+      },
+    ],
+    // Images in src/assets/stack/
+    stack: [
+      'serverless',
+      'kubernetes',
+      'docker',
+      'react',
+      'graphql',
+      'nodejs',
+      'golang',
+    ],
   },
   proxy: {
     prefix: '/localhost:3000',
