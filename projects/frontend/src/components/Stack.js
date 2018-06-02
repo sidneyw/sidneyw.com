@@ -112,7 +112,7 @@ const IconImg = styled(BackgroundImg)`
 
 const Icon = styled.div`
   padding: 10px;
-  width: 70vw;
+  width: 40vw;
   border-radius: 5px;
   margin-top: 10px;
   margin-right: 10px;
