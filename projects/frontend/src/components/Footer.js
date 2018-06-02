@@ -25,11 +25,11 @@ FooterSection.propTypes = {
 export default FooterSection;
 
 const Footer = styled.footer`
-  min-height: 10vh;
+  min-height: 7vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 2.5vw;
+  padding: 1.1rem 2.5vw;
 
   flex-flow: column wrap;
 
@@ -46,16 +46,18 @@ const Footer = styled.footer`
   }
 `;
 
+const iconSize = 4;
 const SocialIconWrap = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
 
   & > a {
-    height: 8vh;
-    width: 8vh;
+    height: ${iconSize}vh;
+    width: ${iconSize}vh;
+    margin: 0 1em;
   }
 
   // pure-md

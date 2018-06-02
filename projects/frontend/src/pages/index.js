@@ -1,21 +1,29 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import About from '../components/About';
-// import NewsLetter from '../components/NewsLetter';
-import Experience from '../components/Experience';
 import IndexJumbo from '../components/IndexJumbo';
 import Services from '../components/Services';
-// import Testimonials from '../components/Testimonials';
+import { Banner } from '../components/';
+import Stack from '../components/Stack';
 import Companies from '../components/Companies';
 
 const IndexPage = ({ data }) => (
   <div>
     <IndexJumbo headshot={data.headshot} />
-    <Services />
+    <Services
+      services={data.site.siteMetadata.services}
+      imgs={data.servicesImgs}
+    />
+    <Banner>
+      <Callout>
+        The Modern Web Runs on Container Tech and Serverless Platforms
+      </Callout>
+    </Banner>
+    <Stack stack={data.site.siteMetadata.stack} imgs={data.stackImgs} />
     <About newyork={data.newyork} chauoanShot={data.chauoanShot} />
-    <Experience exp={data.allMarkdownRemark.edges} />
     <Companies data={[data.magicLeap, data.ibm, data.dali]} />
   </div>
 );
@@ -28,6 +36,11 @@ IndexPage.propTypes = {
   }),
 };
 
+const Callout = styled.h1`
+  text-align: center;
+  padding: 3rem;
+`;
+
 export const query = graphql`
   fragment ImgQuery on ImageSharp {
     sizes {
@@ -35,13 +48,54 @@ export const query = graphql`
     }
   }
 
+  fragment HQ_ImgQuery on ImageSharp {
+    sizes(maxWidth: 2400) {
+      ...GatsbyImageSharpSizes_withWebp
+    }
+  }
+
   query IndexQuery {
+    site {
+      siteMetadata {
+        stack
+        services {
+          name
+          text
+          img
+        }
+      }
+    }
+
+    stackImgs: allImageSharp(filter: { id: { regex: "/.*assets/stack/.*/" } }) {
+      edges {
+        node {
+          id
+          sizes {
+            ...GatsbyImageSharpSizes_withWebp
+          }
+        }
+      }
+    }
+
+    servicesImgs: allImageSharp(
+      filter: { id: { regex: "/.*assets/services/.*/" } }
+    ) {
+      edges {
+        node {
+          id
+          sizes {
+            ...GatsbyImageSharpSizes_withWebp
+          }
+        }
+      }
+    }
+
     headshot: imageSharp(id: { regex: "/headshot2.jpg/" }) {
-      ...ImgQuery
+      ...HQ_ImgQuery
     }
 
     chauoanShot: imageSharp(id: { regex: "/chauoan-shot1.jpg/" }) {
-      ...ImgQuery
+      ...HQ_ImgQuery
     }
 
     newyork: imageSharp(id: { regex: "/newyork.png/" }) {

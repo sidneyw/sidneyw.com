@@ -50,11 +50,12 @@ BackgroundImg.propTypes = {
 
 export const Banner = styled.section`
   display: flex;
-  color: #333;
+  color: #fff;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   min-height: 10vh;
-  background-color: #fff;
+  background-color: #1d69b2;
 `;
 
 const ButtonStyle = css`
@@ -238,7 +239,10 @@ export const SplitSection = styled(BackgroundImg)`
   }
 `;
 
-export const ImgPropType = PropTypes.shape({
+export const imgMatch = (imgs, match) =>
+  imgs.edges.find(({ node: { id } }) => id.includes(match)).node;
+
+export const imgPropType = PropTypes.shape({
   aspectRatio: PropTypes.number,
   base64: PropTypes.string,
   sizes: PropTypes.string,
@@ -246,4 +250,15 @@ export const ImgPropType = PropTypes.shape({
   srcSet: PropTypes.string,
   srcSetWebp: PropTypes.string,
   srcWebp: PropTypes.string,
+});
+
+export const imgListPropType = PropTypes.shape({
+  edges: PropTypes.arrayOf(
+    PropTypes.shape({
+      node: PropTypes.shape({
+        id: PropTypes.string,
+        sizes: imgPropType,
+      }),
+    })
+  ),
 });

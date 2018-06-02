@@ -31,7 +31,7 @@ const CompanyImg = styled(Img)`
   width: 90vw;
   // pure-md
   @media screen and (min-width: 48em) {
-    width: 30vw;
+    width: 20vw;
   }
 `;
 

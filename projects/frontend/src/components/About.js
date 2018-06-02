@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { SplitSection, BackgroundImg, Loader, ImgPropType } from './index';
+import { SplitSection, BackgroundImg, Loader, imgPropType } from './index';
 
 import ContactMe, { ContactMeMessage } from './ContactMe';
 import FormBuilder from './FormBuilder';
@@ -24,8 +24,8 @@ const AboutSection = ({ chauoanShot, newyork }) => (
 );
 
 AboutSection.propTypes = {
-  newyork: PropTypes.shape({ sizes: ImgPropType }),
-  chauoanShot: PropTypes.shape({ sizes: ImgPropType }),
+  newyork: PropTypes.shape({ sizes: imgPropType }),
+  chauoanShot: PropTypes.shape({ sizes: imgPropType }),
 };
 
 export default AboutSection;

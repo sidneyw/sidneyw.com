@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { ButtonLink, Jumbo, ImgPropType } from './index';
+import { ButtonLink, Jumbo, imgPropType } from './index';
 import { Center } from './mixins';
 
 const IndexJumboSection = ({ headshot }) => (
@@ -25,7 +25,7 @@ const IndexJumboSection = ({ headshot }) => (
 );
 
 IndexJumboSection.propTypes = {
-  headshot: PropTypes.shape({ ImgPropType }),
+  headshot: PropTypes.shape({ imgPropType }),
 };
 
 export default IndexJumboSection;
