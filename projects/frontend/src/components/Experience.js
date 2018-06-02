@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Img from 'gatsby-image';
 
-import { Heading, ImgPropType } from './index';
+import { Heading, imgPropType } from './index';
 import { Thirds, ZDepth1 } from './mixins';
 
 const ExperienceSection = ({ exp }) => (
@@ -46,7 +46,7 @@ const ExperienceCard = ({ link, img }) => (
 );
 
 ExperienceCard.propTypes = {
-  img: ImgPropType,
+  img: imgPropType,
   link: PropTypes.string,
 };
 

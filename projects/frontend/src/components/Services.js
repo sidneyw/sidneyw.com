@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { BackgroundImg, imgMatch, ImgPropType } from '.';
+import { BackgroundImg, imgMatch, imgListPropType, imgPropType } from '.';
 
 const Services = ({ services, imgs }) => (
   <ServiceSection id="services">
@@ -23,7 +23,7 @@ const ServiceProps = {
   text: PropTypes.string,
   img: PropTypes.shape({
     id: PropTypes.string,
-    sizes: ImgPropType,
+    sizes: imgPropType,
   }),
 };
 
@@ -31,6 +31,7 @@ Services.propTypes = {
   services: PropTypes.arrayOf(
     PropTypes.shape({ ...ServiceProps, img: PropTypes.string })
   ),
+  imgs: imgListPropType,
 };
 
 export default Services;

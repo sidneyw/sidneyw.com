@@ -242,7 +242,7 @@ export const SplitSection = styled(BackgroundImg)`
 export const imgMatch = (imgs, match) =>
   imgs.edges.find(({ node: { id } }) => id.includes(match)).node;
 
-export const ImgPropType = PropTypes.shape({
+export const imgPropType = PropTypes.shape({
   aspectRatio: PropTypes.number,
   base64: PropTypes.string,
   sizes: PropTypes.string,
@@ -250,4 +250,15 @@ export const ImgPropType = PropTypes.shape({
   srcSet: PropTypes.string,
   srcSetWebp: PropTypes.string,
   srcWebp: PropTypes.string,
+});
+
+export const imgListPropType = PropTypes.shape({
+  edges: PropTypes.arrayOf(
+    PropTypes.shape({
+      node: PropTypes.shape({
+        id: PropTypes.string,
+        sizes: imgPropType,
+      }),
+    })
+  ),
 });
