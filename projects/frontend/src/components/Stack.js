@@ -60,7 +60,6 @@ StackIcon.propTypes = {
 const Stack = styled.section`
   ${Center} flex-flow: column wrap;
   padding: 5vh 0;
-  // margin: 3vh 0;
   h1 {
     width: 75%;
     margin-bottom: 15px;
@@ -103,7 +102,6 @@ const StackIconWrap = styled.div`
 
 const iconSize = 7;
 const IconImg = styled(BackgroundImg)`
-  // border-radius: 100%;
   width: ${iconSize}vh;
   height: ${iconSize}vh;
   background-size: cover;
@@ -131,6 +129,5 @@ const Icon = styled.div`
   p {
     max-width: 70%;
     font-weight: 400;
-    // font-size: 1.0em;
   }
 `;

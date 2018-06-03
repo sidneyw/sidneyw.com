@@ -21,13 +21,13 @@ module.exports = {
         name: 'DevOps Driven',
         text:
           'DevOps practices help your company scale quickly, sustainably, and durably. Let’s work together to implement processes that transform how you write software.',
-        img: 'delivery',
+        img: 'devops',
       },
       {
         name: 'Progressive Web Applications',
         text:
           'Your users are viewing your site on mobile browsers with spotty internet connections. I can help you write web interfaces built for the modern era.',
-        img: 'pwa',
+        img: 'pwa-lighthouse',
       },
     ],
     // Images in src/assets/stack/
