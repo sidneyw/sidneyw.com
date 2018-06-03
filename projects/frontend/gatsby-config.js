@@ -14,20 +14,20 @@ module.exports = {
       {
         name: 'Cloud Architecture',
         text:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non lectus tincidunt, posuere mi ut, maximus orci. Sed tincidunt posuere nunc sed sagittis. Sed vulputate maximus erat sit amet bibendum. Phasellus ac nunc a turpis imperdiet sodales ut quis elit. Suspendisse fermentum hendrerit felis vel ultrices.',
+          'Weeks of development can save you hours of planning. I want to work with you to understand your business needs and plan an architecture tailored to you.',
         img: 'architecture',
       },
       {
-        name: 'Continuous Delivery',
+        name: 'DevOps Driven',
         text:
-          'Praesent dapibus eu turpis a aliquet. Proin vulputate finibus magna eu imperdiet. Donec viverra et dolor eu blandit. Mauris varius ac arcu sit amet molestie. Phasellus tempus eu libero a tincidunt. Morbi nec orci venenatis, sollicitudin ligula porttitor, mollis arcu. Cras elementum porttitor malesuada.',
-        img: 'delivery',
+          'DevOps practices help your company scale quickly, sustainably, and durably. Let’s work together to implement processes that transform how you write software.',
+        img: 'devops',
       },
       {
         name: 'Progressive Web Applications',
         text:
-          'Fusce sollicitudin efficitur accumsan. Cras ut risus ut erat sodales mollis. Etiam et faucibus eros. Maecenas in dolor dolor. Suspendisse varius tincidunt tristique. Donec tincidunt odio a diam maximus posuere. Aliquam sit amet nisi dictum, gravida ante eget, sollicitudin lectus. Cras sodales facilisis blandit.',
-        img: 'pwa',
+          'Your users are viewing your site on mobile browsers with spotty internet connections. I can help you write web interfaces built for the modern era.',
+        img: 'pwa-lighthouse',
       },
     ],
     // Images in src/assets/stack/

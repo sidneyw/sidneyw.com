@@ -88,7 +88,7 @@ const ServiceCardStyle = styled.div`
   // pure-md
   @media screen and (min-width: 48em) {
     width: 30vw;
-    min-height: 40vh;
+    min-height: 33vh;
     margin-bottom: 0;
   }
 
