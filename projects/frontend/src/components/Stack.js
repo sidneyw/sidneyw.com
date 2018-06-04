@@ -17,13 +17,11 @@ const StackSection = ({ stack, imgs }) => (
   <Stack id="stack">
     <Heading>A Stack for Scale</Heading>
     <p>
-      Elit lorem non iure facere commodi, unde, unde, voluptatem dolorum
-      consequatur. Quisquam obcaecati perspiciatis sunt ducimus beatae. Harum
-      reiciendis officiis nam fugit perspiciatis. Dolores alias eos neque sit
-      explicabo? Eaque. Elit lorem non iure facere commodi, unde, unde,
-      voluptatem dolorum consequatur. Quisquam obcaecati perspiciatis sunt
-      ducimus beatae. Harum reiciendis officiis nam fugit perspiciatis. Dolores
-      alias eos neque sit explicabo? Eaque
+      Benefit from software built on a battle tested stack used by leaders in
+      industry to serve clients at an unprecedented scale. The cloud space is
+      booming with new innovative technologies. Allow me to guide you through
+      selecting components that are ready for production use and make sense for
+      your cloud needs.
     </p>
     <StackIconWrap>
       {stack.map(name => (
