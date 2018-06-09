@@ -4,14 +4,24 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import About from '../components/About';
-import IndexJumbo from '../components/IndexJumbo';
-import Services from '../components/Services';
-import { Banner } from '../components/';
-import Stack from '../components/Stack';
 import Companies from '../components/Companies';
+import IndexJumbo from '../components/IndexJumbo';
+import Nav from '../components/Nav';
+import Services from '../components/Services';
+import Stack from '../components/Stack';
+
+import { Banner, imgMatch } from '../components/';
 
 const IndexPage = ({ data }) => (
   <div>
+    <Nav
+      hamburger={data.hamburger}
+      socialIcons={data.dataJson.social.map(social => ({
+        ...social,
+        img: imgMatch(data.allImageSharp, social.name),
+      }))}
+    />
+
     <IndexJumbo check={data.check} headshot={data.headshot} send={data.send} />
     <Services services={data.dataJson.services} imgs={data.servicesImgs} />
     <Banner>
@@ -63,6 +73,23 @@ export const query = graphql`
         img
       }
       stack
+    }
+
+    allImageSharp(filter: { id: { regex: "/.*assets/social/.*/" } }) {
+      edges {
+        node {
+          id
+          sizes {
+            ...GatsbyImageSharpSizes_withWebp
+          }
+        }
+      }
+    }
+
+    hamburger: imageSharp(id: { regex: "/hamburger.png/" }) {
+      sizes {
+        ...GatsbyImageSharpSizes_withWebp
+      }
     }
 
     headshot: imageSharp(id: { regex: "/headshot2.jpg/" }) {

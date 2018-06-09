@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { ThemeProvider } from 'styled-components';
 
-import Nav from '../components/Nav';
 import Footer from '../components/Footer';
+
+import { imgMatch } from '../components';
 
 import './index.css';
 
@@ -16,17 +17,10 @@ const theme = {
 };
 
 const TemplateWrapper = ({ children, data }) => {
-  const socialIcons = data.dataJson.social.reduce((accum, social) => {
-    // eslint-disable-next-line no-param-reassign
-    accum[social.name] = {
-      ...social,
-      img: data.allImageSharp.edges.find(({ node: { id } }) =>
-        id.includes(social.name)
-      ).node,
-    };
-
-    return accum;
-  }, {});
+  const socialIcons = data.dataJson.social.map(social => ({
+    ...social,
+    img: imgMatch(data.allImageSharp, social.name),
+  }));
 
   return (
     <div>
@@ -43,14 +37,9 @@ const TemplateWrapper = ({ children, data }) => {
 
       <ThemeProvider theme={theme}>
         <React.Fragment>
-          <Nav
-            hamburger={data.hamburger}
-            socialIcons={Object.values(socialIcons)}
-          />
-
           {children()}
 
-          <Footer socialIcons={Object.values(socialIcons)} />
+          <Footer socialIcons={socialIcons} />
         </React.Fragment>
       </ThemeProvider>
     </div>
@@ -75,11 +64,6 @@ export const query = graphql`
       }
     }
 
-    hamburger: imageSharp(id: { regex: "/hamburger.png/" }) {
-      sizes {
-        ...GatsbyImageSharpSizes_withWebp
-      }
-    }
     allImageSharp(filter: { id: { regex: "/.*assets/social/.*/" } }) {
       edges {
         node {
