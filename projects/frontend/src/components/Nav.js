@@ -66,8 +66,9 @@ export default class Navigation extends React.Component {
           showMobile={this.state.showMobile}
         >
           <NavLink href="#services">Services</NavLink>
-          <NavLink href="#contact">Contact</NavLink>
-          <NavLink href="#experience">Experience</NavLink>
+          <NavLink href="#stack">Stack</NavLink>
+          <NavLink href="#about">About</NavLink>
+          <NavLink href="#blog">Blog</NavLink>
           <Divider />
           <SocialWrap>
             {this.props.socialIcons.map((icon, ind) => (

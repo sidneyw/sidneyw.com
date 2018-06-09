@@ -1,27 +1,30 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
-import { ButtonLink, Jumbo, imgPropType } from './index';
+import { Card, Jumbo, imgPropType } from '.';
 import { Center } from './mixins';
+import ContactMe from './ContactMe';
+import FormState from './FormState';
 
-const IndexJumboSection = ({ headshot }) => (
-  <Jumbo img={headshot}>
-    <IndexJumbo>
+const IndexJumboSection = ({ headshot, ...rest }) => (
+  <IndexJumbo img={headshot}>
+    <Introduction>
       <TagLine>I&apos;m Sidney,</TagLine>
       <TagLine>but they call me</TagLine>
       <Squid>Squid.</Squid>
       <TagLine>I build web solutions for</TagLine>
       <TagLine>clients just like you.</TagLine>
-      <LearnMore id="learn-more" href="#contact" color="#ffbc3d">
-        Let&apos;s Create Together
-      </LearnMore>
-      <TitleWrap>
-        <h3>Web Consultant</h3>
-      </TitleWrap>
-    </IndexJumbo>
-  </Jumbo>
+    </Introduction>
+    <FormWrap>
+      <FormState endpoint="/contact">
+        {props => (
+          <ContactMe {...rest} {...props} title="Let's Build Together" />
+        )}
+      </FormState>
+    </FormWrap>
+  </IndexJumbo>
 );
 
 IndexJumboSection.propTypes = {
@@ -29,6 +32,61 @@ IndexJumboSection.propTypes = {
 };
 
 export default IndexJumboSection;
+
+const SlideInRight = keyframes`
+  0% {
+    transform: translateX(70vw);
+  }
+
+  60% {
+    transform: translateX(-5vw);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+`;
+
+const SlideInStyle = css`
+  animation: ${SlideInRight};
+  animation-fill-mode: both;
+  animation-duration: 500ms;
+  animation-delay: 1s;
+  animation-timing-function: ease;
+`;
+
+const IndexJumbo = styled(Jumbo)`
+  ${Center} flex-direction: column;
+
+  //pure-lg
+  @media screen and (min-width: 64em) {
+    justify-content: space-between;
+    flex-direction: row;
+  }
+`;
+
+const FormWrap = styled(Card)`
+  ${SlideInStyle} justify-content: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 5vh 0;
+  border-radius: 5px 0 0 5px;
+  display: none;
+
+  //pure-lg
+  @media screen and (min-width: 64em) {
+    display: flex;
+    width: 40vw;
+  }
+  // pure-xl
+  @media screen and (min-width: 80em) {
+    width: 30vw;
+  }
+  form {
+    width: 70%;
+    color: #fff;
+    text-shadow: 2px 2px 5px #333;
+  }
+`;
 
 const Squid = styled.h1`
   font-size: 5.5em;
@@ -44,12 +102,12 @@ const TagLine = styled.h2`
   }
 `;
 
-const IndexJumbo = styled('div')`
+const Introduction = styled.div`
   ${Center} color: #fff;
   position: relative;
   flex-direction: column;
   height: 100%;
-  width: 100%;
+  width: 50vw;
 
   h2,
   h3 {
@@ -65,51 +123,11 @@ const IndexJumbo = styled('div')`
   // pure-md
   @media screen and (min-width: 48em) {
     align-items: flex-start;
-    padding-left: 10vw;
+    // padding-left: 10vw;
 
     h2,
     h3 {
       font-weight: 100;
     }
-  }
-`;
-
-const LearnMore = styled(ButtonLink)`
-  font-size: 1.2em;
-  min-width: 50%;
-  margin-top: 30px;
-
-  // pure-md
-  @media screen and (min-width: 48em) {
-    min-width: 20%;
-    margin-top: 20px;
-  }
-
-  //pure-lg
-  @media screen and (min-width: 64em) {
-    min-width: 20%;
-  }
-`;
-
-const TitleWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  position: absolute;
-  margin: 0 auto;
-  bottom: 10px;
-
-  h3 {
-    font-size: 1.5em;
-    font-family: 'Roboto Slab', serif;
-    text-align: center;
-  }
-
-  // pure-sm
-  @media screen and (min-width: 35.5em) {
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    width: 80%;
   }
 `;

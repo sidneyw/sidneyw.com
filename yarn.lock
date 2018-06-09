@@ -5136,6 +5136,13 @@ gatsby-source-medium@^1.0.14:
     axios "^0.16.2"
     babel-runtime "^6.26.0"
 
+gatsby-transformer-json@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.npmjs.org/gatsby-transformer-json/-/gatsby-transformer-json-1.0.19.tgz#89f6454e61f1351399796dbff6f06c740d8f8002"
+  dependencies:
+    babel-runtime "^6.26.0"
+    bluebird "^3.5.0"
+
 gatsby-transformer-remark@^1.7.26:
   version "1.7.40"
   resolved "https://registry.yarnpkg.com/gatsby-transformer-remark/-/gatsby-transformer-remark-1.7.40.tgz#199296ba084c4931be91e5637a7eca13711f212e"

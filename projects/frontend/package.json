@@ -18,6 +18,7 @@
     "gatsby-remark-images": "^1.5.36",
     "gatsby-source-filesystem": "^1.5.11",
     "gatsby-source-medium": "^1.0.14",
+    "gatsby-transformer-json": "^1.0.19",
     "gatsby-transformer-remark": "^1.7.26",
     "gatsby-transformer-sharp": "^1.6.16",
     "lodash.debounce": "^4.0.8",
@@ -25,9 +26,7 @@
     "react-helmet": "^5.2.0",
     "styled-components": "^2.4.0"
   },
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "jest": {
     "rootDir": "./src"
   },
@@ -37,7 +36,10 @@
     "symlink": "rm -rf node_modules; ln -s ../../node_modules node_modules",
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint --fix src/**/*.js",
-    "deploy": "netlify deploy -s $NETLIFY_FREELANCE_SITE_ID -p public/ -t $NETLIFY_TOKEN",
+    "deploy":
+      "netlify deploy -s $NETLIFY_FREELANCE_SITE_ID -p public/ -t $NETLIFY_TOKEN",
+    "deploy:draft":
+      "netlify deploy -d -s $NETLIFY_FREELANCE_SITE_ID -p public/ -t $NETLIFY_TOKEN",
     "develop": "gatsby develop",
     "test": "jest"
   },

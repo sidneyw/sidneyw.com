@@ -12,17 +12,14 @@ import Companies from '../components/Companies';
 
 const IndexPage = ({ data }) => (
   <div>
-    <IndexJumbo headshot={data.headshot} />
-    <Services
-      services={data.site.siteMetadata.services}
-      imgs={data.servicesImgs}
-    />
+    <IndexJumbo check={data.check} headshot={data.headshot} send={data.send} />
+    <Services services={data.dataJson.services} imgs={data.servicesImgs} />
     <Banner>
       <Callout>
         The Modern Web Runs on Container Tech and Serverless Platforms
       </Callout>
     </Banner>
-    <Stack stack={data.site.siteMetadata.stack} imgs={data.stackImgs} />
+    <Stack stack={data.dataJson.stack} imgs={data.stackImgs} />
     <About newyork={data.newyork} chauoanShot={data.chauoanShot} />
     <Companies data={[data.magicLeap, data.ibm, data.dali]} />
   </div>
@@ -43,7 +40,7 @@ const Callout = styled.h1`
 
 export const query = graphql`
   fragment ImgQuery on ImageSharp {
-    sizes {
+    sizes(maxWidth: 200) {
       ...GatsbyImageSharpSizes_withWebp
     }
   }
@@ -55,26 +52,29 @@ export const query = graphql`
   }
 
   query IndexQuery {
-    site {
-      siteMetadata {
-        stack
-        services {
-          name
-          text
-          img
-        }
+    dataJson {
+      social {
+        name
+        href
       }
+      services {
+        name
+        text
+        img
+      }
+      stack
     }
 
-    stackImgs: allImageSharp(filter: { id: { regex: "/.*assets/stack/.*/" } }) {
-      edges {
-        node {
-          id
-          sizes(maxWidth: 200) {
-            ...GatsbyImageSharpSizes_withWebp
-          }
-        }
-      }
+    headshot: imageSharp(id: { regex: "/headshot2.jpg/" }) {
+      ...HQ_ImgQuery
+    }
+
+    send: imageSharp(id: { regex: "/send.png/" }) {
+      ...ImgQuery
+    }
+
+    check: imageSharp(id: { regex: "/check.png/" }) {
+      ...ImgQuery
     }
 
     servicesImgs: allImageSharp(
@@ -90,8 +90,15 @@ export const query = graphql`
       }
     }
 
-    headshot: imageSharp(id: { regex: "/headshot2.jpg/" }) {
-      ...HQ_ImgQuery
+    stackImgs: allImageSharp(filter: { id: { regex: "/.*assets/stack/.*/" } }) {
+      edges {
+        node {
+          id
+          sizes(maxWidth: 200) {
+            ...GatsbyImageSharpSizes_withWebp
+          }
+        }
+      }
     }
 
     chauoanShot: imageSharp(id: { regex: "/chauoan-shot1.jpg/" }) {
@@ -99,7 +106,7 @@ export const query = graphql`
     }
 
     newyork: imageSharp(id: { regex: "/newyork.png/" }) {
-      ...ImgQuery
+      ...HQ_ImgQuery
     }
 
     ibm: imageSharp(id: { regex: "/ibm-bw.png/" }) {
@@ -112,27 +119,6 @@ export const query = graphql`
 
     dali: imageSharp(id: { regex: "/dali-bw.png/" }) {
       ...ImgQuery
-    }
-
-    allMarkdownRemark {
-      edges {
-        node {
-          frontmatter {
-            title
-            type
-            technology
-            link
-            image {
-              childImageSharp {
-                ...ImgQuery
-              }
-            }
-          }
-          fields {
-            slug
-          }
-        }
-      }
     }
   }
 `;

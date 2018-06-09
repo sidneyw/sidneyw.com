@@ -3,11 +3,50 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { BlueButton, Input, TextArea } from './index';
+import { STATE_ENUM } from './FormState';
+import { UnifiedButton, Loader, Input, TextArea } from './index';
 
-const ContactMe = ({ handleSubmit, handleChange, state }) => (
-  <ContactStyle id="contact" name="contact" onSubmit={handleSubmit}>
-    <h3>what are you waiting for?</h3>
+const LoaderMargin = styled(Loader)`
+  margin-right: 0.8rem;
+`;
+
+const ContactButton = styled(UnifiedButton)`
+  margin: 0 auto;
+  padding: 1rem;
+`;
+
+const getContent = ({ state, loader, check, send }) => {
+  switch (state.submitted) {
+    case STATE_ENUM.PENDING:
+      return {
+        children: (
+          <React.Fragment>
+            <LoaderMargin />
+            <span>Working on it</span>
+          </React.Fragment>
+        ),
+        disabled: true,
+        icon: loader,
+      };
+
+    case STATE_ENUM.SUCCESS:
+      return {
+        children: "I've received your message",
+        disabled: true,
+        icon: check,
+      };
+
+    // case STATE_ENUM.ERROR:
+    //   return { icon: error, children: 'Oops something went wrong' };
+
+    default:
+      return { icon: send, children: 'Contact me' };
+  }
+};
+
+const ContactMe = ({ handleSubmit, handleChange, state, title, ...rest }) => (
+  <ContactStyle id="contact" name="contact" onSubmit={handleSubmit} {...rest}>
+    <h3>{title}</h3>
     <Input
       onChange={handleChange}
       value={state.name}
@@ -33,10 +72,7 @@ const ContactMe = ({ handleSubmit, handleChange, state }) => (
       name="message"
       required
     />
-
-    <BlueButton type="submit" fullwidth>
-      Book Me Now
-    </BlueButton>
+    <ContactButton {...getContent({ state, ...rest })} type="submit" />
   </ContactStyle>
 );
 
@@ -45,26 +81,17 @@ ContactMe.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   state: PropTypes.object,
+  title: PropTypes.string,
 };
 
 export default ContactMe;
 
-const ContactMeMessage = ({ success = true }) => (
-  <div style={{ textAlign: 'center' }}>
-    {success
-      ? "I've received your message and will get back to you shortly"
-      : 'There seems to have been a problem. Please try again soon'}
-  </div>
-);
-
-ContactMeMessage.propTypes = {
-  success: PropTypes.bool,
-};
-
-export { ContactMeMessage };
-
 const ContactStyle = styled.form`
   width: 100%;
+  h3 {
+    font-size: 1.5em;
+    text-align: center;
+  }
 
   & > * {
     margin-top: 10px;

@@ -3,23 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { SplitSection, BackgroundImg, Loader, imgPropType } from './index';
-
-import ContactMe, { ContactMeMessage } from './ContactMe';
-import FormBuilder from './FormBuilder';
+import { SplitSection, BackgroundImg, imgPropType } from './index';
 
 const AboutSection = ({ chauoanShot, newyork }) => (
   <SplitSection>
     <CenterPiece img={chauoanShot} />
-    <Section img={newyork} id="contact">
-      <FormBuilder
-        endpoint="/contact"
-        form={ContactMe}
-        pending={() => <Loader />}
-        success={() => <ContactMeMessage success />}
-        error={() => <ContactMeMessage success={false} />}
-      />
-    </Section>
+    <Section img={newyork} id="contact" />
   </SplitSection>
 );
 
