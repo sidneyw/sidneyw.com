@@ -11,6 +11,27 @@ import styled, { css, keyframes } from 'styled-components';
 
 import { Center, Rounded, ZDepth1, ZDepth3 } from './mixins';
 
+export const imgPropType = PropTypes.shape({
+  aspectRatio: PropTypes.number,
+  base64: PropTypes.string,
+  sizes: PropTypes.string,
+  src: PropTypes.string,
+  srcSet: PropTypes.string,
+  srcSetWebp: PropTypes.string,
+  srcWebp: PropTypes.string,
+});
+
+export const imgListPropType = PropTypes.shape({
+  edges: PropTypes.arrayOf(
+    PropTypes.shape({
+      node: PropTypes.shape({
+        id: PropTypes.string,
+        sizes: imgPropType,
+      }),
+    })
+  ),
+});
+
 const BgWrap = styled.div`
   position: relative;
   // Make sure children display on top of the image
@@ -55,20 +76,22 @@ export const Banner = styled.section`
   align-items: center;
   justify-content: center;
   min-height: 10vh;
-  background-color: #1d69b2;
+  background-color: ${({ theme }) => theme.primary};
 `;
 
 const ButtonStyle = css`
-  ${Center} ${Rounded} ${ZDepth1} padding: 10px;
+  ${Center} ${Rounded} ${ZDepth1} padding: 1rem;
   border: none;
   color: #fff;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   font-size: 1.2em;
-  background-color: ${props => props.color || '#1D69B2'};
+  background-color: ${({ disabled, theme }) =>
+    disabled ? theme.primaryDisabled : theme.primary};
   text-decoration: none;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
 
   transition: all 200ms ease;
+  width: ${props => (props.fullwidth ? '100%' : '')};
 
   &:visited,
   &:focus {
@@ -76,9 +99,13 @@ const ButtonStyle = css`
     color: #fff;
   }
 
-  &:hover {
-    ${ZDepth3};
-  }
+  ${({ disabled }) =>
+    !disabled &&
+    `
+    &:hover {
+      ${ZDepth3};
+    }
+  `}
 `;
 export const Button = styled.button`
   ${ButtonStyle};
@@ -87,10 +114,29 @@ export const ButtonLink = styled.a`
   ${ButtonStyle};
 `;
 
-export const BlueButton = styled(Button)`
-  background-color: #1d69b2;
-  width: ${props => (props.fullwidth ? '100%' : '')};
+const ButtonIcon = styled(Img)`
+  max-height: 90%;
+  width: 2vw;
+  margin-right: 0.3em;
 `;
+
+export const UnifiedButton = ({ children, icon, ...rest }) => {
+  const Wrapper = rest.href ? ButtonLink : Button;
+
+  return (
+    <Wrapper {...rest}>
+      {icon && <ButtonIcon {...icon} />}
+      {children && children}
+    </Wrapper>
+  );
+};
+
+UnifiedButton.propTypes = {
+  children: PropTypes.node,
+  icon: PropTypes.shape({
+    sizes: imgPropType,
+  }),
+};
 
 export const Card = styled.div`
   ${ZDepth1} background-color: #fff;
@@ -119,8 +165,10 @@ export const Heading = styled.h1`
 
 export const formFieldStyle = css`
   border: none;
-  ${Rounded} ${ZDepth1} padding: 0 5px;
+  ${Rounded} ${ZDepth1} padding: 0.5rem 1rem;
+  font-size: 1em;
   min-height: 5vh;
+  max-height: 2em;
   width: 100%;
 `;
 
@@ -133,10 +181,6 @@ const FormField = styled.div`
   input,
   textarea {
     ${formFieldStyle};
-  }
-
-  textarea {
-    padding-top: 5px;
   }
 `;
 
@@ -213,11 +257,11 @@ export const Spin = keyframes`
 `;
 
 export const Loader = styled.div`
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #1d69b2; /* Blue */
+  border: 0.2em solid #f3f3f3; /* Light grey */
+  border-top: 0.2em solid ${({ theme }) => theme.secondary};
   border-radius: 50%;
-  width: 120px;
-  height: 120px;
+  width: 1em;
+  height: 1em;
   animation: ${Spin} 1s ease infinite;
 `;
 
@@ -241,24 +285,3 @@ export const SplitSection = styled(BackgroundImg)`
 
 export const imgMatch = (imgs, match) =>
   imgs.edges.find(({ node: { id } }) => id.includes(match)).node;
-
-export const imgPropType = PropTypes.shape({
-  aspectRatio: PropTypes.number,
-  base64: PropTypes.string,
-  sizes: PropTypes.string,
-  src: PropTypes.string,
-  srcSet: PropTypes.string,
-  srcSetWebp: PropTypes.string,
-  srcWebp: PropTypes.string,
-});
-
-export const imgListPropType = PropTypes.shape({
-  edges: PropTypes.arrayOf(
-    PropTypes.shape({
-      node: PropTypes.shape({
-        id: PropTypes.string,
-        sizes: imgPropType,
-      }),
-    })
-  ),
-});

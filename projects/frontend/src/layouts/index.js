@@ -2,14 +2,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import { ThemeProvider } from 'styled-components';
 
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 
 import './index.css';
 
+const theme = {
+  primary: '#1D69B2',
+  primaryDisabled: '#0f355a',
+  secondary: '#ffbc3d',
+};
+
 const TemplateWrapper = ({ children, data }) => {
-  const socialIcons = data.site.siteMetadata.social.reduce((accum, social) => {
+  const socialIcons = data.dataJson.social.reduce((accum, social) => {
     // eslint-disable-next-line no-param-reassign
     accum[social.name] = {
       ...social,
@@ -29,19 +36,23 @@ const TemplateWrapper = ({ children, data }) => {
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
         <link
-          href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400|Ubuntu:400,700"
+          href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400|Montserrat:400,700"
           rel="stylesheet"
         />
       </Helmet>
 
-      <Nav
-        hamburger={data.hamburger}
-        socialIcons={Object.values(socialIcons)}
-      />
+      <ThemeProvider theme={theme}>
+        <React.Fragment>
+          <Nav
+            hamburger={data.hamburger}
+            socialIcons={Object.values(socialIcons)}
+          />
 
-      {children()}
+          {children()}
 
-      <Footer socialIcons={Object.values(socialIcons)} />
+          <Footer socialIcons={Object.values(socialIcons)} />
+        </React.Fragment>
+      </ThemeProvider>
     </div>
   );
 };
@@ -57,15 +68,13 @@ TemplateWrapper.propTypes = {
 
 export const query = graphql`
   query TemplateQuery {
-    site {
-      siteMetadata {
-        title
-        social {
-          name
-          href
-        }
+    dataJson {
+      social {
+        name
+        href
       }
     }
+
     hamburger: imageSharp(id: { regex: "/hamburger.png/" }) {
       sizes {
         ...GatsbyImageSharpSizes_withWebp
