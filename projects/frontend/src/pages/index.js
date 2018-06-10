@@ -10,16 +10,13 @@ import Nav from '../components/Nav';
 import Services from '../components/Services';
 import Stack from '../components/Stack';
 
-import { Banner, imgMatch } from '../components/';
+import { Banner, mergeSocial } from '../components/';
 
 const IndexPage = ({ data }) => (
   <div>
     <Nav
       hamburger={data.hamburger}
-      socialIcons={data.dataJson.social.map(social => ({
-        ...social,
-        img: imgMatch(data.allImageSharp, social.name),
-      }))}
+      socialIcons={mergeSocial(data.dataJson.social, data.allImageSharp)}
     />
 
     <IndexJumbo check={data.check} headshot={data.headshot} send={data.send} />

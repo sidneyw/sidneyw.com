@@ -21,6 +21,8 @@ export const imgPropType = PropTypes.shape({
   srcWebp: PropTypes.string,
 });
 
+export const imgPropTypeShape = PropTypes.shape({ sizes: imgPropType });
+
 export const imgListPropType = PropTypes.shape({
   edges: PropTypes.arrayOf(
     PropTypes.shape({
@@ -133,9 +135,7 @@ export const UnifiedButton = ({ children, icon, ...rest }) => {
 
 UnifiedButton.propTypes = {
   children: PropTypes.node,
-  icon: PropTypes.shape({
-    sizes: imgPropType,
-  }),
+  icon: imgPropTypeShape,
 };
 
 export const Card = styled.div`
@@ -285,3 +285,9 @@ export const SplitSection = styled(BackgroundImg)`
 
 export const imgMatch = (imgs, match) =>
   imgs.edges.find(({ node: { id } }) => id.includes(match)).node;
+
+export const mergeSocial = (socials, imgs) =>
+  socials.map(social => ({
+    ...social,
+    img: imgMatch(imgs, social.name),
+  }));

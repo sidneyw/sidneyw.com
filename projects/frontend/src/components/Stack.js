@@ -10,7 +10,7 @@ import {
   Heading,
   imgMatch,
   imgListPropType,
-  imgPropType,
+  imgPropTypeShape,
 } from '.';
 
 const StackSection = ({ stack, imgs }) => (
@@ -46,9 +46,7 @@ const StackIcon = ({ title, img }) => (
 );
 
 StackIcon.propTypes = {
-  img: PropTypes.shape({
-    sizes: imgPropType,
-  }),
+  img: imgPropTypeShape,
   title: PropTypes.string,
 };
 

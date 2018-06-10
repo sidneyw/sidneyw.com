@@ -6,7 +6,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Footer from '../components/Footer';
 
-import { imgMatch } from '../components';
+import { mergeSocial } from '../components';
 
 import './index.css';
 
@@ -16,35 +16,30 @@ const theme = {
   secondary: '#ffbc3d',
 };
 
-const TemplateWrapper = ({ children, data }) => {
-  const socialIcons = data.dataJson.social.map(social => ({
-    ...social,
-    img: imgMatch(data.allImageSharp, social.name),
-  }));
+const TemplateWrapper = ({ children, data }) => (
+  <div>
+    <Helmet>
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      />
+      <link
+        href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400|Montserrat:100,400,700"
+        rel="stylesheet"
+      />
+    </Helmet>
 
-  return (
-    <div>
-      <Helmet>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    <ThemeProvider theme={theme}>
+      <React.Fragment>
+        {children()}
+
+        <Footer
+          socialIcons={mergeSocial(data.dataJson.social, data.allImageSharp)}
         />
-        <link
-          href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400|Montserrat:400,700"
-          rel="stylesheet"
-        />
-      </Helmet>
-
-      <ThemeProvider theme={theme}>
-        <React.Fragment>
-          {children()}
-
-          <Footer socialIcons={socialIcons} />
-        </React.Fragment>
-      </ThemeProvider>
-    </div>
-  );
-};
+      </React.Fragment>
+    </ThemeProvider>
+  </div>
+);
 
 TemplateWrapper.propTypes = {
   children: PropTypes.func,
