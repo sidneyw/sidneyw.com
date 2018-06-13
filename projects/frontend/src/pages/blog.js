@@ -51,6 +51,7 @@ const BlogPage = ({ data }) => (
           timeToRead={node.timeToRead}
           key={node.id}
           tagIcon={data.tag}
+          to={node.fields.slug}
           {...node.frontmatter}
           img={node.frontmatter.img.childImageSharp}
         />
@@ -214,6 +215,9 @@ export const query = graphql`
           id
           timeToRead
           excerpt
+          fields {
+            slug
+          }
           frontmatter {
             title
             author

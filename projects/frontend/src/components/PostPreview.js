@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Img from 'gatsby-image';
+import Link from 'gatsby-link';
 
 import { BackgroundImg, imgPropTypeShape } from '.';
 
@@ -38,8 +39,9 @@ const PostPreview = ({
   tags,
   timeToRead,
   title,
+  ...rest
 }) => (
-  <PostPreviewStyle>
+  <PostPreviewStyle {...rest}>
     <PreviewImg img={previewImg || img} />
     <PreviewText>
       <h2>{title}</h2>
@@ -75,8 +77,9 @@ export default PostPreview;
 
 const borderRadius = '1rem';
 
-const PostPreviewStyle = styled.div`
+const PostPreviewStyle = styled(Link)`
   display: flex;
+  text-decoration: none;
   box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.3);
   flex-flow: column wrap;
   border-radius: ${borderRadius};

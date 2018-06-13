@@ -1,47 +1,67 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const Webpack = require('webpack');
-// const path = require('path');
-// const { createFilePath } = require('gatsby-source-filesystem');
+const path = require('path');
+const { createFilePath } = require('gatsby-source-filesystem');
 
-// exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-//   const { createNodeField } = boundActionCreators;
-//   if (node.internal.type === `MarkdownRemark`) {
-//     const slug = createFilePath({ node, getNode, basePath: `pages` });
+const isBlogPost = ({ internal: { type }, parent }) => {
+  if (type !== `MarkdownRemark`) return false;
 
-//     createNodeField({ node, name: `slug`, value: slug });
-//   }
-// };
+  // parent looks like: '<absPath>/<filename.md> absPath of file'
+  const dirPath = path.dirname(parent.split(' ')[0]);
+  const directories = dirPath.split('/');
+  // all blog posts are in a subdirectory with their name and assets
+  return directories[directories.length - 2] === 'blog';
+};
 
-// exports.createPages = async ({ graphql, boundActionCreators }) => {
-//   const { createPage } = boundActionCreators;
+exports.onCreateNode = ({
+  node,
+  getNode,
+  boundActionCreators: { createNodeField },
+}) => {
+  if (isBlogPost(node)) {
+    const slug = createFilePath({ node, getNode });
+    console.log('\n\n', slug, '\n');
+    createNodeField({ node, name: 'slug', value: slug });
+  }
+};
 
-//   // Query the nodes that we added slugs to in the onCreateNode function
-//   const { data } = await graphql(`
-//     {
-//       allMarkdownRemark {
-//         edges {
-//           node {
-//             fields {
-//               slug
-//             }
-//           }
-//         }
-//       }
-//     }
-//   `);
+exports.createPages = async ({
+  graphql,
+  boundActionCreators: { createPage },
+}) => {
+  // Query the nodes that we added slugs to in the onCreateNode function
+  const {
+    data: {
+      allMarkdownRemark: { edges: posts },
+    },
+  } = await graphql(`
+    {
+      allMarkdownRemark(
+        filter: { id: { regex: "/blog*/" } }
+        sort: { fields: frontmatter___date }
+      ) {
+        edges {
+          node {
+            fields {
+              slug
+            }
+          }
+        }
+      }
+    }
+  `);
 
-//   data.allMarkdownRemark.edges.forEach(({ node }) => {
-//     createPage({
-//       path: node.fields.slug,
-//       component: path.resolve(`./src/templates/experience.js`),
-//       layout: `experience`,
-//       context: {
-//         // Data passed to context is available in page queries as GraphQL variables.
-//         slug: node.fields.slug,
-//       },
-//     });
-//   });
-// };
+  posts.forEach(({ node: { fields: { slug } } }) => {
+    createPage({
+      path: slug,
+      component: path.resolve('./src/templates/blog-post.js'),
+      context: {
+        // Data passed to context is available in page queries as GraphQL variables.
+        slug,
+      },
+    });
+  });
+};
 
 exports.modifyWebpackConfig = ({ config }) => {
   config.plugin('webpack-environment', Webpack.EnvironmentPlugin, [
