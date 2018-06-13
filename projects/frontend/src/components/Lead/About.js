@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { SplitSection, BackgroundImg, imgPropType } from './index';
+import { SplitSection, BackgroundImg, imgPropType } from '..';
 
 const AboutSection = ({ chauoanShot, newyork }) => (
   <SplitSection>

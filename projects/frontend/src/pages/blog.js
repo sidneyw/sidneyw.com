@@ -6,11 +6,12 @@ import FormState from '../components/FormState';
 import PostPreview from '../components/Blog/Preview';
 import {
   formFieldStyle,
-  UnifiedButton,
   mergeSocial,
   imgPropTypeShape,
   imgListPropType,
 } from '../components';
+
+import Button from '../components/Button';
 import SocialIcon, {
   PropType as SocialPropType,
 } from '../components/SocialIcon';
@@ -36,9 +37,9 @@ const BlogPage = ({ data }) => (
             placeholder="someone@mail.com"
             required
           />
-          <UnifiedButton icon={data.message}>
+          <Button icon={data.message}>
             <span>Subscribe</span>
-          </UnifiedButton>
+          </Button>
         </NewsLetter>
       )}
     </FormState>

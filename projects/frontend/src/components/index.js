@@ -81,63 +81,6 @@ export const Banner = styled.section`
   background-color: ${({ theme }) => theme.primary};
 `;
 
-const ButtonStyle = css`
-  ${Center} ${Rounded} ${ZDepth1} padding: 1rem;
-  border: none;
-  color: #fff;
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  font-size: 1.2em;
-  background-color: ${({ disabled, theme }) =>
-    disabled ? theme.primaryDisabled : theme.primary};
-  text-decoration: none;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
-
-  transition: all 200ms ease;
-  width: ${props => (props.fullwidth ? '100%' : '')};
-
-  &:visited,
-  &:focus {
-    text-decoration: none;
-    color: #fff;
-  }
-
-  ${({ disabled }) =>
-    !disabled &&
-    `
-    &:hover {
-      ${ZDepth3};
-    }
-  `}
-`;
-export const Button = styled.button`
-  ${ButtonStyle};
-`;
-export const ButtonLink = styled.a`
-  ${ButtonStyle};
-`;
-
-const ButtonIcon = styled(Img)`
-  max-height: 90%;
-  width: 2vw;
-  margin-right: 0.3em;
-`;
-
-export const UnifiedButton = ({ children, icon, ...rest }) => {
-  const Wrapper = rest.href ? ButtonLink : Button;
-
-  return (
-    <Wrapper {...rest}>
-      {icon && <ButtonIcon {...icon} />}
-      {children && children}
-    </Wrapper>
-  );
-};
-
-UnifiedButton.propTypes = {
-  children: PropTypes.node,
-  icon: imgPropTypeShape,
-};
-
 export const Card = styled.div`
   ${ZDepth1} background-color: #fff;
 

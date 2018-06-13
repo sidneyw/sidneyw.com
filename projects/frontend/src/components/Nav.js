@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import debounce from 'lodash.debounce';
 import SocialIcon, { PropType as SocialPropType } from './SocialIcon';
+import Link from './Link';
 
-import { IconButton } from './index';
+import { IconButton } from '.';
 import { Center, ZDepth1 } from './mixins';
 
 // TODO: Check out: https://github.com/fisshy/react-scroll - 03/04/18 12:42:12 sidneywijngaarde
@@ -13,6 +14,10 @@ export default class Navigation extends React.Component {
   static propTypes = {
     hamburger: SocialPropType,
     socialIcons: PropTypes.arrayOf(SocialPropType),
+    links: PropTypes.shape({
+      href: PropTypes.string,
+      text: PropTypes.string.isRequired,
+    }),
   };
 
   constructor(props) {
@@ -50,7 +55,7 @@ export default class Navigation extends React.Component {
   }
 
   render() {
-    const { hamburger } = this.props;
+    const { hamburger, links, socialIcons } = this.props;
 
     return (
       <Nav show={this.state.show}>
@@ -65,15 +70,14 @@ export default class Navigation extends React.Component {
           onClick={this.toggleMobile}
           showMobile={this.state.showMobile}
         >
-          <NavLink href="#services">Services</NavLink>
-          <NavLink href="#stack">Stack</NavLink>
-          <NavLink href="#about">About</NavLink>
-          <NavLink href="#blog">Blog</NavLink>
+          {links.map(link => (
+            <NavLink {...link} key={link.text}>
+              {link.text}
+            </NavLink>
+          ))}
           <Divider />
           <SocialWrap>
-            {this.props.socialIcons.map((icon, ind) => (
-              <NavSocial {...icon} key={ind} />
-            ))}
+            {socialIcons.map((icon, ind) => <NavSocial {...icon} key={ind} />)}
           </SocialWrap>
         </NavLinks>
       </Nav>
@@ -151,7 +155,7 @@ const NavLinks = styled.div`
   }
 `;
 
-const NavLink = styled.a`
+const NavLink = styled(Link)`
   margin: 5px auto;
   &:last-of-type {
     margin-bottom: 0;

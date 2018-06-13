@@ -3,12 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import About from '../components/About';
-import Companies from '../components/Companies';
-import IndexJumbo from '../components/IndexJumbo';
+import About from '../components/Lead/About';
+import Companies from '../components/Lead/Companies';
+import IndexJumbo from '../components/Lead/IndexJumbo';
 import Nav from '../components/Nav';
-import Services from '../components/Services';
-import Stack from '../components/Stack';
+import Services from '../components/Lead/Services';
+import Stack from '../components/Lead/Stack';
 
 import { Banner, mergeSocial } from '../components/';
 
@@ -16,6 +16,12 @@ const IndexPage = ({ data }) => (
   <div>
     <Nav
       hamburger={data.hamburger}
+      links={[
+        { href: '#services', text: 'Services' },
+        { href: '#stack', text: 'Stack' },
+        { href: '#about', text: 'About' },
+        { to: '/blog', text: 'Blog' },
+      ]}
       socialIcons={mergeSocial(data.dataJson.social, data.allImageSharp)}
     />
 

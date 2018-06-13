@@ -2,11 +2,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { BackgroundImg, Card } from './index';
-import { ZDepth1 } from './mixins';
+import { BackgroundImg, Card } from '..';
+import { ZDepth1 } from '../mixins';
 
-import Asilah from '../assets/asilah.jpg';
-import Nicole from '../assets/nicole.png';
+import Asilah from '../../assets/asilah.jpg';
+import Nicole from '../../assets/nicole.png';
 
 export default () => (
   <Testimonials img={Asilah}>

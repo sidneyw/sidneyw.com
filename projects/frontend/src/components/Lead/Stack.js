@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Center } from './mixins';
+import { Center } from '../mixins';
 
 import {
   BackgroundImg,
@@ -11,7 +11,7 @@ import {
   imgMatch,
   imgListPropType,
   imgPropTypeShape,
-} from '.';
+} from '..';
 
 const StackSection = ({ stack, imgs }) => (
   <Stack id="stack">

@@ -3,14 +3,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { STATE_ENUM } from './FormState';
-import { UnifiedButton, Loader, Input, TextArea } from './index';
+import { STATE_ENUM } from '../FormState';
+import { Loader, Input, TextArea } from '..';
+
+import Button from '../Button';
 
 const LoaderMargin = styled(Loader)`
   margin-right: 0.8rem;
 `;
 
-const ContactButton = styled(UnifiedButton)`
+const ContactButton = styled(Button)`
   margin: 0 auto;
   padding: 1rem;
 `;
