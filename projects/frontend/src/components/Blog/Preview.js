@@ -3,30 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Img from 'gatsby-image';
 import Link from 'gatsby-link';
 
-import { BackgroundImg, imgPropTypeShape } from '.';
-
-const months = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
-
-function formatDate(unix) {
-  const date = new Date(unix * 1000);
-  return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-}
+import { PostMeta, PostMetaIcon, PostMetaText } from './Meta';
+import { Tag } from './Tag';
+import { formatDate } from '../utils';
+import { BackgroundImg, imgPropTypeShape } from '..';
 
 const PostPreview = ({
   calendar,
@@ -75,6 +57,7 @@ PostPreview.propTypes = {
 
 export default PostPreview;
 
+// TODO: Use theme prop - 06/13/18 16:18:40 sidneywijngaarde
 const borderRadius = '1rem';
 
 const PostPreviewStyle = styled(Link)`
@@ -152,68 +135,3 @@ const PostExcerpt = styled.p`
   width: 100%;
   font-size: 0.7em;
 `;
-
-const PostMeta = styled.div`
-  margin-top: 1rem;
-  align-self: flex-end;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  width: 100%;
-
-  & > div {
-    display: flex;
-    flex-direction: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    width: initial;
-  }
-`;
-
-const PostMetaIcon = styled(Img)`
-  height: 0.8em;
-  width: 0.8em;
-  // pure-md
-  @media screen and (min-width: 48em) {
-    height: 0.6em;
-    width: 0.6em;
-  }
-
-  margin-right: 0.25em;
-`;
-
-const PostMetaText = styled.p`
-  font-size: 0.6em;
-  margin-right: 0.6em;
-`;
-
-const TagImg = styled(Img)`
-  height: 0.6rem;
-  width: 0.7rem;
-  max-height: 1.5rem;
-  margin-right: 0.2rem;
-`;
-
-const TagStyle = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  color: #fff;
-  padding: 0.3rem 0.5rem;
-  font-size: 0.8em;
-  background-color: ${({ theme }) => theme.primary};
-  border-radius: 0.5rem;
-`;
-
-const Tag = ({ icon, children }) => (
-  <TagStyle>
-    <TagImg {...icon} />
-    {children}
-  </TagStyle>
-);
-
-Tag.propTypes = {
-  icon: imgPropTypeShape,
-  children: PropTypes.node,
-};

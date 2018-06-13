@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import FormState from '../components/FormState';
-import PostPreview from '../components/PostPreview';
+import PostPreview from '../components/Blog/Preview';
 import {
   formFieldStyle,
   UnifiedButton,
