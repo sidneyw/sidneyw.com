@@ -5,10 +5,11 @@ import Helmet from 'react-helmet';
 import { ThemeProvider } from 'styled-components';
 
 import Footer from '../components/Footer';
-
 import { mergeSocial } from '../components';
 
 import './index.css';
+
+require('prismjs/themes/prism-okaidia.css');
 
 const theme = {
   primary: '#1D69B2',

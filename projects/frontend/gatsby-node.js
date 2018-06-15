@@ -3,22 +3,22 @@ const Webpack = require('webpack');
 const path = require('path');
 const { createFilePath } = require('gatsby-source-filesystem');
 
-const isBlogPost = ({ internal: { type }, parent }) => {
-  if (type !== `MarkdownRemark`) return false;
+// const isBlogPost = ({ internal: { type }, parent }) => {
+//   if (type !== `MarkdownRemark`) return false;
 
-  // parent looks like: '<absPath>/<filename.md> absPath of file'
-  const dirPath = path.dirname(parent.split(' ')[0]);
-  const directories = dirPath.split('/');
-  // all blog posts are in a subdirectory with their name and assets
-  return directories[directories.length - 2] === 'blog';
-};
+//   // parent looks like: '<absPath>/<filename.md> absPath of file'
+//   const dirPath = path.dirname(parent.split(' ')[0]);
+//   const directories = dirPath.split('/');
+//   // all blog posts are in a subdirectory with their name and assets
+//   return directories[directories.length - 2] === 'blog';
+// };
 
 exports.onCreateNode = ({
   node,
   getNode,
   boundActionCreators: { createNodeField },
 }) => {
-  if (isBlogPost(node)) {
+  if (node.internal.type === 'MarkdownRemark') {
     const slug = createFilePath({ node, getNode });
     console.log('\n\n', slug, '\n');
     createNodeField({ node, name: 'slug', value: slug });
@@ -36,10 +36,7 @@ exports.createPages = async ({
     },
   } = await graphql(`
     {
-      allMarkdownRemark(
-        filter: { id: { regex: "/blog*/" } }
-        sort: { fields: frontmatter___date }
-      ) {
+      allMarkdownRemark(sort: { fields: frontmatter___date }) {
         edges {
           node {
             fields {

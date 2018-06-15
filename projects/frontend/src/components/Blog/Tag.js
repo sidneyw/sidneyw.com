@@ -24,7 +24,7 @@ const TagStyle = styled.div`
   border-radius: 0.5rem;
 `;
 
-export const Tag = ({ icon, children }) => (
+const Tag = ({ icon, children }) => (
   <TagStyle>
     <TagImg {...icon} />
     {children}
@@ -35,3 +35,5 @@ Tag.propTypes = {
   icon: imgPropTypeShape,
   children: PropTypes.node,
 };
+
+export default Tag;

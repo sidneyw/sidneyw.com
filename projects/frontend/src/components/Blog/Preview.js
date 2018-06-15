@@ -5,54 +5,35 @@ import styled from 'styled-components';
 
 import Link from '../Link';
 
-import { PostMeta, PostMetaIcon, PostMetaText } from './Meta';
-import { Tag } from './Tag';
-import { formatDate } from '../utils';
+import PostMeta from './Meta';
 import { BackgroundImg, imgPropTypeShape } from '..';
 
 const PostPreview = ({
-  calendar,
-  clock,
-  date,
   excerpt,
   img,
   previewImg,
-  tagIcon,
-  tags,
-  timeToRead,
   title,
+  to,
+  className = '',
   ...rest
 }) => (
-  <PostPreviewStyle {...rest}>
+  <PostPreviewStyle to={to} className={className}>
     <PreviewImg img={previewImg || img} />
     <PreviewText>
       <h2>{title}</h2>
       <PostExcerpt>{excerpt}</PostExcerpt>
-      <PostMeta>
-        <div>
-          <PostMetaIcon {...calendar} />
-          <PostMetaText>{formatDate(date)}</PostMetaText>
-          <PostMetaText>‧</PostMetaText>
-          <PostMetaIcon {...clock} />
-          <PostMetaText>{`${timeToRead} mins`}</PostMetaText>
-        </div>
-        {tags && <Tag icon={tagIcon}>{tags[0]}</Tag>}
-      </PostMeta>
+      <PostMeta {...rest} />
     </PreviewText>
   </PostPreviewStyle>
 );
 
 PostPreview.propTypes = {
-  calendar: imgPropTypeShape,
-  clock: imgPropTypeShape,
-  date: PropTypes.number,
+  className: PropTypes.string,
   excerpt: PropTypes.string,
   img: imgPropTypeShape,
   previewImg: imgPropTypeShape,
-  tagIcon: imgPropTypeShape,
-  tags: PropTypes.arrayOf(PropTypes.string),
-  timeToRead: PropTypes.number,
   title: PropTypes.string,
+  to: PropTypes.string.isRequired,
 };
 
 export default PostPreview;

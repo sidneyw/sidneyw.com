@@ -1,8 +1,41 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import styled from 'styled-components';
 import Img from 'gatsby-image';
 
-export const PostMeta = styled.div`
-  margin-top: 1rem;
+import { BackgroundImg, imgPropTypeShape } from '..';
+import Tag from './Tag';
+import { formatDate } from '../utils';
+
+const PostMeta = ({ calendar, date, clock, timeToRead, tagIcon, tags }) => {
+  return (
+    <PostMetaStyle>
+      <div>
+        <PostMetaIcon {...calendar} />
+        <PostMetaText>{formatDate(date)}</PostMetaText>
+        <PostMetaText>‧</PostMetaText>
+        <PostMetaIcon {...clock} />
+        <PostMetaText>{`${timeToRead} mins`}</PostMetaText>
+      </div>
+      {tags && <Tag icon={tagIcon}>{tags[0]}</Tag>}
+    </PostMetaStyle>
+  );
+};
+
+PostMeta.propTypes = {
+  calendar: imgPropTypeShape,
+  clock: imgPropTypeShape,
+  date: PropTypes.number,
+  tagIcon: imgPropTypeShape,
+  tags: PropTypes.arrayOf(PropTypes.string),
+  timeToRead: PropTypes.number,
+};
+
+export default PostMeta;
+
+export const PostMetaStyle = styled.div`
   align-self: flex-end;
   display: flex;
   flex-direction: row;
