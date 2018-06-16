@@ -131,6 +131,11 @@ const PostText = styled.div`
     font-size: 0.6em;
     color: rgba(0, 0, 0, 0.5);
   }
+
+  :not(pre) > code[class*='language-'],
+  pre[class*='language-'] {
+    font-size: 0.8em;
+  }
 `;
 
 export const query = graphql`
