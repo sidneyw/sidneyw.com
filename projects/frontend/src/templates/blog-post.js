@@ -71,11 +71,12 @@ const PostContent = styled.div`
   margin: 0 auto;
 
   font-size: 0.8em;
-  h1 {
+
+  & > h1 {
     margin-top: 8rem;
   }
+
   h5 {
-    font-weight: 300;
     margin-top: 0.5rem;
   }
 
