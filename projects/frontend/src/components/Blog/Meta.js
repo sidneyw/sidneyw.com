@@ -1,64 +1,46 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
 
-import styled from 'styled-components';
-import Img from 'gatsby-image';
+import { imgPropTypeShape } from '..';
 
-import { BackgroundImg, imgPropTypeShape } from '..';
-import Tag from './Tag';
-import { formatDate } from '../utils';
+const Meta = ({
+  author = 'Sidney Wijngaarde',
+  date,
+  excerpt,
+  img,
+  siteRoot = 'https://www.sidneyw.com',
+  slug,
+  title,
+}) => (
+  <Helmet>
+    <title>{title}</title>
+    <meta name="description" content={excerpt} />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content={author} />
 
-const PostMeta = ({ calendar, date, clock, timeToRead, tagIcon, tags }) => {
-  return (
-    <PostMetaStyle>
-      <div>
-        <PostMetaIcon {...calendar} />
-        <PostMetaText>{formatDate(date)}</PostMetaText>
-        <PostMetaText>‧</PostMetaText>
-        <PostMetaIcon {...clock} />
-        <PostMetaText>{`${timeToRead} mins`}</PostMetaText>
-      </div>
-      {tags && <Tag icon={tagIcon}>{tags[0]}</Tag>}
-    </PostMetaStyle>
-  );
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:site_name" content="sidneyw" />
+    <meta property="og:url" content={`${siteRoot}/${slug}`} />
+    <meta
+      property="og:image"
+      content={`${siteRoot}${img.childImageSharp.sizes.srcWebp}`}
+    />
+    <meta property="article:published_time" content={date} />
+    {/* <meta property="article:author" content="https://www.sidneyw.com/about" /> */}
+  </Helmet>
+);
+
+Meta.propTypes = {
+  author: PropTypes.string,
+  date: PropTypes.string,
+  excerpt: PropTypes.string,
+  img: imgPropTypeShape,
+  siteRoot: PropTypes.string,
+  slug: PropTypes.string,
+  title: PropTypes.string,
 };
 
-PostMeta.propTypes = {
-  calendar: imgPropTypeShape,
-  clock: imgPropTypeShape,
-  date: PropTypes.number,
-  tagIcon: imgPropTypeShape,
-  tags: PropTypes.arrayOf(PropTypes.string),
-  timeToRead: PropTypes.number,
-};
-
-export default PostMeta;
-
-export const PostMetaStyle = styled.div`
-  align-self: flex-end;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  width: 100%;
-
-  & > div {
-    display: flex;
-    flex-direction: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    width: initial;
-  }
-`;
-
-export const PostMetaIcon = styled(Img)`
-  height: 0.8em;
-  width: 0.8em;
-  margin-right: 0.25em;
-`;
-
-export const PostMetaText = styled.p`
-  font-size: 0.6em;
-  margin-right: 0.6em;
-`;
+export default Meta;

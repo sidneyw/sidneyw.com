@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import Link from '../Link';
 
-import PostMeta from './Meta';
+import PostInfo from './Info';
 import { BackgroundImg, imgPropTypeShape } from '..';
 
 const PostPreview = ({
@@ -22,7 +22,7 @@ const PostPreview = ({
     <PreviewText>
       <h2>{title}</h2>
       <PostExcerpt>{excerpt}</PostExcerpt>
-      <PostMeta {...rest} />
+      <PostInfo {...rest} />
     </PreviewText>
   </PostPreviewStyle>
 );
