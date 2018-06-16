@@ -49,6 +49,7 @@ module.exports = {
               maxWidth: 590,
             },
           },
+          'gatsby-remark-smartypants',
           {
             resolve: `gatsby-remark-prismjs`,
             options: {
@@ -78,7 +79,7 @@ module.exports = {
       resolve: 'gatsby-plugin-google-tagmanager',
       options: {
         id: 'GTM-5BPGDJS',
-        includeInDevelopment: true,
+        includeInDevelopment: false,
       },
     },
   ],

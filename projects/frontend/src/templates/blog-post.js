@@ -2,45 +2,65 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styled, { css, keyframes } from 'styled-components';
+import styled from 'styled-components';
 import PostMeta from '../components/Blog/Meta';
 
 import Nav from '../components/Nav';
-import { BackgroundImg, mergeSocial } from '../components';
 
-const Post = ({ data: { post, clock, calendar, tag, ...data } }) => {
-  return (
-    <div>
-      <Nav
-        hamburger={data.hamburger}
-        links={[
-          { to: '/blog', text: 'Home' },
-          { to: '/#about', text: 'About' },
-        ]}
-        socialIcons={mergeSocial(data.dataJson.social, data.allImageSharp)}
+import { PropType as SocialPropType } from '../components/SocialIcon';
+import {
+  BackgroundImg,
+  mergeSocial,
+  imgPropTypeShape,
+  imgListPropType,
+} from '../components';
+
+// const fbShare = `https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.sidneyw.com%2F${
+//   post.slug
+// }`;
+// const twitterShare = `https://twitter.com/intent/tweet?text=www.sidneyw.com`;
+const Post = ({
+  data: { calendar, clock, dataJson, hamburger, post, socialIcons, tag },
+}) => (
+  <div>
+    <Nav
+      hamburger={hamburger}
+      links={[{ to: '/', text: 'Home' }, { to: '/#about', text: 'About' }]}
+      socialIcons={mergeSocial(dataJson.social, socialIcons)}
+    />
+
+    <PostContent>
+      <h1>{post.frontmatter.title}</h1>
+      <h5>Sidney Wijngaarde</h5>
+
+      <PostMeta
+        calendar={calendar}
+        clock={clock}
+        timeToRead={post.timeToRead}
+        date={post.frontmatter.date}
+        tags={post.frontmatter.tags}
+        tagIcon={tag}
       />
 
-      <PostContent>
-        <h1>{post.frontmatter.title}</h1>
-        <h6>Sidney Wijngaarde</h6>
+      <PostHeroImage img={post.frontmatter.img.childImageSharp} />
+      <PostText dangerouslySetInnerHTML={{ __html: post.html }} />
+    </PostContent>
+  </div>
+);
 
-        <PostMeta
-          calendar={calendar}
-          clock={clock}
-          timeToRead={post.timeToRead}
-          date={post.frontmatter.date}
-          tags={post.frontmatter.tags}
-          tagIcon={tag}
-        />
-
-        <PostHeroImage img={post.frontmatter.img.childImageSharp} />
-        <PostText dangerouslySetInnerHTML={{ __html: post.html }} />
-      </PostContent>
-    </div>
-  );
+Post.propTypes = {
+  data: PropTypes.shape({
+    calendar: imgPropTypeShape,
+    clock: imgPropTypeShape,
+    dataJson: PropTypes.shape({
+      social: PropTypes.arrayOf(SocialPropType),
+    }),
+    hamburger: imgPropTypeShape,
+    message: imgPropTypeShape,
+    socialIcons: imgListPropType,
+    tag: imgPropTypeShape,
+  }),
 };
-
-Post.propTypes = {};
 
 export default Post;
 
@@ -54,7 +74,7 @@ const PostContent = styled.div`
   h1 {
     margin-top: 8rem;
   }
-  h6 {
+  h5 {
     font-weight: 300;
     margin-top: 0.5rem;
   }
@@ -70,7 +90,7 @@ const PostContent = styled.div`
 
   // pure-xl
   @media screen and (min-width: 80em) {
-    width: 40vw;
+    width: 45vw;
   }
 `;
 
@@ -84,7 +104,32 @@ const PostHeroImage = styled(BackgroundImg)`
 
 const PostText = styled.div`
   p {
-    margin: 0.5em 0;
+    margin: 1em 0;
+  }
+
+  blockquote {
+    font-style: italic;
+    background-color: ${({ theme }) => theme.em};
+    border-left: 0.2em solid #333;
+    padding: 0.5em;
+  }
+
+  a {
+    /* text-decoration: none; */
+    color: #000;
+  }
+
+  em {
+    background-color: #e8e8e8;
+  }
+
+  .caption {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 1em;
+    font-size: 0.6em;
+    color: rgba(0, 0, 0, 0.5);
   }
 `;
 
@@ -94,6 +139,9 @@ export const query = graphql`
       html
       timeToRead
       excerpt
+      fields {
+        slug
+      }
       frontmatter {
         title
         author
@@ -109,7 +157,9 @@ export const query = graphql`
       }
     }
 
-    allImageSharp(filter: { id: { regex: "/.*assets/social/.*/" } }) {
+    socialIcons: allImageSharp(
+      filter: { id: { regex: "/.*assets/social/.*/" } }
+    ) {
       edges {
         node {
           id

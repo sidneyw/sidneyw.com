@@ -55,12 +55,6 @@ export const PostMetaStyle = styled.div`
 export const PostMetaIcon = styled(Img)`
   height: 0.8em;
   width: 0.8em;
-  // pure-md
-  @media screen and (min-width: 48em) {
-    height: 0.6em;
-    width: 0.6em;
-  }
-
   margin-right: 0.25em;
 `;
 

@@ -15,6 +15,7 @@ const theme = {
   primary: '#1D69B2',
   primaryDisabled: '#0f355a',
   secondary: '#ffbc3d',
+  em: '#f8f8f8',
 };
 
 const TemplateWrapper = ({ children, data }) => (
@@ -25,7 +26,7 @@ const TemplateWrapper = ({ children, data }) => (
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
       />
       <link
-        href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400|Montserrat:100,400,700"
+        href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Montserrat:400,400i,700"
         rel="stylesheet"
       />
     </Helmet>
