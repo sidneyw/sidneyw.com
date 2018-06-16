@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
+import PostInfo from '../components/Blog/Info';
 import PostMeta from '../components/Blog/Meta';
 
 import Nav from '../components/Nav';
@@ -23,6 +24,11 @@ const Post = ({
   data: { calendar, clock, dataJson, hamburger, post, socialIcons, tag },
 }) => (
   <div>
+    <PostMeta
+      {...post.frontmatter}
+      slug={post.fields.slug}
+      excerpt={post.excerpt}
+    />
     <Nav
       hamburger={hamburger}
       links={[{ to: '/', text: 'Home' }, { to: '/#about', text: 'About' }]}
@@ -33,7 +39,7 @@ const Post = ({
       <h1>{post.frontmatter.title}</h1>
       <h5>Sidney Wijngaarde</h5>
 
-      <PostMeta
+      <PostInfo
         calendar={calendar}
         clock={clock}
         timeToRead={post.timeToRead}
