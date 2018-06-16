@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import Footer from '../components/Footer';
 import { mergeSocial } from '../components';
@@ -19,7 +19,7 @@ const theme = {
 };
 
 const TemplateWrapper = ({ children, data }) => (
-  <div>
+  <GlobalStyles>
     <Helmet>
       <meta
         name="viewport"
@@ -40,7 +40,7 @@ const TemplateWrapper = ({ children, data }) => (
         />
       </React.Fragment>
     </ThemeProvider>
-  </div>
+  </GlobalStyles>
 );
 
 TemplateWrapper.propTypes = {
@@ -51,6 +51,27 @@ TemplateWrapper.propTypes = {
     }),
   }),
 };
+
+const GlobalStyles = styled.div`
+  font-size: 0.8em;
+  // pure-sm
+  @media screen and (min-width: 35.5em) {
+  }
+
+  // pure-md
+  @media screen and (min-width: 48em) {
+    font-size: 1em;
+  }
+
+  //pure-lg
+  @media screen and (min-width: 64em) {
+    font-size: 1.2em;
+  }
+
+  // pure-xl
+  @media screen and (min-width: 80em) {
+  }
+`;
 
 export const query = graphql`
   query TemplateQuery {

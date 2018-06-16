@@ -83,21 +83,10 @@ const Blog = styled.div`
   flex-direction: column;
   align-items: center;
 
-  font-size: 0.7em;
-  h1 {
-    font-weight: 300;
-  }
-
   h3 {
-    font-weight: 100;
     &:nth-of-type(2) {
       margin-bottom: 0.3em;
     }
-  }
-
-  // pure-md
-  @media screen and (min-width: 48em) {
-    font-size: 1em;
   }
 `;
 
