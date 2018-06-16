@@ -3,10 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css, keyframes } from 'styled-components';
 
-import { Card, Jumbo, imgPropType } from '.';
-import { Center } from './mixins';
+import { Card, Jumbo, imgPropType } from '..';
+import { Center } from '../mixins';
+import FormState from '../FormState';
 import ContactMe from './ContactMe';
-import FormState from './FormState';
 
 const IndexJumboSection = ({ headshot, ...rest }) => (
   <IndexJumbo img={headshot}>

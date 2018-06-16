@@ -4,58 +4,44 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { ThemeProvider } from 'styled-components';
 
-import Nav from '../components/Nav';
 import Footer from '../components/Footer';
+import { mergeSocial } from '../components';
 
 import './index.css';
+
+require('prismjs/themes/prism-okaidia.css');
 
 const theme = {
   primary: '#1D69B2',
   primaryDisabled: '#0f355a',
   secondary: '#ffbc3d',
+  em: '#f8f8f8',
 };
 
-const TemplateWrapper = ({ children, data }) => {
-  const socialIcons = data.dataJson.social.reduce((accum, social) => {
-    // eslint-disable-next-line no-param-reassign
-    accum[social.name] = {
-      ...social,
-      img: data.allImageSharp.edges.find(({ node: { id } }) =>
-        id.includes(social.name)
-      ).node,
-    };
+const TemplateWrapper = ({ children, data }) => (
+  <div>
+    <Helmet>
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      />
+      <link
+        href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Montserrat:400,400i,700"
+        rel="stylesheet"
+      />
+    </Helmet>
 
-    return accum;
-  }, {});
+    <ThemeProvider theme={theme}>
+      <React.Fragment>
+        {children()}
 
-  return (
-    <div>
-      <Helmet>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        <Footer
+          socialIcons={mergeSocial(data.dataJson.social, data.allImageSharp)}
         />
-        <link
-          href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400|Montserrat:400,700"
-          rel="stylesheet"
-        />
-      </Helmet>
-
-      <ThemeProvider theme={theme}>
-        <React.Fragment>
-          <Nav
-            hamburger={data.hamburger}
-            socialIcons={Object.values(socialIcons)}
-          />
-
-          {children()}
-
-          <Footer socialIcons={Object.values(socialIcons)} />
-        </React.Fragment>
-      </ThemeProvider>
-    </div>
-  );
-};
+      </React.Fragment>
+    </ThemeProvider>
+  </div>
+);
 
 TemplateWrapper.propTypes = {
   children: PropTypes.func,
@@ -75,11 +61,6 @@ export const query = graphql`
       }
     }
 
-    hamburger: imageSharp(id: { regex: "/hamburger.png/" }) {
-      sizes {
-        ...GatsbyImageSharpSizes_withWebp
-      }
-    }
     allImageSharp(filter: { id: { regex: "/.*assets/social/.*/" } }) {
       edges {
         node {

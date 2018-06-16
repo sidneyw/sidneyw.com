@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Img from 'gatsby-image';
 
-import { Heading, imgPropType } from './index';
-import { Thirds, ZDepth1 } from './mixins';
+import { Heading, imgPropType } from '..';
+import { Thirds, ZDepth1 } from '../mixins';
 
 const ExperienceSection = ({ exp }) => (
   <Experience id="experience">

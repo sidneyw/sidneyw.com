@@ -3,15 +3,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Center } from './mixins';
+import { Center } from '../mixins';
 
 import {
   BackgroundImg,
   Heading,
   imgMatch,
   imgListPropType,
-  imgPropType,
-} from '.';
+  imgPropTypeShape,
+} from '..';
 
 const StackSection = ({ stack, imgs }) => (
   <Stack id="stack">
@@ -46,9 +46,7 @@ const StackIcon = ({ title, img }) => (
 );
 
 StackIcon.propTypes = {
-  img: PropTypes.shape({
-    sizes: imgPropType,
-  }),
+  img: imgPropTypeShape,
   title: PropTypes.string,
 };
 

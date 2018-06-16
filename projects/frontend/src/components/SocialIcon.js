@@ -17,10 +17,23 @@ const SocialIconStyle = styled.a`
 `;
 
 const SocialImg = styled(Img)`
-  height: 100%;
-  width: 100%;
-  margin: 0;
+  // height: 100%;
+  // width: 100%;
+  // margin: 0;
   border-radius: 20%;
+
+  height: 5vh;
+  width: 5vh;
+  margin-right: 5px;
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+  // pure-md
+  @media screen and (min-width: 48em) {
+    height: 4vh;
+    width: 4vh;
+  }
 `;
 
 const SocialIcon = ({ name = '', img, ...props }) => (
@@ -30,7 +43,7 @@ const SocialIcon = ({ name = '', img, ...props }) => (
 );
 
 SocialIcon.propTypes = {
-  img: imgPropType,
+  img: PropTypes.shape({ sizes: imgPropType }),
   name: PropTypes.string,
 };
 
