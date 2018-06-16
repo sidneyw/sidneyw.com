@@ -48,6 +48,7 @@ const PostPreviewStyle = styled(Link)`
   flex-flow: column wrap;
   border-radius: ${borderRadius};
   margin-bottom: 2rem;
+  color: #000;
 
   // pure-md
   @media screen and (min-width: 48em) {
