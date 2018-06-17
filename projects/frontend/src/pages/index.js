@@ -9,9 +9,11 @@ import {
   mergeSocial,
   imgPropTypeShape,
   imgListPropType,
+  Loader,
 } from '../components';
 
-import Button from '../components/Button';
+import { LoaderButton } from '../components/Button';
+
 import SocialIcon, {
   PropType as SocialPropType,
 } from '../components/SocialIcon';
@@ -37,9 +39,13 @@ const BlogPage = ({ data }) => (
             placeholder="someone@mail.com"
             required
           />
-          <Button icon={data.message}>
-            <span>Subscribe</span>
-          </Button>
+          <LoaderButton
+            loading={{ icon: <Loader />, children: <span>Working on it</span> }}
+            normal={{ icon: data.message, children: <span>Subscribe</span> }}
+            state={state}
+            success={{ icon: data.check, children: <span>All set!</span> }}
+            type="submit"
+          />
         </NewsLetter>
       )}
     </FormState>
@@ -127,10 +133,6 @@ const NewsLetter = styled.form`
     img {
       height: 100%;
     }
-
-    & > div {
-      display: none;
-    }
   }
 
   input {
@@ -163,12 +165,6 @@ const NewsLetter = styled.form`
       padding: 0;
 
       align-items: center;
-      & * {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        max-height: 100%;
-      }
 
       & > div {
         display: initial;
@@ -236,6 +232,10 @@ export const query = graphql`
       sizes(maxWidth: 200) {
         ...GatsbyImageSharpSizes_withWebp
       }
+    }
+
+    check: imageSharp(id: { regex: "/check.png/" }) {
+      ...ImgQuery
     }
 
     clock: imageSharp(id: { regex: "/clock.png/" }) {

@@ -5,13 +5,21 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Img from 'gatsby-image';
+import { STATE_ENUM } from './FormState';
 import { Center, Rounded, ZDepth1, ZDepth3 } from './mixins';
 import { imgPropTypeShape } from '.';
 
 const ButtonIcon = styled(Img)`
   max-height: 90%;
-  width: 2vw;
-  margin-right: 0.3em;
+  width: 3vh;
+  height; 5vh;
+  margin-right: 0.5em;
+
+
+  //pure-lg
+  @media screen and (min-width: 64em) {
+    margin-right: 0;
+  }
 `;
 
 export const UnifiedButton = ({ children, icon, ...rest }) => {
@@ -21,7 +29,8 @@ export const UnifiedButton = ({ children, icon, ...rest }) => {
 
   return (
     <Wrapper {...rest}>
-      {icon && <ButtonIcon {...icon} />}
+      {icon && icon.sizes && <ButtonIcon {...icon} />}
+      {icon && !icon.sizes && icon}
       {children && children}
     </Wrapper>
   );
@@ -29,10 +38,10 @@ export const UnifiedButton = ({ children, icon, ...rest }) => {
 
 UnifiedButton.propTypes = {
   children: PropTypes.node,
-  icon: imgPropTypeShape,
+  icon: PropTypes.oneOfType([imgPropTypeShape, PropTypes.node]),
 };
 
-export default styled(UnifiedButton)`
+const StyledButton = styled(UnifiedButton)`
   ${Center} ${Rounded} ${ZDepth1} padding: 1rem;
   border: none;
   color: #fff;
@@ -60,3 +69,36 @@ export default styled(UnifiedButton)`
     }
   `}
 `;
+
+export default StyledButton;
+
+export const LoaderButton = ({ state, normal, loading, success, ...rest }) => {
+  let props;
+
+  switch (state.submitted) {
+    case STATE_ENUM.PENDING:
+      props = { disabled: true, ...loading };
+      break;
+
+    case STATE_ENUM.SUCCESS:
+      props = { disabled: true, ...success };
+      break;
+
+    default:
+      props = normal;
+  }
+
+  return <StyledButton {...props} {...rest} />;
+};
+
+const LoaderPresentationType = PropTypes.shape({
+  icon: PropTypes.oneOfType([imgPropTypeShape, PropTypes.node]),
+  children: PropTypes.node,
+});
+
+LoaderButton.propTypes = {
+  loading: LoaderPresentationType,
+  normal: LoaderPresentationType,
+  state: PropTypes.shape({ submitted: PropTypes.bool }),
+  success: LoaderPresentationType,
+};

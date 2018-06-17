@@ -3,11 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
+
 import PostInfo from '../components/Blog/Info';
 import PostMeta from '../components/Blog/Meta';
-
 import Nav from '../components/Nav';
-
 import { PropType as SocialPropType } from '../components/SocialIcon';
 import {
   BackgroundImg,
@@ -20,6 +19,8 @@ import {
 //   post.slug
 // }`;
 // const twitterShare = `https://twitter.com/intent/tweet?text=www.sidneyw.com`;
+// const linkedinShare = `https://www.linkedin.com/shareArticle?mini=true&url=https://webcode.tools/open-graph-generator/article&title=Open%20Graph%20Article%20Generator%20-%20Web%20Code%20Tools&source=http://webcodetools.com`
+
 const Post = ({
   data: { calendar, clock, dataJson, hamburger, post, socialIcons, tag },
 }) => (
@@ -76,7 +77,7 @@ const PostContent = styled.div`
   width: 80vw;
   margin: 0 auto;
 
-  font-size: 0.8em;
+  font-size: 1em;
 
   & > h1 {
     margin-top: 8rem;

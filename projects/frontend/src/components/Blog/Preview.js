@@ -7,6 +7,7 @@ import Link from '../Link';
 
 import PostInfo from './Info';
 import { BackgroundImg, imgPropTypeShape } from '..';
+import { ZDepth2, ZDepth3, ZDepth4 } from '../mixins';
 
 const PostPreview = ({
   excerpt,
@@ -44,11 +45,15 @@ const borderRadius = '1rem';
 const PostPreviewStyle = styled(Link)`
   display: flex;
   text-decoration: none;
-  box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.3);
   flex-flow: column wrap;
   border-radius: ${borderRadius};
   margin-bottom: 2rem;
   color: #000;
+
+  transition: box-shadow 500ms ease;
+  ${ZDepth2} &:hover {
+    ${ZDepth4};
+  }
 
   // pure-md
   @media screen and (min-width: 48em) {

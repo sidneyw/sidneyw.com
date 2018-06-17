@@ -3,50 +3,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { STATE_ENUM } from '../FormState';
-import { Loader, Input, TextArea } from '..';
+import { Loader, Input, imgPropTypeShape, TextArea } from '..';
 
-import Button from '../Button';
+import { LoaderButton } from '../Button';
 
-const LoaderMargin = styled(Loader)`
-  margin-right: 0.8rem;
-`;
-
-const ContactButton = styled(Button)`
-  margin: 0 auto;
-  padding: 1rem;
-`;
-
-const getContent = ({ state, loader, check, send }) => {
-  switch (state.submitted) {
-    case STATE_ENUM.PENDING:
-      return {
-        children: (
-          <React.Fragment>
-            <LoaderMargin />
-            <span>Working on it</span>
-          </React.Fragment>
-        ),
-        disabled: true,
-        icon: loader,
-      };
-
-    case STATE_ENUM.SUCCESS:
-      return {
-        children: "I've received your message",
-        disabled: true,
-        icon: check,
-      };
-
-    // case STATE_ENUM.ERROR:
-    //   return { icon: error, children: 'Oops something went wrong' };
-
-    default:
-      return { icon: send, children: 'Contact me' };
-  }
-};
-
-const ContactMe = ({ handleSubmit, handleChange, state, title, ...rest }) => (
+const ContactMe = ({
+  check,
+  handleSubmit,
+  handleChange,
+  send,
+  state,
+  title,
+  ...rest
+}) => (
   <ContactStyle id="contact" name="contact" onSubmit={handleSubmit} {...rest}>
     <h3>{title}</h3>
     <Input
@@ -74,13 +43,22 @@ const ContactMe = ({ handleSubmit, handleChange, state, title, ...rest }) => (
       name="message"
       required
     />
-    <ContactButton {...getContent({ state, ...rest })} type="submit" />
+
+    <LoaderButton
+      loading={{ icon: <Loader />, children: <span>Working on it</span> }}
+      normal={{ icon: send, children: <span>Contact Me</span> }}
+      state={state}
+      success={{ icon: check, children: <span>All set!</span> }}
+      type="submit"
+    />
   </ContactStyle>
 );
 
 ContactMe.propTypes = {
+  check: imgPropTypeShape,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  send: imgPropTypeShape,
   // eslint-disable-next-line react/forbid-prop-types
   state: PropTypes.object,
   title: PropTypes.string,

@@ -54,14 +54,9 @@ TemplateWrapper.propTypes = {
 };
 
 const GlobalStyles = styled.div`
-  font-size: 0.8em;
+  font-size: 1em;
   // pure-sm
   @media screen and (min-width: 35.5em) {
-  }
-
-  // pure-md
-  @media screen and (min-width: 48em) {
-    font-size: 1em;
   }
 
   //pure-lg
