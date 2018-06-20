@@ -1,5 +1,6 @@
 module.exports = {
   siteMetadata: {
+    siteUrl: 'https://www.sidneyw.com',
     title: 'Sidney Wijngaarde',
   },
   proxy: {
@@ -12,6 +13,7 @@ module.exports = {
     'gatsby-plugin-react-next',
     'gatsby-plugin-styled-components',
     'gatsby-transformer-json',
+    'gatsby-plugin-sitemap',
     {
       resolve: 'gatsby-source-filesystem',
       options: {

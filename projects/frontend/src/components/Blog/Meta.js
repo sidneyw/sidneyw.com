@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
 import { imgPropTypeShape } from '..';
+import { yearMonthDay } from '../utils';
 
 const Meta = ({
   author = 'Sidney Wijngaarde',
@@ -28,14 +29,14 @@ const Meta = ({
       property="og:image"
       content={`${siteRoot}${img.childImageSharp.sizes.srcWebp}`}
     />
-    <meta property="article:published_time" content={date} />
+    <meta property="article:published_time" content={yearMonthDay(date)} />
     {/* <meta property="article:author" content="https://www.sidneyw.com/about" /> */}
   </Helmet>
 );
 
 Meta.propTypes = {
   author: PropTypes.string,
-  date: PropTypes.string,
+  date: PropTypes.number,
   excerpt: PropTypes.string,
   img: imgPropTypeShape,
   siteRoot: PropTypes.string,

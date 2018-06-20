@@ -46,10 +46,11 @@ const ContactMe = ({
 
     <LoaderButton
       loading={{ icon: <Loader />, children: <span>Working on it</span> }}
-      normal={{ icon: send, children: <span>Contact Me</span> }}
+      normal={{ icon: send, children: <span>Reach Out to Me</span> }}
       state={state}
       success={{ icon: check, children: <span>All set!</span> }}
       type="submit"
+      fullwidth
     />
   </ContactStyle>
 );

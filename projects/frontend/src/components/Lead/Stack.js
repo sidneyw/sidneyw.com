@@ -38,8 +38,8 @@ StackSection.propTypes = {
 
 export default StackSection;
 
-const StackIcon = ({ title, img }) => (
-  <Icon>
+export const StackIcon = ({ title, img, ...rest }) => (
+  <Icon {...rest}>
     <IconImg img={img} />
     <p>{title}</p>
   </Icon>
@@ -101,15 +101,15 @@ const IconImg = styled(BackgroundImg)`
   width: ${iconSize}vh;
   height: ${iconSize}vh;
   background-size: cover;
-  margin-right: 5px;
+  // margin-right: 0.5em;
 `;
 
 const Icon = styled.div`
   padding: 10px;
   width: 40vw;
   border-radius: 5px;
-  margin-top: 10px;
-  margin-right: 10px;
+  margin-top: 0.2em;
+  margin-right: 0.2em;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -124,6 +124,5 @@ const Icon = styled.div`
 
   p {
     max-width: 70%;
-    font-weight: 400;
   }
 `;

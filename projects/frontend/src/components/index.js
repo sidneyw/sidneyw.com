@@ -71,6 +71,13 @@ BackgroundImg.propTypes = {
   children: PropTypes.node,
 };
 
+export const Avatar = styled(Img)`
+  border-radius: 100%;
+  margin-right: 0.5em;
+  height: 5vh;
+  width: 5vh;
+`;
+
 export const Banner = styled.section`
   display: flex;
   color: #fff;

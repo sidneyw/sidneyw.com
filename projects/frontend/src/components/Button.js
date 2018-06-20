@@ -18,7 +18,7 @@ const ButtonIcon = styled(Img)`
 
   //pure-lg
   @media screen and (min-width: 64em) {
-    margin-right: 0;
+    // margin-right: 0;
   }
 `;
 
@@ -41,14 +41,29 @@ UnifiedButton.propTypes = {
   icon: PropTypes.oneOfType([imgPropTypeShape, PropTypes.node]),
 };
 
+const getColor = ({ theme, secondary, disabled }) => {
+  switch (true) {
+    case secondary && disabled:
+      return theme.secondaryDisabled;
+
+    case secondary:
+      return theme.secondary;
+
+    case disabled:
+      return theme.primaryDisabled;
+
+    default:
+      return theme.primary;
+  }
+};
+
 const StyledButton = styled(UnifiedButton)`
   ${Center} ${Rounded} ${ZDepth1} padding: 1rem;
   border: none;
   color: #fff;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   font-size: 1.2em;
-  background-color: ${({ disabled, theme }) =>
-    disabled ? theme.primaryDisabled : theme.primary};
+  background-color: ${getColor};
   text-decoration: none;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
 
@@ -99,6 +114,6 @@ const LoaderPresentationType = PropTypes.shape({
 LoaderButton.propTypes = {
   loading: LoaderPresentationType,
   normal: LoaderPresentationType,
-  state: PropTypes.shape({ submitted: PropTypes.bool }),
+  state: PropTypes.shape({ submitted: PropTypes.number }),
   success: LoaderPresentationType,
 };

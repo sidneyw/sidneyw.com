@@ -36,9 +36,7 @@ const TemplateWrapper = ({ children, data }) => (
       <React.Fragment>
         {children()}
 
-        <Footer
-          socialIcons={mergeSocial(data.dataJson.social, data.allImageSharp)}
-        />
+        {/* <Footer socialIcons={mergeSocial(data.dataJson.social, data.allImageSharp)} /> */}
       </React.Fragment>
     </ThemeProvider>
   </GlobalStyles>
