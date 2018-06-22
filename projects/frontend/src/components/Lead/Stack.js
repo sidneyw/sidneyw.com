@@ -5,15 +5,10 @@ import styled from 'styled-components';
 
 import { Center } from '../mixins';
 
-import {
-  BackgroundImg,
-  Heading,
-  imgMatch,
-  imgListPropType,
-  imgPropTypeShape,
-} from '..';
+import { Heading } from '..';
+import { BackgroundImg, imgPropTypeShape, mergeByImgProps } from '../Img';
 
-const StackSection = ({ stack, imgs }) => (
+const StackSection = ({ stack }) => (
   <Stack id="stack">
     <Heading>A Stack for Scale</Heading>
     <p>
@@ -24,16 +19,15 @@ const StackSection = ({ stack, imgs }) => (
       your cloud needs.
     </p>
     <StackIconWrap>
-      {stack.map(name => (
-        <StackIcon title={name} img={imgMatch(imgs, name)} key={name} />
+      {stack.map(({ name, img }) => (
+        <StackIcon title={name} img={img} key={name} />
       ))}
     </StackIconWrap>
   </Stack>
 );
 
 StackSection.propTypes = {
-  stack: PropTypes.arrayOf(PropTypes.string),
-  imgs: imgListPropType,
+  stack: mergeByImgProps,
 };
 
 export default StackSection;

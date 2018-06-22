@@ -3,7 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { SplitSection, BackgroundImg, imgPropType } from '..';
+import { SplitSection } from '..';
+import { BackgroundImg, imgPropType } from '../Img';
 
 const AboutSection = ({ chauoanShot, newyork }) => (
   <SplitSection>
@@ -17,6 +18,7 @@ AboutSection.propTypes = {
   chauoanShot: PropTypes.shape({ sizes: imgPropType }),
 };
 
+AboutSection.assets = ['chauoanShot.jpg', 'newyork.png'];
 export default AboutSection;
 
 const Section = styled(BackgroundImg)`

@@ -37,7 +37,7 @@ export default class ContactModal extends React.Component {
       <div>
         <Modal onRequestClose={this.toggleModal} isOpen={this.state.isOpen}>
           <FormWrap>
-            <FormHeader>I Don't Bite</FormHeader>
+            <FormHeader>I Don&apos;t Bite</FormHeader>
             <BorderAvatar {...headshot} />
             <ContactForm send={send} title="Let's Build Together" {...rest} />
           </FormWrap>

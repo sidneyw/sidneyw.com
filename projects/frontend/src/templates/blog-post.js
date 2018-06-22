@@ -14,14 +14,15 @@ import { PropType as SocialPropType } from '../components/SocialIcon';
 import CTA from '../components/CTA';
 import ContactModal from '../components/ContactModal';
 import { Center, ZDepth1 } from '../components/mixins';
+import { Avatar, BackgroundImg } from '../components';
+
 import {
-  Avatar,
-  BackgroundImg,
+  createAssetIdx,
   imgPropTypeShape,
   imgListPropType,
-} from '../components';
-
-import { createAssetIdx, matchAssets, mergeBy } from '../components/Img';
+  matchAssets,
+  mergeBy,
+} from '../components/Img';
 
 const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
   const assetIdx = createAssetIdx(icons, hq);

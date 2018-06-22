@@ -22,19 +22,19 @@
       "name": "Cloud Architecture",
       "text":
         "Weeks of development can save you hours of planning. I want to work with you to understand your business needs and plan an architecture tailored to you.",
-      "img": "architecture"
+      "img": "architecture.jpg"
     },
     {
       "name": "DevOps Driven",
       "text":
         "DevOps practices help your company scale quickly, sustainably, and durably. Let’s work together to implement processes that transform how you write software.",
-      "img": "devops"
+      "img": "devops.png"
     },
     {
       "name": "Progressive Web Applications",
       "text":
         "Your users are viewing your site on mobile browsers with spotty internet connections. I can help you write web interfaces built for the modern era.",
-      "img": "pwa-lighthouse"
+      "img": "pwa.png"
     }
   ],
   "stack": [
@@ -45,5 +45,6 @@
     "graphql",
     "nodejs",
     "golang"
-  ]
+  ],
+  "companies": ["magic-leap", "ibm", "dali"]
 }

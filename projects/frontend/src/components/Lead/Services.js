@@ -3,17 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { BackgroundImg, imgMatch, imgListPropType, imgPropType } from '..';
+import { BackgroundImg } from '..';
+import { imgPropTypeShape } from '../Img';
 
-const Services = ({ services, imgs }) => (
+const Services = ({ services }) => (
   <ServiceSection id="services">
     {services.map(({ name, text, img }) => (
-      <ServiceCard
-        name={name}
-        text={text}
-        img={imgMatch(imgs, img)}
-        key={name}
-      />
+      <ServiceCard name={name} text={text} img={img} key={name} />
     ))}
   </ServiceSection>
 );
@@ -21,17 +17,11 @@ const Services = ({ services, imgs }) => (
 const ServiceProps = {
   name: PropTypes.string,
   text: PropTypes.string,
-  img: PropTypes.shape({
-    id: PropTypes.string,
-    sizes: imgPropType,
-  }),
+  img: imgPropTypeShape,
 };
 
 Services.propTypes = {
-  services: PropTypes.arrayOf(
-    PropTypes.shape({ ...ServiceProps, img: PropTypes.string })
-  ),
-  imgs: imgListPropType,
+  services: PropTypes.arrayOf(PropTypes.shape(ServiceProps)),
 };
 
 export default Services;

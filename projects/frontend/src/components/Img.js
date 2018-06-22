@@ -28,6 +28,13 @@ export const imgListPropType = PropTypes.shape({
   ),
 });
 
+export const mergeByImgProps = PropTypes.arrayOf(
+  PropTypes.shape({
+    name: PropTypes.string,
+    img: imgPropTypeShape,
+  })
+);
+
 const BgWrap = styled.div`
   position: relative;
   // Make sure children display on top of the image
@@ -92,8 +99,13 @@ export const matchAssets = (assetIdx, componentAssets) =>
     return accum;
   }, Object.create(null));
 
+const getExt = (getField, props) => {
+  const list = getField(props).split('.');
+  return list.length > 1 ? '' : '.png';
+};
+
 export const mergeBy = (assetIdx, properties, getField = obj => obj.name) =>
   properties.map(props => ({
     ...props,
-    img: assetIdx[`${getField(props)}.png`],
+    img: assetIdx[`${getField(props)}${getExt(getField, props)}`],
   }));

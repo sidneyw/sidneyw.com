@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import styled, { ThemeProvider } from 'styled-components';
 
-import Footer from '../components/Footer';
-import { mergeSocial } from '../components';
-
 import './index.css';
 
 require('prismjs/themes/prism-okaidia.css');
@@ -18,7 +15,7 @@ const theme = {
   em: '#f8f8f8',
 };
 
-const TemplateWrapper = ({ children, data }) => (
+const TemplateWrapper = ({ children }) => (
   <GlobalStyles>
     <Helmet>
       <meta charSet="utf-8" />
@@ -44,11 +41,6 @@ const TemplateWrapper = ({ children, data }) => (
 
 TemplateWrapper.propTypes = {
   children: PropTypes.func,
-  data: PropTypes.shape({
-    site: PropTypes.shape({
-      siteMetadata: PropTypes.object,
-    }),
-  }),
 };
 
 const GlobalStyles = styled.div`

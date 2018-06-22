@@ -5,8 +5,7 @@ import styled, { css, keyframes } from 'styled-components';
 
 import { Card, Jumbo, imgPropType } from '..';
 import { Center } from '../mixins';
-import FormState from '../FormState';
-import ContactMe from './ContactMe';
+import ContactForm from '../ContactForm';
 
 const IndexJumboSection = ({ headshot, ...rest }) => (
   <IndexJumbo img={headshot}>
@@ -18,11 +17,7 @@ const IndexJumboSection = ({ headshot, ...rest }) => (
       <TagLine>clients just like you.</TagLine>
     </Introduction>
     <FormWrap>
-      <FormState endpoint="/contact">
-        {props => (
-          <ContactMe {...rest} {...props} title="Let's Build Together" />
-        )}
-      </FormState>
+      <ContactForm {...rest} />
     </FormWrap>
   </IndexJumbo>
 );
@@ -30,6 +25,8 @@ const IndexJumboSection = ({ headshot, ...rest }) => (
 IndexJumboSection.propTypes = {
   headshot: PropTypes.shape({ imgPropType }),
 };
+
+IndexJumboSection.assets = [...ContactForm.assets, 'headshot.jpg'];
 
 export default IndexJumboSection;
 

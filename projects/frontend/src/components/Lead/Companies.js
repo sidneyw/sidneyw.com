@@ -1,17 +1,17 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
-import PropTypes from 'prop-types';
 import Img from 'gatsby-image';
 import styled from 'styled-components';
+import { mergeByImgProps } from '../Img';
 
-const CompanySection = ({ data }) => (
+const CompanySection = ({ companies }) => (
   <CompanyWrap>
-    {data.map((img, ind) => <CompanyImg {...img} key={ind} />)}
+    {companies.map(({ img }, ind) => <CompanyImg {...img} key={ind} />)}
   </CompanyWrap>
 );
 
 CompanySection.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
+  companies: mergeByImgProps,
 };
 
 const CompanyWrap = styled.section`
