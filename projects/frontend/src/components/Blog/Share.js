@@ -18,6 +18,7 @@ const qs = {
 
 const ShareRow = ({
   noText,
+  hideMobile,
   shortText,
   socialIcons,
   siteUrl,
@@ -34,7 +35,7 @@ const ShareRow = ({
   );
 
   return (
-    <ShareRowStyle>
+    <ShareRowStyle hideMobile={hideMobile}>
       <ShareText noText={noText} shortText={shortText}>
         Share <span>This Post</span>
       </ShareText>
@@ -74,8 +75,12 @@ ShareRow.propTypes = {};
 export default ShareRow;
 
 const ShareRowStyle = styled.div`
-  display: flex;
+  display: ${({ hideMobile }) => (hideMobile ? 'none' : 'flex')};
   flex-flow: column;
+  //pure-lg
+  @media screen and (min-width: 64em) {
+    display: flex;
+  }
 `;
 
 const ShareText = styled.p`

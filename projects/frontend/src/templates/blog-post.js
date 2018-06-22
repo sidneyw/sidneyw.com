@@ -68,6 +68,7 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
             siteUrl={site.siteMetadata.siteUrl}
             slug={post.fields.slug}
             title={post.frontmatter.title}
+            hideMobile
             socialIcons={mergeBy(assetIdx, [
               { name: 'twitter' },
               { name: 'facebook' },
@@ -247,7 +248,9 @@ const PostConclusion = styled.div`
   display: flex;
   flex-flow: column;
   font-size: 0.7em;
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 1em;
   padding: 1em 0;
 
   //pure-lg
