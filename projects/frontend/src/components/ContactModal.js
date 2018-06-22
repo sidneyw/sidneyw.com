@@ -4,11 +4,10 @@ import styled from 'styled-components';
 
 import Modal from './Modal';
 import Button from './Button';
+import { Card } from '.';
 import ContactForm from './ContactForm';
-import { imgPropTypeShape } from './Img';
+import { Avatar, imgPropTypeShape } from './Img';
 import { dedupe } from './utils';
-
-import { Avatar, Card } from '.';
 
 export default class ContactModal extends React.Component {
   static propTypes = {

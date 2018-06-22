@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import FormState from './FormState';
-import { Loader, Input, imgPropTypeShape, TextArea } from '.';
+import { Loader, Input, TextArea } from '.';
+import { imgPropTypeShape } from './Img';
 import { LoaderButton } from './Button';
 
 const ContactForm = ({

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Img from 'gatsby-image';
 
-import { imgPropTypeShape } from '..';
+import { imgPropTypeShape } from '../Img';
 import Tag from './Tag';
 import { formatDate } from '../utils';
 

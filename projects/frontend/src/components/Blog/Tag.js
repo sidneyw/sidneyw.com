@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Img from 'gatsby-image';
-import { imgPropTypeShape } from '..';
+import { imgPropTypeShape } from '../Img';
 
 const TagImg = styled(Img)`
   height: 0.6rem;

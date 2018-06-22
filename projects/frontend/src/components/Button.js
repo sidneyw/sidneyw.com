@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import Img from 'gatsby-image';
 import { STATE_ENUM } from './FormState';
 import { Center, Rounded, ZDepth1, ZDepth3 } from './mixins';
-import { imgPropTypeShape } from '.';
+import { imgPropTypeShape } from './Img';
 
 const ButtonIcon = styled(Img)`
   max-height: 90%;

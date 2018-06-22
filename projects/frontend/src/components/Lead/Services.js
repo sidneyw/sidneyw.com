@@ -3,8 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { BackgroundImg } from '..';
-import { imgPropTypeShape } from '../Img';
+import { BackgroundImg, imgPropTypeShape } from '../Img';
 
 const Services = ({ services }) => (
   <ServiceSection id="services">

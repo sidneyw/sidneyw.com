@@ -4,25 +4,26 @@ import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
 
-import PostInfo from '../components/Blog/Info';
-import PostMeta from '../components/Blog/Meta';
-import ShareRow from '../components/Blog/Share';
-
 import Nav from '../components/Nav';
 import { PropType as SocialPropType } from '../components/SocialIcon';
 // import Button from '../components/Button';
 import CTA from '../components/CTA';
 import ContactModal from '../components/ContactModal';
 import { Center, ZDepth1 } from '../components/mixins';
-import { Avatar, BackgroundImg } from '../components';
 
 import {
+  Avatar,
+  BackgroundImg,
   createAssetIdx,
   imgPropTypeShape,
   imgListPropType,
   matchAssets,
   mergeBy,
 } from '../components/Img';
+
+import PostInfo from '../components/Blog/Info';
+import PostMeta from '../components/Blog/Meta';
+import ShareRow from '../components/Blog/Share';
 
 const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
   const assetIdx = createAssetIdx(icons, hq);

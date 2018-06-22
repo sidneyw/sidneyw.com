@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
-import { imgPropTypeShape } from '..';
+import { imgPropTypeShape } from '../Img';
 import { yearMonthDay } from '../utils';
 
 const Meta = ({
