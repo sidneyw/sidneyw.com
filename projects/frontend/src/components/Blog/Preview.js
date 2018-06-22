@@ -37,6 +37,8 @@ PostPreview.propTypes = {
   to: PropTypes.string.isRequired,
 };
 
+PostPreview.assets = PostInfo.assets;
+
 export default PostPreview;
 
 // TODO: Use theme prop - 06/13/18 16:18:40 sidneywijngaarde

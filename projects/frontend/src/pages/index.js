@@ -2,70 +2,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import FormState from '../components/FormState';
 import PostPreview from '../components/Blog/Preview';
-import {
-  formFieldStyle,
-  mergeSocial,
-  imgPropTypeShape,
-  imgListPropType,
-  Loader,
-} from '../components';
+import NewsLetterForm from '../components/NewsLetterForm';
 
-import { LoaderButton } from '../components/Button';
+import {
+  createAssetIdx,
+  imgListPropType,
+  imgPropTypeShape,
+  matchAssets,
+  mergeBy,
+} from '../components/Img';
 
 import SocialIcon, {
   PropType as SocialPropType,
 } from '../components/SocialIcon';
 
-const BlogPage = ({ data }) => (
-  <Blog>
-    <h1>SIDNEY WIJNGAARDE</h1>
-    <h3>Sometimes I Code Things...</h3>
-    <Socials>
-      {mergeSocial(data.dataJson.social, data.socialIcons).map(social => (
-        <SocialIcon {...social} key={social.name} />
-      ))}
-    </Socials>
-    <h3>Stay Updated</h3>
-    <FormState endpoint="/signup">
-      {({ handleChange, handleSubmit, state }) => (
-        <NewsLetter name="email-list" id="email-list" onSubmit={handleSubmit}>
-          <input
-            onChange={handleChange}
-            value={state.email}
-            name="email"
-            type="email"
-            placeholder="someone@mail.com"
-            required
+const BlogPage = ({ data: { dataJson, posts, icons } }) => {
+  const assetIdx = createAssetIdx(icons);
+
+  return (
+    <Blog>
+      <h1>SIDNEY WIJNGAARDE</h1>
+      <h3>Sometimes I Code Things...</h3>
+      <Socials>
+        {mergeBy(assetIdx, dataJson.social).map(social => (
+          <SocialIcon {...social} key={social.name} />
+        ))}
+      </Socials>
+      <h3>Stay Updated</h3>
+      <NewsLetterForm {...matchAssets(assetIdx, NewsLetterForm.assets)} />
+      <Posts>
+        {posts.edges.map(({ node }) => (
+          <PostPreview
+            {...matchAssets(assetIdx, PostPreview.assets)}
+            excerpt={node.excerpt}
+            timeToRead={node.timeToRead}
+            key={node.id}
+            to={node.fields.slug}
+            {...node.frontmatter}
+            img={node.frontmatter.img.childImageSharp}
           />
-          <LoaderButton
-            loading={{ icon: <Loader />, children: <span>Working on it</span> }}
-            normal={{ icon: data.message, children: <span>Subscribe</span> }}
-            state={state}
-            success={{ icon: data.check, children: <span>All set!</span> }}
-            type="submit"
-          />
-        </NewsLetter>
-      )}
-    </FormState>
-    <Posts>
-      {data.posts.edges.map(({ node }) => (
-        <PostPreview
-          calendar={data.calendar}
-          clock={data.clock}
-          excerpt={node.excerpt}
-          timeToRead={node.timeToRead}
-          key={node.id}
-          tagIcon={data.tag}
-          to={node.fields.slug}
-          {...node.frontmatter}
-          img={node.frontmatter.img.childImageSharp}
-        />
-      ))}
-    </Posts>
-  </Blog>
-);
+        ))}
+      </Posts>
+    </Blog>
+  );
+};
 
 BlogPage.propTypes = {
   data: PropTypes.shape({
@@ -115,68 +96,6 @@ const Socials = styled.div`
   }
 `;
 
-const NewsLetter = styled.form`
-  display: flex;
-  flex-flow: column;
-  width: 90vw;
-  max-width: 20rem;
-  max-height: 50rem;
-
-  & > button,
-  & > input {
-    width: 100%;
-    height: 6vh !important;
-  }
-
-  button {
-    padding: 0;
-    img {
-      height: 100%;
-    }
-  }
-
-  input {
-    ${formFieldStyle};
-    margin-bottom: 0.5em;
-  }
-  //pure-lg
-  @media screen and (min-width: 64em) {
-    flex-flow: row;
-    width: 50vw;
-    max-width: 30rem;
-
-    & > * {
-      margin-bottom: 0;
-    }
-
-    input {
-      width: 70%;
-      margin-right: 0.5rem;
-      text-align: right;
-      max-height: 10rem;
-    }
-
-    button {
-      width: 20%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 0;
-      padding: 0;
-
-      align-items: center;
-
-      & > div {
-        display: initial;
-      }
-
-      span {
-        display: none;
-      }
-    }
-  }
-`;
-
 const Posts = styled.div`
   margin-top: 2em;
   width: 90vw;
@@ -221,51 +140,21 @@ export const query = graphql`
       }
     }
 
+    icons: allImageSharp(filter: { id: { regex: "/.*assets/icons/.*/" } }) {
+      edges {
+        node {
+          id
+          sizes(maxWidth: 200) {
+            ...GatsbyImageSharpSizes_withWebp
+          }
+        }
+      }
+    }
+
     dataJson {
       social {
         name
         href
-      }
-    }
-
-    calendar: imageSharp(id: { regex: "/calendar-alt.png/" }) {
-      sizes(maxWidth: 200) {
-        ...GatsbyImageSharpSizes_withWebp
-      }
-    }
-
-    check: imageSharp(id: { regex: "/check.png/" }) {
-      ...ImgQuery
-    }
-
-    clock: imageSharp(id: { regex: "/clock.png/" }) {
-      sizes(maxWidth: 200) {
-        ...GatsbyImageSharpSizes_withWebp
-      }
-    }
-
-    tag: imageSharp(id: { regex: "/tag.png/" }) {
-      sizes(maxWidth: 200) {
-        ...GatsbyImageSharpSizes_withWebp
-      }
-    }
-
-    message: imageSharp(id: { regex: "/message.png/" }) {
-      sizes(maxWidth: 200) {
-        ...GatsbyImageSharpSizes_withWebp
-      }
-    }
-
-    socialIcons: allImageSharp(
-      filter: { id: { regex: "/.*assets/social/.*/" } }
-    ) {
-      edges {
-        node {
-          id
-          sizes {
-            ...GatsbyImageSharpSizes_withWebp
-          }
-        }
       }
     }
   }

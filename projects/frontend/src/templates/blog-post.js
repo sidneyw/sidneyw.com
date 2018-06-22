@@ -21,7 +21,7 @@ import {
   imgListPropType,
 } from '../components';
 
-import { mergeBy, createAssetIdx, matchAssets } from '../components/Img';
+import { createAssetIdx, matchAssets, mergeBy } from '../components/Img';
 
 const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
   const assetIdx = createAssetIdx(icons, hq);
