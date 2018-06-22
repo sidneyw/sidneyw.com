@@ -25,4 +25,7 @@ export function yearMonthDay(unix) {
   return `${date.getFullYear()}-${monthStr}-${date.getDate()}`;
 }
 
-export default {};
+export const dedupe = (...args) => {
+  const set = new Set(args);
+  return Array.from(set);
+};

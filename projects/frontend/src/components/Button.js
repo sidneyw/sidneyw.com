@@ -26,7 +26,6 @@ export const UnifiedButton = ({ children, icon, ...rest }) => {
   const Wrapper = rest.href
     ? props => <a {...props} />
     : props => <button {...props} />;
-
   return (
     <Wrapper {...rest}>
       {icon && icon.sizes && <ButtonIcon {...icon} />}

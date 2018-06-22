@@ -3,46 +3,44 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
-import FormState from './FormState';
 import { StackIcon } from './Lead/Stack';
-import { Card, imgMatch } from '.';
-import Button from './Button';
-import { ContactModal } from '../components/Modal';
+import { Card } from '.';
+import { imgPropTypeShape } from '../components/Img';
+import ContactModal from '../components/ContactModal';
 import Link from './Link';
 
-export default class CTAForm extends React.Component {
-  static propTypes = {};
+const CTAForm = ({ headshot, send, check, stack, title }) => (
+  <CTACard>
+    <h3>{title}</h3>
 
-  static defaultProps = {};
+    <StackWrap>
+      {stack
+        .splice(0, stack.length - 1)
+        .map(({ name, img }) => (
+          <CTAStackIcon title={name} img={img} key={name} />
+        ))}
+    </StackWrap>
 
-  constructor() {
-    super();
-  }
+    <ContactModal headshot={headshot} send={send} check={check} />
+    <Link to="/cloud">Learn More</Link>
+  </CTACard>
+);
 
-  render() {
-    const { headshot, send, check, stack, imgs, avatar, title } = this.props;
-    return (
-      <CTACard>
-        <h3>{title}</h3>
+CTAForm.propTypes = {
+  check: imgPropTypeShape,
+  headshot: imgPropTypeShape,
+  send: imgPropTypeShape,
+  stack: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      img: imgPropTypeShape,
+    })
+  ),
+  title: PropTypes.string,
+};
 
-        <StackWrap>
-          {stack
-            .splice(0, stack.length - 1)
-            .map(name => (
-              <CTAStackIcon
-                title={name}
-                img={imgMatch(imgs, name)}
-                key={name}
-              />
-            ))}
-        </StackWrap>
-
-        <ContactModal headshot={headshot} send={send} check={check} />
-        <Link to="/cloud">Learn More</Link>
-      </CTACard>
-    );
-  }
-}
+CTAForm.assets = ContactModal.assets;
+export default CTAForm;
 
 const CTACard = styled(Card)`
   display: flex;
@@ -51,6 +49,7 @@ const CTACard = styled(Card)`
   align-items: center;
   padding: 1em;
   width: 95%;
+  max-width: 20em;
   margin: 0 auto;
   border-radius: 5px;
 

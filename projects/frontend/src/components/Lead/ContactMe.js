@@ -65,6 +65,8 @@ ContactMe.propTypes = {
   title: PropTypes.string,
 };
 
+ContactMe.assets = ['check.png', 'send.png'];
+
 export default ContactMe;
 
 const ContactStyle = styled.form`

@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
-import Img from 'gatsby-image';
 
 import PostInfo from '../components/Blog/Info';
 import PostMeta from '../components/Blog/Meta';
@@ -13,133 +12,112 @@ import Nav from '../components/Nav';
 import { PropType as SocialPropType } from '../components/SocialIcon';
 // import Button from '../components/Button';
 import CTA from '../components/CTA';
-import { ContactModal } from '../components/Modal';
+import ContactModal from '../components/ContactModal';
 import { Center, ZDepth1 } from '../components/mixins';
 import {
   Avatar,
   BackgroundImg,
-  mergeSocial,
   imgPropTypeShape,
   imgListPropType,
 } from '../components';
 
-const Post = ({
-  data: {
-    calendar,
-    check,
-    clock,
-    dataJson,
-    hamburger,
-    headshot,
-    post,
-    send,
-    stackImgs,
-    site,
-    socialIcons,
-    tag,
-  },
-}) => (
-  <PageWrap>
-    <PostMeta
-      {...post.frontmatter}
-      slug={post.fields.slug}
-      excerpt={post.excerpt}
-    />
-    <Nav
-      hamburger={hamburger}
-      links={[{ to: '/', text: 'Home' }, { to: '/#about', text: 'About' }]}
-      socialIcons={mergeSocial(dataJson.social, socialIcons)}
-    />
+import { mergeBy, createAssetIdx, matchAssets } from '../components/Img';
 
-    <PostContent>
-      <h1>{post.frontmatter.title}</h1>
-      <h5>Sidney Wijngaarde</h5>
+const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
+  const assetIdx = createAssetIdx(icons, hq);
 
-      <PostInfo
-        calendar={calendar}
-        clock={clock}
-        timeToRead={post.timeToRead}
-        date={post.frontmatter.date}
-        tags={post.frontmatter.tags}
-        tagIcon={tag}
+  return (
+    <PageWrap>
+      <PostMeta
+        {...post.frontmatter}
+        slug={post.fields.slug}
+        excerpt={post.excerpt}
+      />
+      <Nav
+        {...matchAssets(assetIdx, ['hamburger.png'])}
+        links={[{ to: '/', text: 'Home' }, { to: '/#about', text: 'About' }]}
+        socialIcons={mergeBy(assetIdx, dataJson.social)}
       />
 
-      <PostHeroImage img={post.frontmatter.img.childImageSharp} />
-      <PostText dangerouslySetInnerHTML={{ __html: post.html }} />
-      <PostConclusion>
-        <Bio>
-          <Avatar {...headshot} />
-          <p>
-            Consectetur eaque velit eligendi eveniet laborum nihil. Illo facilis
-            ut expedita natus voluptatum. Beatae explicabo ipsa eos excepturi
-            ipsa labore similique Quae beatae ad velit distinctio expedita Nam
-            repudiandae ex?
-          </p>
-        </Bio>
+      <PostContent>
+        <h1>{post.frontmatter.title}</h1>
+        <h5>Sidney Wijngaarde</h5>
+
+        <PostInfo
+          {...matchAssets(assetIdx, PostInfo.assets)}
+          timeToRead={post.timeToRead}
+          date={post.frontmatter.date}
+          tags={post.frontmatter.tags}
+        />
+
+        <PostHeroImage img={post.frontmatter.img.childImageSharp} />
+        <PostText dangerouslySetInnerHTML={{ __html: post.html }} />
+        <PostConclusion>
+          <Bio>
+            <Avatar {...assetIdx['headshot.jpg']} />
+            <p>
+              Consectetur eaque velit eligendi eveniet laborum nihil. Illo
+              facilis ut expedita natus voluptatum. Beatae explicabo ipsa eos
+              excepturi ipsa labore similique Quae beatae ad velit distinctio
+              expedita Nam repudiandae ex?
+            </p>
+          </Bio>
+          <ShareRow
+            siteUrl={site.siteMetadata.siteUrl}
+            slug={post.fields.slug}
+            title={post.frontmatter.title}
+            socialIcons={mergeBy(assetIdx, [
+              { name: 'twitter' },
+              { name: 'facebook' },
+              { name: 'linkedin' },
+              { name: 'copylink' },
+            ])}
+          />
+        </PostConclusion>
+      </PostContent>
+      <Sidebar>
+        <CTA
+          {...matchAssets(assetIdx, CTA.assets)}
+          stack={mergeBy(
+            assetIdx,
+            dataJson.stack.map(stack => ({ name: stack }))
+          )}
+          title="Let's Build Something Together With"
+        />
+      </Sidebar>
+      <StickyShare>
         <ShareRow
           siteUrl={site.siteMetadata.siteUrl}
           slug={post.fields.slug}
           title={post.frontmatter.title}
-          socialIcons={mergeSocial(
-            [
-              { name: 'twitter' },
-              { name: 'facebook' },
-              { name: 'linkedin' },
-              { name: 'link' },
-            ],
-            socialIcons
-          )}
+          vertical
+          shortText
+          socialIcons={mergeBy(assetIdx, [
+            { name: 'twitter' },
+            { name: 'facebook' },
+            { name: 'linkedin' },
+            { name: 'copylink' },
+          ])}
         />
-      </PostConclusion>
-    </PostContent>
-    <Sidebar>
-      <CTA
-        check={check}
-        headshot={headshot}
-        imgs={stackImgs}
-        send={send}
-        stack={dataJson.stack}
-        title="Let's Build Something Together With"
-      />
-    </Sidebar>
-    <StickyShare>
-      <ShareRow
-        siteUrl={site.siteMetadata.siteUrl}
-        slug={post.fields.slug}
-        title={post.frontmatter.title}
-        vertical
-        shortText
-        socialIcons={mergeSocial(
-          [
+      </StickyShare>
+      <BottomBar>
+        <ShareRow
+          siteUrl={site.siteMetadata.siteUrl}
+          slug={post.fields.slug}
+          title={post.frontmatter.title}
+          shortText
+          socialIcons={mergeBy(assetIdx, [
             { name: 'twitter' },
             { name: 'facebook' },
             { name: 'linkedin' },
-            { name: 'link' },
-          ],
-          socialIcons
-        )}
-      />
-    </StickyShare>
-    <BottomBar>
-      <ShareRow
-        siteUrl={site.siteMetadata.siteUrl}
-        slug={post.fields.slug}
-        title={post.frontmatter.title}
-        shortText
-        socialIcons={mergeSocial(
-          [
-            { name: 'twitter' },
-            { name: 'facebook' },
-            { name: 'linkedin' },
-            { name: 'link' },
-          ],
-          socialIcons
-        )}
-      />
-      <ContactModal headshot={headshot} send={send} check={check} />
-    </BottomBar>
-  </PageWrap>
-);
+            { name: 'copylink' },
+          ])}
+        />
+        <ContactModal {...matchAssets(assetIdx, ContactModal.assets)} />
+      </BottomBar>
+    </PageWrap>
+  );
+};
 
 Post.propTypes = {
   data: PropTypes.shape({
@@ -348,43 +326,6 @@ export const query = graphql`
       }
     }
 
-    site {
-      siteMetadata {
-        siteUrl
-      }
-    }
-
-    socialIcons: allImageSharp(
-      filter: { id: { regex: "/.*assets/social/.*/" } }
-    ) {
-      edges {
-        node {
-          id
-          sizes {
-            ...GatsbyImageSharpSizes_withWebp
-          }
-        }
-      }
-    }
-
-    calendar: imageSharp(id: { regex: "/calendar-alt.png/" }) {
-      sizes(maxWidth: 200) {
-        ...GatsbyImageSharpSizes_withWebp
-      }
-    }
-
-    check: imageSharp(id: { regex: "/check.png/" }) {
-      sizes(maxWidth: 200) {
-        ...GatsbyImageSharpSizes_withWebp
-      }
-    }
-
-    clock: imageSharp(id: { regex: "/clock.png/" }) {
-      sizes(maxWidth: 200) {
-        ...GatsbyImageSharpSizes_withWebp
-      }
-    }
-
     dataJson {
       social {
         name
@@ -393,25 +334,13 @@ export const query = graphql`
       stack
     }
 
-    hamburger: imageSharp(id: { regex: "/hamburger.png/" }) {
-      sizes {
-        ...GatsbyImageSharpSizes_withWebp
+    site {
+      siteMetadata {
+        siteUrl
       }
     }
 
-    headshot: imageSharp(id: { regex: "/headshot2.jpg/" }) {
-      sizes(maxWidth: 2400) {
-        ...GatsbyImageSharpSizes_withWebp
-      }
-    }
-
-    send: imageSharp(id: { regex: "/send.png/" }) {
-      sizes {
-        ...GatsbyImageSharpSizes_withWebp
-      }
-    }
-
-    stackImgs: allImageSharp(filter: { id: { regex: "/.*assets/stack/.*/" } }) {
+    icons: allImageSharp(filter: { id: { regex: "/.*assets/icons/.*/" } }) {
       edges {
         node {
           id
@@ -422,9 +351,14 @@ export const query = graphql`
       }
     }
 
-    tag: imageSharp(id: { regex: "/tag.png/" }) {
-      sizes(maxWidth: 200) {
-        ...GatsbyImageSharpSizes_withWebp
+    hq: allImageSharp(filter: { id: { regex: "/.*assets/hq/.*/" } }) {
+      edges {
+        node {
+          id
+          sizes(maxWidth: 2400) {
+            ...GatsbyImageSharpSizes_withWebp
+          }
+        }
       }
     }
   }
