@@ -6,6 +6,7 @@ import styled, { css, keyframes } from 'styled-components';
 import { Card, Jumbo, imgPropType } from '..';
 import { Center } from '../mixins';
 import ContactForm from '../ContactForm';
+import ContactModal, { ContactModalButton } from '../ContactModal';
 
 const IndexJumboSection = ({ headshot, ...rest }) => (
   <IndexJumbo img={headshot}>
@@ -15,9 +16,12 @@ const IndexJumboSection = ({ headshot, ...rest }) => (
       <Squid>Squid.</Squid>
       <TagLine>I build web solutions for</TagLine>
       <TagLine>clients just like you.</TagLine>
+      <ContactModal headshot={headshot} {...rest}>
+        {props => <ContactModalButton {...props} />}
+      </ContactModal>
     </Introduction>
     <FormWrap>
-      <ContactForm {...rest} />
+      <ContactForm title="Let's build something together" {...rest} />
     </FormWrap>
   </IndexJumbo>
 );
@@ -26,9 +30,27 @@ IndexJumboSection.propTypes = {
   headshot: PropTypes.shape({ imgPropType }),
 };
 
-IndexJumboSection.assets = [...ContactForm.assets, 'headshot.jpg'];
+IndexJumboSection.assets = [...ContactModal.assets, 'headshot.jpg'];
+
+const ContactMobileOnlyBtn = styled(ContactModalButton)`
+  //pure-lg
+  @media screen and (min-width: 64em) {
+    display: none;
+  }
+`;
 
 export default IndexJumboSection;
+
+const IndexJumbo = styled(Jumbo)`
+  ${Center};
+  flex-direction: column;
+
+  //pure-lg
+  @media screen and (min-width: 64em) {
+    justify-content: space-between;
+    flex-direction: row;
+  }
+`;
 
 const SlideInRight = keyframes`
   0% {
@@ -52,18 +74,9 @@ const SlideInStyle = css`
   animation-timing-function: ease;
 `;
 
-const IndexJumbo = styled(Jumbo)`
-  ${Center} flex-direction: column;
-
-  //pure-lg
-  @media screen and (min-width: 64em) {
-    justify-content: space-between;
-    flex-direction: row;
-  }
-`;
-
 const FormWrap = styled(Card)`
-  ${SlideInStyle} justify-content: center;
+  ${SlideInStyle};
+  justify-content: center;
   background-color: rgba(0, 0, 0, 0.2);
   padding: 5vh 0;
   border-radius: 5px 0 0 5px;
@@ -93,14 +106,15 @@ const TagLine = styled.h2`
   text-align: center;
   font-family: 'Roboto Slab', serif;
 
-  // pure-md
-  @media screen and (min-width: 48em) {
+  //pure-lg
+  @media screen and (min-width: 64em) {
     text-align: left;
   }
 `;
 
 const Introduction = styled.div`
-  ${Center} color: #fff;
+  ${Center};
+  color: #fff;
   position: relative;
   flex-direction: column;
   height: 100%;
@@ -117,10 +131,9 @@ const Introduction = styled.div`
     margin-top: 10px;
   }
 
-  // pure-md
-  @media screen and (min-width: 48em) {
+  //pure-lg
+  @media screen and (min-width: 64em) {
     align-items: flex-start;
-    // padding-left: 10vw;
 
     h2,
     h3 {

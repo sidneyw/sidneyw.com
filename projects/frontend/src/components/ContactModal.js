@@ -61,7 +61,7 @@ export default class ContactModal extends React.Component {
 }
 
 export const ContactModalButton = ({ send, toggle }) => (
-  <Button icon={send} secondary onClick={toggle}>
+  <Button icon={send} secondary onClick={toggle} className="cta-contact-launch">
     <span>Contact</span>
   </Button>
 );

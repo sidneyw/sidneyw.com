@@ -8,7 +8,7 @@ import Nav from '../components/Nav';
 import { PropType as SocialPropType } from '../components/SocialIcon';
 import Button from '../components/Button';
 import CTA from '../components/CTA';
-import ContactModal, { ContactModalButton } from '../components/ContactModal';
+import ContactModal from '../components/ContactModal';
 import { Center, ZDepth1 } from '../components/mixins';
 
 import {
@@ -125,10 +125,20 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
 };
 
 const ContactMobile = ({ send, toggle }) => (
-  <ContactMobileStyle secondary icon={send} onClick={toggle}>
+  <ContactMobileStyle
+    secondary
+    icon={send}
+    onClick={toggle}
+    className="cta-contact-launch"
+  >
     <span>Contact</span>
   </ContactMobileStyle>
 );
+
+ContactMobile.propTypes = {
+  send: imgPropTypeShape,
+  toggle: PropTypes.func.isRequired,
+};
 
 const ContactMobileStyle = styled(Button)`
   & > div {

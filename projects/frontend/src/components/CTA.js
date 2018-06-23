@@ -39,6 +39,7 @@ CTAForm.propTypes = {
       img: imgPropTypeShape,
     })
   ),
+  times: imgPropTypeShape,
   title: PropTypes.string,
 };
 
