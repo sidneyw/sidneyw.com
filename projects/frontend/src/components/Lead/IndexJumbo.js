@@ -17,7 +17,7 @@ const IndexJumboSection = ({ headshot, ...rest }) => (
       <TagLine>I build web solutions for</TagLine>
       <TagLine>clients just like you.</TagLine>
       <ContactModal headshot={headshot} {...rest}>
-        {props => <ContactModalButton {...props} />}
+        {props => <ContactMobileOnlyBtn {...props} />}
       </ContactModal>
     </Introduction>
     <FormWrap>

@@ -64,15 +64,21 @@ export default class ContactModal extends React.Component {
   }
 }
 
-export const ContactModalButton = ({ send, toggle }) => (
-  <Button icon={send} secondary onClick={toggle} className="cta-contact-launch">
+export const ContactModalButton = ({ send, toggle, className = '' }) => (
+  <Button
+    icon={send}
+    secondary
+    onClick={toggle}
+    className={`cta-contact-launch${className || ''}`}
+  >
     <span>Contact</span>
   </Button>
 );
 
 ContactModalButton.propTypes = {
-  toggle: PropTypes.func.isRequired,
+  className: PropTypes.string,
   send: imgPropTypeShape,
+  toggle: PropTypes.func.isRequired,
 };
 
 const FormHeader = styled.h1`
