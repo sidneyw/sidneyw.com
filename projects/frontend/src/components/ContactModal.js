@@ -27,6 +27,10 @@ export default class ContactModal extends React.Component {
   constructor() {
     super();
     this.toggleModal = this.toggleModal.bind(this);
+
+    if (typeof window !== 'undefined') {
+      this.appElement = document.getElementById('___gatsby');
+    }
   }
 
   state = { isOpen: false };
@@ -40,7 +44,7 @@ export default class ContactModal extends React.Component {
     return (
       <div>
         <Modal
-          appElement={document.getElementById('___gatsby')}
+          appElement={this.appElement}
           onRequestClose={this.toggleModal}
           isOpen={this.state.isOpen}
         >
