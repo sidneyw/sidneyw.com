@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Img from 'gatsby-image';
@@ -16,6 +17,7 @@ export default class ContactModal extends React.Component {
     headshot: imgPropTypeShape,
     send: imgPropTypeShape,
     times: imgPropTypeShape,
+    children: PropTypes.func.isRequired,
   };
 
   static assets = dedupe(...ContactForm.assets, 'times.png', 'headshot.jpg');
@@ -34,7 +36,7 @@ export default class ContactModal extends React.Component {
   }
 
   render() {
-    const { send, headshot, times, ...rest } = this.props;
+    const { children, send, headshot, times, ...rest } = this.props;
     return (
       <div>
         <Modal
@@ -52,13 +54,22 @@ export default class ContactModal extends React.Component {
           </FormWrap>
         </Modal>
 
-        <Button icon={send} secondary onClick={this.toggleModal}>
-          Contact
-        </Button>
+        {children && children({ send, toggle: this.toggleModal })}
       </div>
     );
   }
 }
+
+export const ContactModalButton = ({ send, toggle }) => (
+  <Button icon={send} secondary onClick={toggle}>
+    <span>Contact</span>
+  </Button>
+);
+
+ContactModalButton.propTypes = {
+  toggle: PropTypes.func.isRequired,
+  send: imgPropTypeShape,
+};
 
 const FormHeader = styled.h1`
   background-color: ${({ theme }) => theme.primary};

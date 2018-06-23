@@ -13,8 +13,6 @@ const ButtonIcon = styled(Img)`
   max-height: 90%;
   width: 3vh;
   height; 5vh;
-  margin-right: 0.5em;
-
 
   //pure-lg
   @media screen and (min-width: 64em) {
@@ -57,7 +55,10 @@ const getColor = ({ theme, secondary, disabled }) => {
 };
 
 const StyledButton = styled(UnifiedButton)`
-  ${Center} ${Rounded} ${ZDepth1} padding: 1rem;
+  ${Center};
+  ${Rounded};
+  ${ZDepth1};
+  padding: 1rem;
   border: none;
   color: #fff;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
@@ -65,6 +66,10 @@ const StyledButton = styled(UnifiedButton)`
   background-color: ${getColor};
   text-decoration: none;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+
+  span {
+    margin-left: 0.5em;
+  }
 
   transition: all 200ms ease;
   width: ${props => (props.fullwidth ? '100%' : '')};
@@ -81,7 +86,7 @@ const StyledButton = styled(UnifiedButton)`
     &:hover {
       ${ZDepth3};
     }
-  `}
+  `};
 `;
 
 export default StyledButton;

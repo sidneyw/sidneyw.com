@@ -7,10 +7,10 @@ import styled from 'styled-components';
 import { StackIcon } from './Lead/Stack';
 import { Card } from '.';
 import { imgPropTypeShape } from '../components/Img';
-import ContactModal from '../components/ContactModal';
+import ContactModal, { ContactModalButton } from '../components/ContactModal';
 import Link from './Link';
 
-const CTAForm = ({ headshot, send, check, stack, title }) => (
+const CTAForm = ({ headshot, send, times, check, stack, title }) => (
   <CTACard>
     <h3>{title}</h3>
 
@@ -22,7 +22,9 @@ const CTAForm = ({ headshot, send, check, stack, title }) => (
         ))}
     </StackWrap>
 
-    <ContactModal headshot={headshot} send={send} check={check} />
+    <ContactModal headshot={headshot} times={times} send={send} check={check}>
+      {props => <ContactModalButton {...props} />}
+    </ContactModal>
     <Link to="/cloud">Learn More</Link>
   </CTACard>
 );
@@ -63,11 +65,12 @@ const CTACard = styled(Card)`
 const StackWrap = styled.div`
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: space-between;
   margin: 1em 0;
+  font-size: 0.8em;
 `;
 
 const CTAStackIcon = styled(StackIcon)`
-  width: 48%;
+  width: 49%;
   padding: 0;
 `;

@@ -6,9 +6,9 @@ import styled from 'styled-components';
 
 import Nav from '../components/Nav';
 import { PropType as SocialPropType } from '../components/SocialIcon';
-// import Button from '../components/Button';
+import Button from '../components/Button';
 import CTA from '../components/CTA';
-import ContactModal from '../components/ContactModal';
+import ContactModal, { ContactModalButton } from '../components/ContactModal';
 import { Center, ZDepth1 } from '../components/mixins';
 
 import {
@@ -116,11 +116,31 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
             { name: 'copylink' },
           ])}
         />
-        <ContactModal {...matchAssets(assetIdx, ContactModal.assets)} />
+        <ContactModal {...matchAssets(assetIdx, ContactModal.assets)}>
+          {props => <ContactMobile {...props} />}
+        </ContactModal>
       </BottomBar>
     </PageWrap>
   );
 };
+
+const ContactMobile = ({ send, toggle }) => (
+  <ContactMobileStyle secondary icon={send} onClick={toggle}>
+    <span>Contact</span>
+  </ContactMobileStyle>
+);
+
+const ContactMobileStyle = styled(Button)`
+  & > div {
+    margin-right: 0;
+  }
+
+  span {
+    display: none;
+    height: 3vh;
+    width: 3vh;
+  }
+`;
 
 Post.propTypes = {
   data: PropTypes.shape({
@@ -155,7 +175,7 @@ const PageWrap = styled.div`
 const Sidebar = styled.div`
   display: flex;
   flex-flow: column;
-  width: 80vw;
+  width: 100vw;
 
   //pure-lg
   @media screen and (min-width: 64em) {

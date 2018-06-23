@@ -16,19 +16,18 @@ CompanySection.propTypes = {
 
 const CompanyWrap = styled.section`
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: row wrap;
   justify-content: center;
   width: 100vw;
   min-height: 10vh;
 
   // pure-md
   @media screen and (min-width: 48em) {
-    flex-flow: row wrap;
   }
 `;
 
 const CompanyImg = styled(Img)`
-  width: 90vw;
+  width: 30vw;
   // pure-md
   @media screen and (min-width: 48em) {
     width: 20vw;

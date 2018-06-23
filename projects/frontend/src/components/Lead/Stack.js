@@ -48,17 +48,18 @@ StackIcon.propTypes = {
 // Styles
 // ------------------------------------
 const Stack = styled.section`
-  ${Center} flex-flow: column wrap;
+  ${Center};
+  flex-flow: column wrap;
   padding: 5vh 0;
   h1 {
     width: 75%;
-    margin-bottom: 15px;
-    font-size: 1.5em;
+    margin-bottom: 1em;
+    font-size: 2em;
   }
 
   & > p {
-    font-size: 0.7em;
     width: 75%;
+    max-width: 50rem;
     margin-bottom: 2vh;
   }
 
@@ -80,13 +81,34 @@ const StackIconWrap = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  width: 100vw;
+  width: 90vw;
+  max-width: 50rem;
+
+  & > div:nth-child(odd) {
+    margin-right: 0.3em;
+  }
+
+  & > div:last-of-type {
+    width: 55%;
+  }
 
   // pure-md
   @media screen and (min-width: 48em) {
     margin: 0 auto;
-    width: 50vw;
+    width: 75vw;
     align-items: center;
+    & > div {
+      margin-right: 0.3em;
+    }
+
+    & > div:last-of-type {
+      width: initial;
+    }
+  }
+
+  //pure-lg
+  @media screen and (min-width: 64em) {
+    width: 50vw;
   }
 `;
 
@@ -95,15 +117,14 @@ const IconImg = styled(BackgroundImg)`
   width: ${iconSize}vh;
   height: ${iconSize}vh;
   background-size: cover;
-  // margin-right: 0.5em;
+  margin-right: 0.1em;
 `;
 
 const Icon = styled.div`
   padding: 10px;
-  width: 40vw;
+  width: 48%;
   border-radius: 5px;
   margin-top: 0.2em;
-  margin-right: 0.2em;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;

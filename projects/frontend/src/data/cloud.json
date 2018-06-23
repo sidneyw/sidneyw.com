@@ -39,12 +39,12 @@
   ],
   "stack": [
     "serverless",
-    "kubernetes",
     "docker",
     "react",
     "graphql",
     "nodejs",
-    "golang"
+    "golang",
+    "kubernetes"
   ],
   "companies": ["magic-leap", "ibm", "dali"]
 }
