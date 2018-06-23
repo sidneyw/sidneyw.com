@@ -19,6 +19,7 @@
     }
   },
   "rules": {
+		"no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["accum"] }],
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "no-underscore-dangle": "warn",
     "no-unused-vars": [2],

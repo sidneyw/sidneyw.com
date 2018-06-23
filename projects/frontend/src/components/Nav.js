@@ -14,10 +14,12 @@ export default class Navigation extends React.Component {
   static propTypes = {
     hamburger: SocialPropType,
     socialIcons: PropTypes.arrayOf(SocialPropType),
-    links: PropTypes.shape({
-      href: PropTypes.string,
-      text: PropTypes.string.isRequired,
-    }),
+    links: PropTypes.arrayOf(
+      PropTypes.shape({
+        href: PropTypes.string,
+        text: PropTypes.string.isRequired,
+      })
+    ),
   };
 
   constructor(props) {

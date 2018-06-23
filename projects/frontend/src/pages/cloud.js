@@ -10,33 +10,50 @@ import Nav from '../components/Nav';
 import Services from '../components/Lead/Services';
 import Stack from '../components/Lead/Stack';
 
-import { Banner, mergeSocial } from '../components/';
+import { Banner } from '../components/';
 
-const IndexPage = ({ data }) => (
-  <div>
-    <Nav
-      hamburger={data.hamburger}
-      links={[
-        { href: '#services', text: 'Services' },
-        { href: '#stack', text: 'Stack' },
-        { href: '#about', text: 'About' },
-        { to: '/blog', text: 'Blog' },
-      ]}
-      socialIcons={mergeSocial(data.dataJson.social, data.allImageSharp)}
-    />
+import { createAssetIdx, matchAssets, mergeBy } from '../components/Img';
 
-    <IndexJumbo check={data.check} headshot={data.headshot} send={data.send} />
-    <Services services={data.dataJson.services} imgs={data.servicesImgs} />
-    <Banner>
-      <Callout>
-        The Modern Web Runs on Container Tech and Serverless Platforms
-      </Callout>
-    </Banner>
-    <Stack stack={data.dataJson.stack} imgs={data.stackImgs} />
-    <About newyork={data.newyork} chauoanShot={data.chauoanShot} />
-    <Companies data={[data.magicLeap, data.ibm, data.dali]} />
-  </div>
-);
+const IndexPage = ({ data: { dataJson, icons, hq } }) => {
+  const assetIdx = createAssetIdx(icons, hq);
+  return (
+    <div>
+      <Nav
+        {...matchAssets(assetIdx, ['hamburger.png'])}
+        links={[
+          { href: '#services', text: 'Services' },
+          { href: '#stack', text: 'Stack' },
+          { href: '#about', text: 'About' },
+          { to: '/', text: 'Blog' },
+        ]}
+        socialIcons={mergeBy(assetIdx, dataJson.social)}
+      />
+
+      <IndexJumbo {...matchAssets(assetIdx, IndexJumbo.assets)} />
+      <Services
+        services={mergeBy(assetIdx, dataJson.services, svc => svc.img)}
+      />
+      <Banner>
+        <Callout>
+          The Modern Web Runs on Container Tech and Serverless Platforms
+        </Callout>
+      </Banner>
+      <Stack
+        stack={mergeBy(
+          assetIdx,
+          dataJson.stack.map(stack => ({ name: stack }))
+        )}
+      />
+      <About {...matchAssets(assetIdx, About.assets)} />
+      <Companies
+        companies={mergeBy(
+          assetIdx,
+          dataJson.companies.map(company => ({ name: company }))
+        )}
+      />
+    </div>
+  );
+};
 
 IndexPage.propTypes = {
   data: PropTypes.shape({
@@ -76,35 +93,29 @@ export const query = graphql`
         img
       }
       stack
+      companies
     }
 
-    allImageSharp(filter: { id: { regex: "/.*assets/social/.*/" } }) {
+    icons: allImageSharp(filter: { id: { regex: "/.*assets/icons/.*/" } }) {
       edges {
         node {
           id
-          sizes {
+          sizes(maxWidth: 200) {
             ...GatsbyImageSharpSizes_withWebp
           }
         }
       }
     }
 
-    hamburger: imageSharp(id: { regex: "/hamburger.png/" }) {
-      sizes {
-        ...GatsbyImageSharpSizes_withWebp
+    hq: allImageSharp(filter: { id: { regex: "/.*assets/hq/.*/" } }) {
+      edges {
+        node {
+          id
+          sizes(maxWidth: 2400) {
+            ...GatsbyImageSharpSizes_withWebp
+          }
+        }
       }
-    }
-
-    headshot: imageSharp(id: { regex: "/headshot2.jpg/" }) {
-      ...HQ_ImgQuery
-    }
-
-    send: imageSharp(id: { regex: "/send.png/" }) {
-      ...ImgQuery
-    }
-
-    check: imageSharp(id: { regex: "/check.png/" }) {
-      ...ImgQuery
     }
 
     servicesImgs: allImageSharp(

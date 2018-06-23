@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Img from 'gatsby-image';
 
-import { imgPropTypeShape } from '..';
+import { imgPropTypeShape } from '../Img';
 import Tag from './Tag';
 import { formatDate } from '../utils';
 
-const PostInfo = ({ calendar, date, clock, timeToRead, tagIcon, tags }) => (
+const PostInfo = ({ calendar, date, clock, timeToRead, tag, tags }) => (
   <PostInfoStyle>
     <div>
       <PostInfoIcon {...calendar} />
@@ -18,7 +18,7 @@ const PostInfo = ({ calendar, date, clock, timeToRead, tagIcon, tags }) => (
       <PostInfoIcon {...clock} />
       <PostInfoText>{`${timeToRead} mins`}</PostInfoText>
     </div>
-    {tags && <Tag icon={tagIcon}>{tags[0]}</Tag>}
+    {tags && <Tag icon={tag}>{tags[0]}</Tag>}
   </PostInfoStyle>
 );
 
@@ -26,10 +26,12 @@ PostInfo.propTypes = {
   calendar: imgPropTypeShape,
   clock: imgPropTypeShape,
   date: PropTypes.number,
-  tagIcon: imgPropTypeShape,
+  tag: imgPropTypeShape,
   tags: PropTypes.arrayOf(PropTypes.string),
   timeToRead: PropTypes.number,
 };
+
+PostInfo.assets = ['calendar.png', 'clock.png', 'tag.png'];
 
 export default PostInfo;
 

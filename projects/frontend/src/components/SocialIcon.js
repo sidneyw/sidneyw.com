@@ -22,8 +22,8 @@ const SocialImg = styled(Img)`
   // margin: 0;
   border-radius: 20%;
 
-  height: 5vh;
-  width: 5vh;
+  height: 4vh;
+  width: 4vh;
   margin-right: 5px;
   &:last-of-type {
     margin-right: 0;

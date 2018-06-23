@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Link from '../Link';
+import { BackgroundImg, imgPropTypeShape } from '../Img';
+import { ZDepth2, ZDepth4 } from '../mixins';
 
 import PostInfo from './Info';
-import { BackgroundImg, imgPropTypeShape } from '..';
-import { ZDepth2, ZDepth3, ZDepth4 } from '../mixins';
 
 const PostPreview = ({
   excerpt,
@@ -36,6 +36,8 @@ PostPreview.propTypes = {
   title: PropTypes.string,
   to: PropTypes.string.isRequired,
 };
+
+PostPreview.assets = PostInfo.assets;
 
 export default PostPreview;
 
