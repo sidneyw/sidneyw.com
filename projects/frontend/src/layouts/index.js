@@ -15,32 +15,75 @@ const theme = {
   em: '#f8f8f8',
 };
 
-const TemplateWrapper = ({ children }) => (
-  <GlobalStyles>
-    <Helmet>
-      <meta charSet="utf-8" />
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-      />
-      <link
-        href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Montserrat:400,400i,700"
-        rel="stylesheet"
-      />
-    </Helmet>
+const TemplateWrapper = ({ children, data: { favicons } }) => {
+  const idx = favicons.edges.reduce((accum, { node }) => {
+    // /static/file-name-[hash].ext
+    const [, , noFolder] = node.publicURL.split('/');
+    const noHashExtIdx = noFolder.lastIndexOf('-');
+    if (noHashExtIdx !== -1) {
+      accum[noFolder.substr(0, noHashExtIdx)] = node.publicURL;
+    } else {
+      console.error('Incorrect Favicon File Path Format');
+    }
 
-    <ThemeProvider theme={theme}>
-      <React.Fragment>
-        {children()}
+    return accum;
+  }, Object.create(null));
 
-        {/* <Footer socialIcons={mergeSocial(data.dataJson.social, data.allImageSharp)} /> */}
-      </React.Fragment>
-    </ThemeProvider>
-  </GlobalStyles>
-);
+  return (
+    <GlobalStyles>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <link
+          href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Montserrat:400,400i,700"
+          rel="stylesheet"
+        />
+
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href={idx['apple-touch-icon']}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href={idx['favicon-32x32']}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href={idx['favicon-16x16']}
+        />
+        <link rel="mask-icon" href={idx['safari-pinned-tab']} color="#5bbad5" />
+      </Helmet>
+
+      <ThemeProvider theme={theme}>
+        <React.Fragment>
+          {children()}
+
+          {/* <Footer socialIcons={mergeSocial(data.dataJson.social, data.allImageSharp)} /> */}
+        </React.Fragment>
+      </ThemeProvider>
+    </GlobalStyles>
+  );
+};
 
 TemplateWrapper.propTypes = {
   children: PropTypes.func,
+  data: PropTypes.shape({
+    edges: PropTypes.arrayOf(
+      PropTypes.shape({
+        node: PropTypes.shape({
+          publicURL: PropTypes.string,
+        }),
+      })
+    ),
+  }),
 };
 
 const GlobalStyles = styled.div`
@@ -68,13 +111,10 @@ export const query = graphql`
       }
     }
 
-    allImageSharp(filter: { id: { regex: "/.*assets/social/.*/" } }) {
+    favicons: allFile(filter: { id: { regex: "/.*assets/favicons/.*/" } }) {
       edges {
         node {
-          id
-          sizes {
-            ...GatsbyImageSharpSizes_withWebp
-          }
+          publicURL
         }
       }
     }
