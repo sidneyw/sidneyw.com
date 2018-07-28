@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
-
+import { DiscussionEmbed } from 'disqus-react';
 import Nav from '../components/Nav';
 import { PropType as SocialPropType } from '../components/SocialIcon';
 import Button from '../components/Button';
@@ -77,6 +77,14 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
             ])}
           />
         </PostConclusion>
+        <DiscussionEmbed
+          shortname="sidneyw-com"
+          config={{
+            url: `${site.siteMetadata.siteUrl}/${post.fields.slug}`,
+            identifier: post.fields.slug,
+            title: post.frontmatter.title,
+          }}
+        />
       </PostContent>
       <Sidebar>
         <CTA
