@@ -17,13 +17,8 @@ const SocialIconStyle = styled.a`
 `;
 
 const SocialImg = styled(Img)`
-  // height: 100%;
-  // width: 100%;
-  // margin: 0;
-  border-radius: 20%;
-
-  height: 4vh;
-  width: 4vh;
+  height: 6vh;
+  width: 6vh;
   margin-right: 5px;
   &:last-of-type {
     margin-right: 0;

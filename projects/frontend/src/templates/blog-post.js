@@ -312,8 +312,6 @@ const Bio = styled.div`
 const StickyShare = styled.div`
   display: none;
   position: fixed;
-  background-color: #fff;
-  ${ZDepth1};
 
   //pure-lg
   @media screen and (min-width: 64em) {

@@ -63,8 +63,6 @@ const ShareRow = ({
             url: `${siteUrl}${slug}`,
           })}`}
         />
-
-        <SocialIcon img={socialMap.copylink} onClick={() => alert('clicked')} />
       </ShareButtonWrap>
     </ShareRowStyle>
   );
