@@ -6,6 +6,7 @@
   "dependencies": {
     "@sidneyw/config": "^1.0.0",
     "axios": "^0.18.0",
+    "disqus-react": "^1.0.5",
     "gatsby": "^1.9.241",
     "gatsby-image": "^1.0.31",
     "gatsby-link": "^1.6.32",
