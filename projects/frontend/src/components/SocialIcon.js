@@ -17,17 +17,11 @@ const SocialIconStyle = styled.a`
 `;
 
 const SocialImg = styled(Img)`
-  height: 6vh;
-  width: 6vh;
+  height: 3rem;
+  width: 3rem;
   margin-right: 5px;
   &:last-of-type {
     margin-right: 0;
-  }
-
-  // pure-md
-  @media screen and (min-width: 48em) {
-    height: 4vh;
-    width: 4vh;
   }
 `;
 
