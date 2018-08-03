@@ -60,33 +60,18 @@ const PostPreviewStyle = styled(Link)`
   // pure-md
   @media screen and (min-width: 48em) {
     width: 100%;
-    min-height: 20vh;
+    min-height: 10rem;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: stretch;
-  }
-
-  //pure-lg
-  @media screen and (min-width: 64em) {
-    min-height: 15vh;
-  }
-
-  // pure-xl
-  @media screen and (min-width: 80em) {
-    min-height: 10vh;
   }
 `;
 
 const PreviewImg = styled(BackgroundImg)`
   width: 100%;
-  height: 20vh;
+  height: 10rem;
   overflow: hidden;
   border-radius: ${borderRadius} ${borderRadius} 0 0;
-
-  // pure-sm
-  @media screen and (min-width: 35.5em) {
-    height: 15vh;
-  }
 
   // pure-md
   @media screen and (min-width: 48em) {
@@ -108,7 +93,7 @@ const PreviewText = styled.div`
   padding: 0.5rem 1rem;
   width: 100%;
 
-  font-size: 1.3em;
+  font-size: 1.1em;
 
   h2 {
     font-weight: 400;

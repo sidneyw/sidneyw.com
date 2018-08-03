@@ -70,6 +70,10 @@ const Blog = styled.div`
   flex-direction: column;
   align-items: center;
 
+  h1 {
+    text-align: center;
+  }
+
   h3 {
     &:nth-of-type(2) {
       margin-bottom: 0.3em;

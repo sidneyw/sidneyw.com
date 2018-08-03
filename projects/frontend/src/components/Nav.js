@@ -62,7 +62,7 @@ export default class Navigation extends React.Component {
     return (
       <Nav show={this.state.show}>
         <NavWrap show={this.state.show}>
-          <p>Sidney Wijngaarde</p>
+          <LogoLink to="/">Sidney Wijngaarde</LogoLink>
           <Hamburger onClick={this.toggleMobile}>
             <Divider />
             <IconButton img={hamburger} />
@@ -91,6 +91,14 @@ export default class Navigation extends React.Component {
 // Style Components
 // ------------------------------------
 const NavHeight = 10;
+
+const LogoLink = styled(Link)`
+  font-size: 1.5em;
+  text-decoration: none;
+  &:visited {
+    color: black;
+  }
+`;
 
 const NavToggle = prop => css`
   transition: all 200ms ease;
@@ -212,15 +220,13 @@ const Hamburger = styled.div`
 const NavSocial = styled(SocialIcon)`
   height: 5vh;
   width: 5vh;
-  margin-right: 5px;
-  &:last-of-type {
-    margin-right: 0;
-  }
+  margin: 0.5em;
 
   // pure-md
   @media screen and (min-width: 48em) {
     height: 4vh;
     width: 4vh;
+    margin: 0.2em;
   }
 `;
 
