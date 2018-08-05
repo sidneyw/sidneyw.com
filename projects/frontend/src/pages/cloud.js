@@ -9,6 +9,7 @@ import IndexJumbo from '../components/Lead/IndexJumbo';
 import Nav from '../components/Nav';
 import Services from '../components/Lead/Services';
 import Stack from '../components/Lead/Stack';
+import NewsLetterForm from '../components/NewsLetterForm';
 
 import { Banner } from '../components/';
 
@@ -44,6 +45,15 @@ const IndexPage = ({ data: { dataJson, icons, hq } }) => {
           dataJson.stack.map(stack => ({ name: stack }))
         )}
       />
+      <Banner>
+        <Callout>
+          get my latest and greatest content delivered straight to your inbox
+        </Callout>
+        <NewsLetterForm
+          {...matchAssets(assetIdx, NewsLetterForm.assets)}
+          secondary
+        />
+      </Banner>
       <About {...matchAssets(assetIdx, About.assets)} />
       <Companies
         companies={mergeBy(
@@ -65,7 +75,8 @@ IndexPage.propTypes = {
 
 const Callout = styled.h1`
   text-align: center;
-  padding: 3rem;
+  text-transform: Capitalize;
+  margin: 1rem auto;
 `;
 
 export const query = graphql`

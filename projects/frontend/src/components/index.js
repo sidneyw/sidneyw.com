@@ -15,11 +15,13 @@ import { BackgroundImg } from './Img';
 export const Banner = styled.section`
   display: flex;
   color: #fff;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 10vh;
-  background-color: ${({ theme }) => theme.primary};
+  padding: 3rem;
+  background-color: ${({ theme, secondary }) =>
+    secondary ? theme.secondary : theme.primary};
 `;
 
 export const Card = styled.div`

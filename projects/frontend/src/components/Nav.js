@@ -218,14 +218,10 @@ const Hamburger = styled.div`
 `;
 
 const NavSocial = styled(SocialIcon)`
-  height: 5vh;
-  width: 5vh;
   margin: 0.5em;
 
   // pure-md
   @media screen and (min-width: 48em) {
-    height: 4vh;
-    width: 4vh;
     margin: 0.2em;
   }
 `;
