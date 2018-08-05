@@ -23,6 +23,7 @@ const TemplateWrapper = ({ children, data: { favicons } }) => {
     if (noHashExtIdx !== -1) {
       accum[noFolder.substr(0, noHashExtIdx)] = node.publicURL;
     } else {
+      // eslint-disable-next-line no-console
       console.error('Incorrect Favicon File Path Format');
     }
 

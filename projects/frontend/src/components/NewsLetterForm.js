@@ -9,7 +9,12 @@ import { imgPropTypeShape } from './Img';
 
 import { LoaderButton } from './Button';
 
-const NewsLetterForm = ({ message, check, endpoint = '/signup ' }) => (
+const NewsLetterForm = ({
+  message,
+  check,
+  secondary,
+  endpoint = '/signup ',
+}) => (
   <FormState endpoint={endpoint}>
     {({ handleChange, handleSubmit, state }) => (
       <NewsLetter name="email-list" id="email-list" onSubmit={handleSubmit}>
@@ -25,15 +30,18 @@ const NewsLetterForm = ({ message, check, endpoint = '/signup ' }) => (
           loading={{
             icon: <Loader />,
             children: <span>Working on it</span>,
+            secondary,
           }}
           normal={{
             icon: message,
             children: <span>Subscribe</span>,
+            secondary,
           }}
           state={state}
           success={{
             icon: check,
             children: <span>All set!</span>,
+            secondary,
           }}
           type="submit"
         />
@@ -46,6 +54,7 @@ NewsLetterForm.propTypes = {
   check: imgPropTypeShape,
   endpoint: PropTypes.string,
   message: imgPropTypeShape,
+  secondary: PropTypes.bool,
 };
 
 NewsLetterForm.assets = ['message.png', 'check.png'];
