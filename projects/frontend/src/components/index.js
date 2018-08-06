@@ -18,8 +18,8 @@ export const Banner = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 10vh;
-  padding: 3rem;
+  min-height: 7rem;
+  padding: 3rem 1.5rem;
   background-color: ${({ theme, secondary }) =>
     secondary ? theme.secondary : theme.primary};
 `;

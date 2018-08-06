@@ -81,6 +81,7 @@ const Callout = styled.h1`
   text-align: center;
   text-transform: Capitalize;
   margin: 1rem auto;
+  width: 100%;
 `;
 
 export const query = graphql`
