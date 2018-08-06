@@ -38,14 +38,9 @@ ServiceCard.propTypes = ServiceProps;
 // ------------------------------------
 // Styles
 // ------------------------------------
-const borderRadius = 5;
-const borderColor = 'rgba(0, 0, 0, 0.2)';
-const borderStyle = `1px solid ${borderColor}`;
-
 const ServiceImg = styled(BackgroundImg)`
   height: 20vh;
   width: 100%;
-  border-radius: ${borderRadius}px ${borderRadius}px 0 0;
   overflow: hidden;
 `;
 
@@ -69,8 +64,9 @@ const ServiceCardStyle = styled.div`
   justify-content: flex-start;
   width: 90vw;
   align-items: center;
-  border-radius: ${borderRadius}px;
-  border: 1px solid ${borderColor};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  border: ${({ theme }) => theme.borderOutline};
+  overflow: hidden;
   flex-flow: column;
   margin-bottom: 10px;
 
@@ -86,8 +82,8 @@ const ServiceCardStyle = styled.div`
     text-align: center;
     padding: 1vh 0;
     margin-bottom: 1vh;
-    border-bottom: ${borderStyle}
-    border-top: ${borderStyle};
+    border-top: ${({ theme }) => theme.borderOutline};
+    border-bottom: ${({ theme }) => theme.borderOutline};
     width: 100%;
   }
 

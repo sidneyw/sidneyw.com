@@ -206,7 +206,7 @@ const Sidebar = styled.div`
 const PostContent = styled.div`
   display: flex;
   flex-flow: column;
-  width: 80vw;
+  width: 90vw;
 
   font-size: 1em;
 
@@ -240,10 +240,15 @@ const PostContent = styled.div`
 
 const PostHeroImage = styled(BackgroundImg)`
   width: 100%;
-  height: 30vh;
+  height: 17rem;
   border-radius: 1rem;
   overflow: hidden;
   margin: 0.5em 0;
+
+  //pure-lg
+  @media screen and (min-width: 64em) {
+    height: 25rem;
+  }
 `;
 
 const PostText = styled.div`

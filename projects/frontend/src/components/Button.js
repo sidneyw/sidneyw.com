@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import Img from 'gatsby-image';
 import { STATE_ENUM } from './FormState';
 import { Center, Rounded, ZDepth1, ZDepth3 } from './mixins';
+import Link from './Link';
 import { imgPropTypeShape } from './Img';
 
 const ButtonIcon = styled(Img)`
@@ -21,9 +22,10 @@ const ButtonIcon = styled(Img)`
 `;
 
 export const UnifiedButton = ({ children, icon, ...rest }) => {
-  const Wrapper = rest.href
-    ? props => <a {...props} />
-    : props => <button {...props} />;
+  const Wrapper =
+    rest.href || rest.to
+      ? props => <Link {...props} />
+      : props => <button {...props} />;
   return (
     <Wrapper {...rest}>
       {icon && icon.sizes && <ButtonIcon {...icon} />}

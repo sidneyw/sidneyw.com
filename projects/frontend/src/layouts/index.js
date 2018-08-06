@@ -8,11 +8,15 @@ import './index.css';
 
 require('prismjs/themes/prism-okaidia.css');
 
+const borderColor = 'rgba(0, 0, 0, 0.2)';
 const theme = {
+  borderRadius: '0.5rem',
+  borderOutline: `1px solid ${borderColor}`,
+  borderColor,
+  em: '#f8f8f8',
   primary: '#1D69B2',
   primaryDisabled: '#0f355a',
   secondary: '#ffbc3d',
-  em: '#f8f8f8',
 };
 
 const TemplateWrapper = ({ children, data: { favicons } }) => {

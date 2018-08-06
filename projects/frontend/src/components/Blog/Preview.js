@@ -41,19 +41,18 @@ PostPreview.assets = PostInfo.assets;
 
 export default PostPreview;
 
-// TODO: Use theme prop - 06/13/18 16:18:40 sidneywijngaarde
-const borderRadius = '1rem';
-
 const PostPreviewStyle = styled(Link)`
   display: flex;
   text-decoration: none;
   flex-flow: column wrap;
-  border-radius: ${borderRadius};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  overflow: hidden;
   margin-bottom: 2rem;
   color: #000;
 
   transition: box-shadow 500ms ease;
-  ${ZDepth2} &:hover {
+  ${ZDepth2};
+  &:hover {
     ${ZDepth4};
   }
 
@@ -71,14 +70,16 @@ const PreviewImg = styled(BackgroundImg)`
   width: 100%;
   height: 10rem;
   overflow: hidden;
-  border-radius: ${borderRadius} ${borderRadius} 0 0;
+  border-radius: ${({ theme }) =>
+    `${theme.borderRadius} ${theme.borderRadius} 0 0`};
 
   // pure-md
   @media screen and (min-width: 48em) {
     width: 50%;
     height: initial;
     min-height: 100%;
-    border-radius: ${borderRadius} 0 0 ${borderRadius};
+    border-radius: ${({ theme }) =>
+      `${theme.borderRadius} 0 0 ${theme.borderRadius}`};
   }
 
   //pure-lg
@@ -89,6 +90,7 @@ const PreviewImg = styled(BackgroundImg)`
 
 const PreviewText = styled.div`
   display: flex;
+  background-color: #fff;
   flex-flow: row wrap;
   padding: 0.5rem 1rem;
   width: 100%;

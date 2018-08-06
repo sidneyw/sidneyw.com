@@ -44,9 +44,16 @@ export default IndexJumboSection;
 const IndexJumbo = styled(Jumbo)`
   ${Center};
   flex-direction: column;
+  height: 35rem;
+
+  // pure-md
+  @media screen and (min-width: 48em) {
+    height: 50rem;
+  }
 
   //pure-lg
   @media screen and (min-width: 64em) {
+    height: 60rem;
     justify-content: space-between;
     flex-direction: row;
   }
@@ -105,10 +112,12 @@ const Squid = styled.h1`
 const TagLine = styled.h2`
   text-align: center;
   font-family: 'Roboto Slab', serif;
+  width: 100vw;
 
   //pure-lg
   @media screen and (min-width: 64em) {
     text-align: left;
+    width: initial;
   }
 `;
 
