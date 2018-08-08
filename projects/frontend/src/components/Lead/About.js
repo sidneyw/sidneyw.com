@@ -5,18 +5,18 @@ import styled from 'styled-components';
 
 import { SplitSection } from '..';
 import PostPreview from '../Blog/Preview';
-import { ZDepth1, ZDepth3 } from '../mixins';
+import { ZDepth1 } from '../mixins';
 import Button from '../Button';
+import ContactModal, { ContactModalButton } from '../ContactModal';
 import { BackgroundImg, imgPropType, matchAssets } from '../Img';
 
-const borderRadius = '0.5rem';
-
-const AboutSection = ({ posts, assetIdx, chauoanShot, terminal, newyork }) => (
+const AboutSection = ({ posts, assetIdx, chauoanShot }) => (
   <SplitSection>
     <AboutSidney>
       <AboutCard
         img={chauoanShot}
         title="About Me"
+        assetIdx={assetIdx}
         text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
         tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
         vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
@@ -42,7 +42,9 @@ const AboutSection = ({ posts, assetIdx, chauoanShot, terminal, newyork }) => (
 );
 
 AboutSection.propTypes = {
-  newyork: PropTypes.shape({ sizes: imgPropType }),
+  // eslint-disable-next-line react/forbid-prop-types
+  assetIdx: PropTypes.object,
+  posts: PropTypes.arrayOf(PropTypes.object),
   chauoanShot: PropTypes.shape({ sizes: imgPropType }),
 };
 
@@ -110,28 +112,37 @@ const AboutContent = styled.div`
   }
 `;
 
-const AboutButton = styled(Button)`
-  width: 45%;
-`;
-
 const ButtonWrap = styled.div`
   display: flex;
   justify-content: space-around;
   margin-top: 1em;
+  & > {
+    width: 45%;
+  }
 `;
 
-const AboutCard = ({ img, title, text, to, children }) => (
+const AboutCard = ({ assetIdx, img, title, text }) => (
   <AboutStyle>
     <AboutImg img={img} />
     <AboutContent>
       <h2>{title}</h2>
       <p>{text}</p>
       <ButtonWrap>
-        <AboutButton to="/">Learn More</AboutButton>
-        <AboutButton secondary to="/">
-          Contact Me
-        </AboutButton>
+        <Button to="/about">Learn More</Button>
+        <ContactModal {...matchAssets(assetIdx, ContactModal.assets)}>
+          {props => <ContactModalButton {...props} />}
+        </ContactModal>
       </ButtonWrap>
     </AboutContent>
   </AboutStyle>
 );
+
+AboutCard.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  assetIdx: PropTypes.object,
+  chauoanShot: PropTypes.shape({ sizes: imgPropType }),
+  img: PropTypes.shape({ sizes: imgPropType }),
+  posts: PropTypes.arrayOf(PropTypes.object),
+  text: PropTypes.string,
+  title: PropTypes.string,
+};
