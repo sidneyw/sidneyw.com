@@ -4,62 +4,145 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { SplitSection } from '..';
-import { BackgroundImg, imgPropType } from '../Img';
+import PostPreview from '../Blog/Preview';
+import { ZDepth1 } from '../mixins';
+import Button from '../Button';
+import ContactModal, { ContactModalButton } from '../ContactModal';
+import { BackgroundImg, imgPropType, matchAssets } from '../Img';
 
-const AboutSection = ({ chauoanShot, newyork }) => (
+const AboutSection = ({ posts, assetIdx, chauoanShot }) => (
   <SplitSection>
-    <CenterPiece img={chauoanShot} />
-    <Section img={newyork} id="contact" />
+    <AboutSidney>
+      <AboutCard
+        img={chauoanShot}
+        title="About Me"
+        assetIdx={assetIdx}
+        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+        vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+        no sea takimata sanctus est Lorem ipsum dolor sit amet."
+      />
+    </AboutSidney>
+    <Posts>
+      <h2>Check Out My Blog</h2>
+      {posts.edges.map(({ node }) => (
+        <PostPreview
+          {...matchAssets(assetIdx, PostPreview.assets)}
+          excerpt={node.excerpt}
+          timeToRead={node.timeToRead}
+          key={node.id}
+          to={node.fields.slug}
+          {...node.frontmatter}
+          img={node.frontmatter.img.childImageSharp}
+        />
+      ))}
+      <BlogButton to="/">All Posts</BlogButton>
+    </Posts>
   </SplitSection>
 );
 
 AboutSection.propTypes = {
-  newyork: PropTypes.shape({ sizes: imgPropType }),
+  // eslint-disable-next-line react/forbid-prop-types
+  assetIdx: PropTypes.object,
+  posts: PropTypes.arrayOf(PropTypes.object),
   chauoanShot: PropTypes.shape({ sizes: imgPropType }),
 };
 
-AboutSection.assets = ['chauoanShot.jpg', 'newyork.png'];
+AboutSection.assets = ['terminal.png', 'chauoanShot.jpg', 'newyork.png'];
 export default AboutSection;
 
-const Section = styled(BackgroundImg)`
+const BlogButton = styled(Button)`
+  width: 50%;
+  margin: 0 auto 2rem;
+`;
+
+const AboutSidney = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100vw;
-  padding: 10%;
-  color: #fff;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+`;
 
-  h3 {
+const Posts = styled.div`
+  padding: 0 5%;
+
+  & > h2 {
+    margin: 1rem auto;
     text-align: center;
-    text-transform: capitalize;
-    font-size: 1.5em;
-  }
-
-  & > p {
-    margin-top: 10px;
-  }
-
-  & > p:last-of-type {
-    margin-bottom: 10px;
-  }
-
-  // pure-md
-  @media screen and (min-width: 48em) {
-    height: 100vh;
-    width: 30vw;
-    padding: 0 5%;
   }
 `;
 
-const CenterPiece = styled(BackgroundImg)`
-  width: 100vw;
-  height: 100vh;
-  // box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+const AboutStyle = styled.div`
+  ${ZDepth1};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  margin: 1rem auto;
+  display: flex;
+  flex-flow: column wrap;
+  width: 90%;
+  overflow: hidden;
 
   // pure-md
   @media screen and (min-width: 48em) {
-    width: 40vw;
+    width: 95%;
+  }
+
+  //pure-lg
+  @media screen and (min-width: 64em) {
+    max-width: 30rem;
+    align-self: center;
   }
 `;
+
+const AboutImg = styled(BackgroundImg)`
+  width: 100%;
+  height: 15rem;
+  overflow: hidden;
+  border-radius: ${({ theme }) =>
+    `${theme.borderRadius} ${theme.borderRadius} 0 0`};
+
+  //pure-lg
+  @media screen and (min-width: 64em) {
+    height: 20rem;
+  }
+`;
+
+const AboutContent = styled.div`
+  padding: 1em;
+  background-color: #fff;
+  h2 {
+    text-align: center;
+  }
+`;
+
+const ButtonWrap = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1em;
+  & > {
+    width: 45%;
+  }
+`;
+
+const AboutCard = ({ assetIdx, img, title, text }) => (
+  <AboutStyle>
+    <AboutImg img={img} />
+    <AboutContent>
+      <h2>{title}</h2>
+      <p>{text}</p>
+      <ButtonWrap>
+        <Button to="/about">Learn More</Button>
+        <ContactModal {...matchAssets(assetIdx, ContactModal.assets)}>
+          {props => <ContactModalButton {...props} />}
+        </ContactModal>
+      </ButtonWrap>
+    </AboutContent>
+  </AboutStyle>
+);
+
+AboutCard.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  assetIdx: PropTypes.object,
+  chauoanShot: PropTypes.shape({ sizes: imgPropType }),
+  img: PropTypes.shape({ sizes: imgPropType }),
+  posts: PropTypes.arrayOf(PropTypes.object),
+  text: PropTypes.string,
+  title: PropTypes.string,
+};

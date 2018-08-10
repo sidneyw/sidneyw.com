@@ -15,7 +15,7 @@ import { Banner } from '../components/';
 
 import { createAssetIdx, matchAssets, mergeBy } from '../components/Img';
 
-const IndexPage = ({ data: { dataJson, icons, hq } }) => {
+const IndexPage = ({ data: { dataJson, icons, hq, posts } }) => {
   const assetIdx = createAssetIdx(icons, hq);
   return (
     <div>
@@ -54,7 +54,11 @@ const IndexPage = ({ data: { dataJson, icons, hq } }) => {
           secondary
         />
       </Banner>
-      <About {...matchAssets(assetIdx, About.assets)} />
+      <About
+        {...matchAssets(assetIdx, About.assets)}
+        assetIdx={assetIdx}
+        posts={posts}
+      />
       <Companies
         companies={mergeBy(
           assetIdx,
@@ -77,6 +81,7 @@ const Callout = styled.h1`
   text-align: center;
   text-transform: Capitalize;
   margin: 1rem auto;
+  width: 100%;
 `;
 
 export const query = graphql`
@@ -93,6 +98,35 @@ export const query = graphql`
   }
 
   query IndexQuery {
+    posts: allMarkdownRemark(
+      sort: { fields: [frontmatter___date], order: DESC }
+      limit: 3
+    ) {
+      edges {
+        node {
+          id
+          timeToRead
+          excerpt
+          fields {
+            slug
+          }
+          frontmatter {
+            title
+            author
+            date
+            tags
+            img {
+              childImageSharp {
+                sizes(maxWidth: 2400) {
+                  ...GatsbyImageSharpSizes_withWebp
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
     dataJson {
       social {
         name
@@ -127,50 +161,6 @@ export const query = graphql`
           }
         }
       }
-    }
-
-    servicesImgs: allImageSharp(
-      filter: { id: { regex: "/.*assets/services/.*/" } }
-    ) {
-      edges {
-        node {
-          id
-          sizes {
-            ...GatsbyImageSharpSizes_withWebp
-          }
-        }
-      }
-    }
-
-    stackImgs: allImageSharp(filter: { id: { regex: "/.*assets/stack/.*/" } }) {
-      edges {
-        node {
-          id
-          sizes(maxWidth: 200) {
-            ...GatsbyImageSharpSizes_withWebp
-          }
-        }
-      }
-    }
-
-    chauoanShot: imageSharp(id: { regex: "/chauoan-shot1.jpg/" }) {
-      ...HQ_ImgQuery
-    }
-
-    newyork: imageSharp(id: { regex: "/newyork.png/" }) {
-      ...HQ_ImgQuery
-    }
-
-    ibm: imageSharp(id: { regex: "/ibm-bw.png/" }) {
-      ...ImgQuery
-    }
-
-    magicLeap: imageSharp(id: { regex: "/magic-leap-bw.png/" }) {
-      ...ImgQuery
-    }
-
-    dali: imageSharp(id: { regex: "/dali-bw.png/" }) {
-      ...ImgQuery
     }
   }
 `;

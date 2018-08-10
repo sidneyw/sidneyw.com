@@ -112,10 +112,10 @@ const StackIconWrap = styled.div`
   }
 `;
 
-const iconSize = 7;
+const iconSize = 5;
 const IconImg = styled(BackgroundImg)`
-  width: ${iconSize}vh;
-  height: ${iconSize}vh;
+  width: ${iconSize}rem;
+  height: ${iconSize}rem;
   background-size: cover;
   margin-right: 0.1em;
 `;
