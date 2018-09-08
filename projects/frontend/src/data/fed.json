@@ -1,0 +1,50 @@
+{
+  "social": [
+    {
+      "name": "twitter",
+      "href": "https://twitter.com/sidneywijn"
+    },
+    {
+      "name": "medium",
+      "href": "https://medium.com/@sidneywijngaarde"
+    },
+    {
+      "name": "github",
+      "href": "https://github.com/rcrsvsquid"
+    },
+    {
+      "name": "linkedin",
+      "href": "https://www.linkedin.com/in/swijngaarde"
+    }
+  ],
+  "services": [
+    {
+      "name": "Responsive Web Design",
+      "text":
+        "Your users are browsing the web on many different devices. Mobile phones, tablets, laptops etc. Responsive web design ensures that your website looks great on all devices so that your users have an amazing and consistent experience. All of my sites adapt to different screen sizes to best serve my your business.",
+      "img": "responsive-web-design1.jpg"
+    },
+    {
+      "name": "E-Commerce",
+      "text":
+        "If you haven't noticed, people love online shopping. Now, with platforms like Shopify, small businesses can have global reach by selling their products online. Whether you're just starting a business or taking your brick and mortar shop to the web we can grow your business together by creating an engaging e-commerce site.",
+      "img": "e-commerce.jpg"
+    },
+    {
+      "name": "Progressive Web Applications",
+      "text":
+        "Users are expecting mobile sites to be able to do more and more. Luckily Progressive Web Applications solve this problem by introducing a set of best practices that embrace offline, mobile first web applications that feel like real mobile apps. I can deliver a custom end to end solution for your business that feels like its from the future.",
+      "img": "pwa.png"
+    }
+  ],
+  "stack": [
+    "serverless",
+    "docker",
+    "react",
+    "graphql",
+    "nodejs",
+    "golang",
+    "kubernetes"
+  ],
+  "companies": ["magic-leap", "ibm", "dali"]
+}

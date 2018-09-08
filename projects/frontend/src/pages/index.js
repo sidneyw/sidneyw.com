@@ -2,124 +2,94 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import PostPreview from '../components/Blog/Preview';
+
+import About from '../components/Lead/About';
+import Companies from '../components/Lead/Companies';
+import IndexJumbo from '../components/Lead/IndexJumbo';
+import Nav from '../components/Nav';
+import Services from '../components/Lead/Services';
+import Stack from '../components/Lead/Stack';
 import NewsLetterForm from '../components/NewsLetterForm';
 
-import {
-  createAssetIdx,
-  imgListPropType,
-  imgPropTypeShape,
-  matchAssets,
-  mergeBy,
-} from '../components/Img';
+import { Banner } from '../components/';
 
-import SocialIcon, {
-  PropType as SocialPropType,
-} from '../components/SocialIcon';
+import { createAssetIdx, matchAssets, mergeBy } from '../components/Img';
 
-const BlogPage = ({ data: { dataJson, posts, icons } }) => {
-  const assetIdx = createAssetIdx(icons);
-
+const IndexPage = ({ data: { content, icons, hq, posts } }) => {
+  const assetIdx = createAssetIdx(icons, hq);
+  const contentNode = content.edges[0].node;
   return (
-    <Blog>
-      <h1>SIDNEY WIJNGAARDE</h1>
-      <h3>Sometimes I Code Things...</h3>
-      <Socials>
-        {mergeBy(assetIdx, dataJson.social).map(social => (
-          <SocialIcon {...social} key={social.name} />
-        ))}
-      </Socials>
-      <h3>Stay Updated</h3>
-      <NewsLetterForm {...matchAssets(assetIdx, NewsLetterForm.assets)} />
-      <Posts>
-        {posts.edges.map(({ node }) => (
-          <PostPreview
-            {...matchAssets(assetIdx, PostPreview.assets)}
-            excerpt={node.excerpt}
-            timeToRead={node.timeToRead}
-            key={node.id}
-            to={node.fields.slug}
-            {...node.frontmatter}
-            img={node.frontmatter.img.childImageSharp}
-          />
-        ))}
-      </Posts>
-    </Blog>
+    <div>
+      <Nav
+        {...matchAssets(assetIdx, ['hamburger.png'])}
+        links={[
+          { href: '#services', text: 'Services' },
+          { href: '#stack', text: 'Stack' },
+          { href: '/about', text: 'About' },
+          { to: '/blog', text: 'Blog' },
+        ]}
+        socialIcons={mergeBy(assetIdx, contentNode.social)}
+      />
+
+      <IndexJumbo {...matchAssets(assetIdx, IndexJumbo.assets)} />
+      <Services
+        services={mergeBy(assetIdx, contentNode.services, svc => svc.img)}
+      />
+      <Banner>
+        <Callout>
+          The Modern Web Runs on Container Tech and Serverless Platforms
+        </Callout>
+      </Banner>
+      <Stack
+        stack={mergeBy(
+          assetIdx,
+          contentNode.stack.map(stack => ({ name: stack }))
+        )}
+      />
+      <Banner>
+        <Callout>
+          get my latest and greatest content delivered straight to your inbox
+        </Callout>
+        <NewsLetterForm
+          {...matchAssets(assetIdx, NewsLetterForm.assets)}
+          secondary
+        />
+      </Banner>
+      <About
+        {...matchAssets(assetIdx, About.assets)}
+        assetIdx={assetIdx}
+        posts={posts}
+      />
+      <Companies
+        companies={mergeBy(
+          assetIdx,
+          contentNode.companies.map(company => ({ name: company }))
+        )}
+      />
+    </div>
   );
 };
 
-BlogPage.propTypes = {
+IndexPage.propTypes = {
   data: PropTypes.shape({
-    calendar: imgPropTypeShape,
-    clock: imgPropTypeShape,
-    dataJson: PropTypes.shape({
-      social: PropTypes.arrayOf(SocialPropType),
+    allMarkdownRemark: PropTypes.shape({
+      edges: PropTypes.array,
     }),
-    message: imgPropTypeShape,
-    socialIcons: imgListPropType,
   }),
 };
 
-export default BlogPage;
-
-const Blog = styled.div`
-  padding-top: 2rem;
-  width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  h1 {
-    text-align: center;
-  }
-
-  h3 {
-    &:nth-of-type(2) {
-      margin-bottom: 0.3em;
-    }
-  }
-`;
-
-const Socials = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin: 1rem 0;
-  width: 50vw;
-  padding: 1rem 0;
-  border-top: 0.1rem solid rgba(0, 0, 0, 0.1);
-  border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
-
-  & > a {
-    margin-bottom: 0;
-    margin-right: 1rem;
-    &:last-of-type {
-      margin-right: 0;
-    }
-  }
-`;
-
-const Posts = styled.div`
-  margin-top: 2em;
-  width: 90vw;
-  max-width: 40rem;
-
-  // pure-md
-  @media screen and (min-width: 48em) {
-    width: 70vw;
-  }
-
-  //pure-lg
-  @media screen and (min-width: 64em) {
-    width: 70vw;
-  }
+const Callout = styled.h1`
+  text-align: center;
+  text-transform: Capitalize;
+  margin: 1rem auto;
+  width: 100%;
 `;
 
 export const query = graphql`
-  query BlogQuery {
+  query IndexQuery {
     posts: allMarkdownRemark(
       sort: { fields: [frontmatter___date], order: DESC }
+      limit: 3
     ) {
       edges {
         node {
@@ -146,6 +116,24 @@ export const query = graphql`
       }
     }
 
+    content: allDataJson(filter: { id: { regex: "/fed.json/" } }) {
+      edges {
+        node {
+          social {
+            name
+            href
+          }
+          services {
+            name
+            text
+            img
+          }
+          stack
+          companies
+        }
+      }
+    }
+
     icons: allImageSharp(filter: { id: { regex: "/.*assets/icons/.*/" } }) {
       edges {
         node {
@@ -157,11 +145,17 @@ export const query = graphql`
       }
     }
 
-    dataJson {
-      social {
-        name
-        href
+    hq: allImageSharp(filter: { id: { regex: "/.*assets/hq/.*/" } }) {
+      edges {
+        node {
+          id
+          sizes(maxWidth: 2400) {
+            ...GatsbyImageSharpSizes_withWebp
+          }
+        }
       }
     }
   }
 `;
+
+export default IndexPage;
