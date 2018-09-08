@@ -50,6 +50,7 @@
     "test": "jest"
   },
   "devDependencies": {
+    "babel-plugin-styled-components": "^1.6.4",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "netlify-cli": "^1.2.2"

@@ -85,19 +85,7 @@ const Callout = styled.h1`
 `;
 
 export const query = graphql`
-  fragment ImgQuery on ImageSharp {
-    sizes(maxWidth: 200) {
-      ...GatsbyImageSharpSizes_withWebp
-    }
-  }
-
-  fragment HQ_ImgQuery on ImageSharp {
-    sizes(maxWidth: 2400) {
-      ...GatsbyImageSharpSizes_withWebp
-    }
-  }
-
-  query IndexQuery {
+  query CloudQuery {
     posts: allMarkdownRemark(
       sort: { fields: [frontmatter___date], order: DESC }
       limit: 3
