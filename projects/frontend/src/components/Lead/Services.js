@@ -39,7 +39,7 @@ ServiceCard.propTypes = ServiceProps;
 // Styles
 // ------------------------------------
 const ServiceImg = styled(BackgroundImg)`
-  height: 20vh;
+  height: 15rem;
   width: 100%;
   overflow: hidden;
 `;
@@ -56,6 +56,7 @@ const ServiceSection = styled.section`
   @media screen and (min-width: 48em) {
     flex-flow: row wrap;
     justify-content: space-between;
+    align-items: initial;
   }
 `;
 
@@ -73,8 +74,8 @@ const ServiceCardStyle = styled.div`
   // pure-md
   @media screen and (min-width: 48em) {
     width: 30vw;
-    min-height: 33vh;
     margin-bottom: 0;
+    min-height: 50vh;
   }
 
   h1 {

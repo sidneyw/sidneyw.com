@@ -36,9 +36,7 @@ const IndexPage = ({ data: { content, icons, hq, posts } }) => {
         services={mergeBy(assetIdx, contentNode.services, svc => svc.img)}
       />
       <Banner>
-        <Callout>
-          The Modern Web Runs on Container Tech and Serverless Platforms
-        </Callout>
+        <Callout>The web is mobile and social.</Callout>
       </Banner>
       <Stack
         stack={mergeBy(
