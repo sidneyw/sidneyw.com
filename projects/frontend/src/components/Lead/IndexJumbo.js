@@ -1,36 +1,49 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
-import PropTypes from 'prop-types';
+import { StaticQuery, graphql } from 'gatsby';
 import styled, { css, keyframes } from 'styled-components';
 
-import { Card, Jumbo, imgPropType } from '..';
+import { Card, Jumbo } from '..';
 import { Center } from '../mixins';
 import ContactForm from '../ContactForm';
-import ContactModal, { ContactModalButton } from '../ContactModal';
+import ContactModal from '../ContactModal';
+import ContactModalButton from '../ContactModalButton';
 
-const IndexJumboSection = ({ headshot, ...rest }) => (
-  <IndexJumbo img={headshot}>
-    <Introduction>
-      <TagLine>I&apos;m Sidney,</TagLine>
-      <TagLine>but they call me</TagLine>
-      <Squid>Squid.</Squid>
-      <TagLine>I build web solutions for</TagLine>
-      <TagLine>clients just like you.</TagLine>
-      <ContactModal headshot={headshot} {...rest}>
-        {props => <ContactMobileOnlyBtn {...props} />}
-      </ContactModal>
-    </Introduction>
-    <FormWrap>
-      <ContactForm title="Let's build something together" {...rest} />
-    </FormWrap>
-  </IndexJumbo>
+const IndexJumboSection = () => (
+  <StaticQuery
+    query={graphql`
+      query IndexJumboQuery {
+        background: file(relativePath: { regex: "/headshot.jpg/" }) {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+      }
+    `}
+    render={({ background }) => (
+      <IndexJumbo img={background.childImageSharp}>
+        <Introduction>
+          <TagLine>I&apos;m Sidney,</TagLine>
+          <TagLine>but they call me</TagLine>
+          <Squid>Squid.</Squid>
+          <TagLine>I build web solutions for</TagLine>
+          <TagLine>clients just like you.</TagLine>
+          <ContactModal>
+            {Props => <ContactMobileOnlyBtn {...Props} />}
+          </ContactModal>
+        </Introduction>
+        <FormWrap>
+          <ContactForm title="Let's build something together" />
+        </FormWrap>
+      </IndexJumbo>
+    )}
+  />
 );
 
-IndexJumboSection.propTypes = {
-  headshot: PropTypes.shape({ imgPropType }),
-};
-
-IndexJumboSection.assets = [...ContactModal.assets, 'headshot.jpg'];
+// IndexJumboSection.propTypes = {
+//   headshot: PropTypes.shape({ imgPropType }),
+// };
 
 const ContactMobileOnlyBtn = styled(ContactModalButton)`
   //pure-lg

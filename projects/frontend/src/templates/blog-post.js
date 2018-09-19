@@ -386,7 +386,7 @@ export const query = graphql`
       }
     }
 
-    icons: allImageSharp(filter: { id: { regex: "/.*assets/icons/.*/" } }) {
+    icons: allImageSharp {
       edges {
         node {
           id
@@ -397,7 +397,7 @@ export const query = graphql`
       }
     }
 
-    hq: allImageSharp(filter: { id: { regex: "/.*assets/hq/.*/" } }) {
+    hq: allImageSharp {
       edges {
         node {
           id

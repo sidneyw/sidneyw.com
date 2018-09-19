@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import PostPreview from '../components/Blog/Preview';
 import NewsLetterForm from '../components/NewsLetterForm';
+import Layout from '../layouts';
 
 import {
   createAssetIdx,
@@ -21,30 +22,32 @@ const BlogPage = ({ data: { dataJson, posts, icons } }) => {
   const assetIdx = createAssetIdx(icons);
 
   return (
-    <Blog>
-      <h1>SIDNEY WIJNGAARDE</h1>
-      <h3>Sometimes I Code Things...</h3>
-      <Socials>
-        {mergeBy(assetIdx, dataJson.social).map(social => (
-          <SocialIcon {...social} key={social.name} />
-        ))}
-      </Socials>
-      <h3>Stay Updated</h3>
-      <NewsLetterForm {...matchAssets(assetIdx, NewsLetterForm.assets)} />
-      <Posts>
-        {posts.edges.map(({ node }) => (
-          <PostPreview
-            {...matchAssets(assetIdx, PostPreview.assets)}
-            excerpt={node.excerpt}
-            timeToRead={node.timeToRead}
-            key={node.id}
-            to={node.fields.slug}
-            {...node.frontmatter}
-            img={node.frontmatter.img.childImageSharp}
-          />
-        ))}
-      </Posts>
-    </Blog>
+    <Layout>
+      <Blog>
+        <h1>SIDNEY WIJNGAARDE</h1>
+        <h3>Sometimes I Code Things...</h3>
+        <Socials>
+          {mergeBy(assetIdx, dataJson.social).map(social => (
+            <SocialIcon {...social} key={social.name} />
+          ))}
+        </Socials>
+        <h3>Stay Updated</h3>
+        <NewsLetterForm {...matchAssets(assetIdx, NewsLetterForm.assets)} />
+        <Posts>
+          {posts.edges.map(({ node }) => (
+            <PostPreview
+              {...matchAssets(assetIdx, PostPreview.assets)}
+              excerpt={node.excerpt}
+              timeToRead={node.timeToRead}
+              key={node.id}
+              to={node.fields.slug}
+              {...node.frontmatter}
+              img={node.frontmatter.img.childImageSharp}
+            />
+          ))}
+        </Posts>
+      </Blog>
+    </Layout>
   );
 };
 
@@ -146,7 +149,7 @@ export const query = graphql`
       }
     }
 
-    icons: allImageSharp(filter: { id: { regex: "/.*assets/icons/.*/" } }) {
+    icons: allImageSharp {
       edges {
         node {
           id
