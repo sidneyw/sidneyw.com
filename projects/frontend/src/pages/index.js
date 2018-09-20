@@ -18,16 +18,14 @@ const IndexPage = () => {
   return (
     <Layout>
       <div>
-        {/* <Nav
-               {...matchAssets(assetIdx, ['hamburger.png'])}
-               links={[
-                 { href: '#services', text: 'Services' },
-                 { href: '#stack', text: 'Stack' },
-                 { href: '/about', text: 'About' },
-                 { to: '/blog', text: 'Blog' },
-               ]}
-               socialIcons={mergeBy(assetIdx, contentNode.social)}
-             /> */}
+        <Nav
+          links={[
+            { href: '#services', text: 'Services' },
+            { href: '#stack', text: 'Stack' },
+            { href: '/about', text: 'About' },
+            { to: '/blog', text: 'Blog' },
+          ]}
+        />
 
         <IndexJumbo />
       </div>

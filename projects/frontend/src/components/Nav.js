@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import debounce from 'lodash.debounce';
+import { Menu } from 'react-feather';
 import SocialIcon, { PropType as SocialPropType } from './SocialIcon';
 import Link from './Link';
 
@@ -57,15 +58,14 @@ export default class Navigation extends React.Component {
   }
 
   render() {
-    const { hamburger, links, socialIcons } = this.props;
+    const { links, socialIcons } = this.props;
 
     return (
       <Nav show={this.state.show}>
         <NavWrap show={this.state.show}>
           <LogoLink to="/">Sidney Wijngaarde</LogoLink>
           <Hamburger onClick={this.toggleMobile}>
-            <Divider />
-            <IconButton img={hamburger} />
+            <Menu />
           </Hamburger>
         </NavWrap>
         <NavLinks
@@ -78,9 +78,9 @@ export default class Navigation extends React.Component {
             </NavLink>
           ))}
           <Divider />
-          <SocialWrap>
-            {socialIcons.map((icon, ind) => <NavSocial {...icon} key={ind} />)}
-          </SocialWrap>
+          {/* <SocialWrap>
+                 {socialIcons.map((icon, ind) => <NavSocial {...icon} key={ind} />)}
+               </SocialWrap> */}
         </NavLinks>
       </Nav>
     );
