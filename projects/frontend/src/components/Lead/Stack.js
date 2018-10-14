@@ -20,7 +20,7 @@ const StackSection = ({ stack }) => (
     </p>
     <StackIconWrap>
       {stack.map(({ name, img }) => (
-        <StackIcon title={name} img={img} key={name} />
+        <StackIcon title={name} img={img.childImageSharp} key={name} />
       ))}
     </StackIconWrap>
   </Stack>

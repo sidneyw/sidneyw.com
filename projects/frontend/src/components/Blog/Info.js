@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
+import { StaticQuery, graphql } from 'gatsby';
 
 import styled from 'styled-components';
 import Img from 'gatsby-image';
@@ -10,16 +11,45 @@ import Tag from './Tag';
 import { formatDate } from '../utils';
 
 const PostInfo = ({ calendar, date, clock, timeToRead, tag, tags }) => (
-  <PostInfoStyle>
-    <div>
-      <PostInfoIcon {...calendar} />
-      <PostInfoText>{formatDate(date)}</PostInfoText>
-      <PostInfoText>‧</PostInfoText>
-      <PostInfoIcon {...clock} />
-      <PostInfoText>{`${timeToRead} mins`}</PostInfoText>
-    </div>
-    {tags && <Tag icon={tag}>{tags[0]}</Tag>}
-  </PostInfoStyle>
+  <StaticQuery
+    query={graphql`
+      query PostInfo {
+        calendar: file(relativePath: { regex: "/calendar.png/" }) {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+        clock: file(relativePath: { regex: "/clock.png/" }) {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+        tag: file(relativePath: { regex: "/tag.png/" }) {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+      }
+    `}
+    render={({ calendar, clock, tag }) => (
+      <PostInfoStyle>
+        <div>
+          <PostInfoIcon {...calendar.childImageSharp} />
+          <PostInfoText>{formatDate(date)}</PostInfoText>
+          <PostInfoText>‧</PostInfoText>
+          <PostInfoIcon {...clock.childImageSharp} />
+          <PostInfoText>{`${timeToRead} mins`}</PostInfoText>
+        </div>
+        {tags && <Tag icon={tag.childImageSharp}>{tags[0]}</Tag>}
+      </PostInfoStyle>
+    )}
+  />
 );
 
 PostInfo.propTypes = {
@@ -30,8 +60,6 @@ PostInfo.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string),
   timeToRead: PropTypes.number,
 };
-
-PostInfo.assets = ['calendar.png', 'clock.png', 'tag.png'];
 
 export default PostInfo;
 

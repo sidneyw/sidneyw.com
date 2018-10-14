@@ -377,7 +377,6 @@ export const query = graphql`
         name
         href
       }
-      stack
     }
 
     site {

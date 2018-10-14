@@ -20,13 +20,13 @@
     }
   ],
   "stack": [
-    "serverless",
-    "docker",
-    "react",
-    "graphql",
-    "nodejs",
-    "golang",
-    "kubernetes"
+    { "name": "serverless", "img": "../assets/icons/serverless.png" },
+    { "name": "docker", "img": "../assets/icons/docker.png" },
+    { "name": "react", "img": "../assets/icons/react.png" },
+    { "name": "graphql", "img": "../assets/icons/graphql.png" },
+    { "name": "nodejs", "img": "../assets/icons/nodejs.png" },
+    { "name": "golang", "img": "../assets/icons/golang.png" },
+    { "name": "kubernetes", "img": "../assets/icons/kubernetes.png" }
   ],
   "companies": ["magic-leap", "ibm", "dali"]
 }

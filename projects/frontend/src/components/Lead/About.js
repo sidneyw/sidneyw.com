@@ -2,50 +2,65 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { StaticQuery, graphql } from 'gatsby';
 
 import { SplitSection } from '..';
 import PostPreview from '../Blog/Preview';
 import { ZDepth1 } from '../mixins';
 import Button from '../Button';
-import ContactModal, { ContactModalButton } from '../ContactModal';
-import { BackgroundImg, imgPropType, matchAssets } from '../Img';
+import ContactModal from '../ContactModal';
+import ContactModalButton from '../ContactModalButton';
+import { BackgroundImg, imgPropType } from '../Img';
 
-const AboutSection = ({ posts, assetIdx, chauoanShot }) => (
-  <SplitSection>
-    <AboutSidney>
-      <AboutCard
-        img={chauoanShot}
-        title="About Me"
-        assetIdx={assetIdx}
-        text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+const AboutSection = ({ posts }) => (
+  <StaticQuery
+    query={graphql`
+      query AboutQuery {
+        chauoanShot: file(relativePath: { regex: "/chauoan-shot.jpg/" }) {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+      }
+    `}
+    render={({ chauoanShot }) => (
+      <SplitSection>
+        <AboutSidney>
+          <AboutCard
+            img={chauoanShot.childImageSharp}
+            title="About Me"
+            text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
         tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
         vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
         no sea takimata sanctus est Lorem ipsum dolor sit amet."
-      />
-    </AboutSidney>
-    <Posts>
-      <h2>Check Out My Blog</h2>
-      {posts.edges.map(({ node }) => (
-        <PostPreview
-          {...matchAssets(assetIdx, PostPreview.assets)}
-          excerpt={node.excerpt}
-          timeToRead={node.timeToRead}
-          key={node.id}
-          to={node.fields.slug}
-          {...node.frontmatter}
-          img={node.frontmatter.img.childImageSharp}
-        />
-      ))}
-      <BlogButton to="/">All Posts</BlogButton>
-    </Posts>
-  </SplitSection>
+          />
+        </AboutSidney>
+        <Posts>
+          <h2>Check Out My Blog</h2>
+          {posts.edges.map(({ node }) => (
+            <PostPreview
+              excerpt={node.excerpt}
+              timeToRead={node.timeToRead}
+              key={node.id}
+              to={node.fields.slug}
+              {...node.frontmatter}
+              img={node.frontmatter.img.childImageSharp}
+            />
+          ))}
+          <BlogButton to="/">All Posts</BlogButton>
+        </Posts>
+      </SplitSection>
+    )}
+  />
 );
 
 AboutSection.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  assetIdx: PropTypes.object,
-  posts: PropTypes.arrayOf(PropTypes.object),
-  chauoanShot: PropTypes.shape({ sizes: imgPropType }),
+  posts: PropTypes.shape({
+    edges: PropTypes.arrayOf(PropTypes.object),
+  }),
 };
 
 AboutSection.assets = ['terminal.png', 'chauoanShot.jpg', 'newyork.png'];
@@ -121,7 +136,7 @@ const ButtonWrap = styled.div`
   }
 `;
 
-const AboutCard = ({ assetIdx, img, title, text }) => (
+const AboutCard = ({ img, title, text }) => (
   <AboutStyle>
     <AboutImg img={img} />
     <AboutContent>
@@ -129,7 +144,7 @@ const AboutCard = ({ assetIdx, img, title, text }) => (
       <p>{text}</p>
       <ButtonWrap>
         <Button to="/about">Learn More</Button>
-        <ContactModal {...matchAssets(assetIdx, ContactModal.assets)}>
+        <ContactModal>
           {props => <ContactModalButton {...props} />}
         </ContactModal>
       </ButtonWrap>

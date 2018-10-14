@@ -14,7 +14,9 @@ import Layout from '../layouts';
 
 import { Banner } from '../components/';
 
-const IndexPage = ({ data: { serviceContent } }) => {
+const IndexPage = ({ data: { posts, serviceContent } }) => {
+  const pageContent = serviceContent.edges[0].node.childDataJson;
+
   return (
     <Layout>
       <div>
@@ -28,37 +30,23 @@ const IndexPage = ({ data: { serviceContent } }) => {
         />
 
         <IndexJumbo />
-        <Services
-          content={serviceContent.edges[0].node.childDataJson.services}
-        />
+        <Services content={pageContent.services} />
+        <Banner>
+          <Callout>The web is mobile and social.</Callout>
+        </Banner>
+        <Stack stack={pageContent.stack} />
+        <Banner>
+          <Callout>
+            get my latest and greatest content delivered straight to your inbox
+          </Callout>
+          <NewsLetterForm secondary />
+        </Banner>
+        <About posts={posts} />
       </div>
     </Layout>
   );
 };
 
-// <Banner>
-//   <Callout>The web is mobile and social.</Callout>
-// </Banner>
-// <Stack
-//   stack={mergeBy(
-//     assetIdx,
-//     contentNode.stack.map(stack => ({ name: stack }))
-//   )}
-// />
-// <Banner>
-//   <Callout>
-//     get my latest and greatest content delivered straight to your inbox
-//   </Callout>
-//   <NewsLetterForm
-//     {...matchAssets(assetIdx, NewsLetterForm.assets)}
-//     secondary
-//   />
-// </Banner>
-// <About
-//   {...matchAssets(assetIdx, About.assets)}
-//   assetIdx={assetIdx}
-//   posts={posts}
-// />
 // <Companies
 //   companies={mergeBy(
 //     assetIdx,
@@ -87,14 +75,51 @@ export const query = graphql`
         node {
           id
           childDataJson {
+            stack {
+              name
+              img {
+                childImageSharp {
+                  fluid {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
             services {
               name
               text
               img {
                 childImageSharp {
                   fluid {
-                    src
+                    ...GatsbyImageSharpFluid_withWebp
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    posts: allMarkdownRemark(
+      sort: { fields: [frontmatter___date], order: DESC }
+    ) {
+      edges {
+        node {
+          id
+          timeToRead
+          excerpt
+          fields {
+            slug
+          }
+          frontmatter {
+            title
+            author
+            date
+            tags
+            img {
+              childImageSharp {
+                sizes(maxWidth: 2400) {
+                  ...GatsbyImageSharpSizes_withWebp
                 }
               }
             }
