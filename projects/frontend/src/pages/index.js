@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { graphql } from 'gatsby';
 import About from '../components/Lead/About';
 import Companies from '../components/Lead/Companies';
 import IndexJumbo from '../components/Lead/IndexJumbo';
