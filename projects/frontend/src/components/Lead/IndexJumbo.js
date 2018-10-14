@@ -68,6 +68,7 @@ const IndexJumbo = styled(Jumbo)`
   @media screen and (min-width: 64em) {
     height: 60rem;
     justify-content: space-between;
+    padding-left: 5rem;
     flex-direction: row;
   }
 `;

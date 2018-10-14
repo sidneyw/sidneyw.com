@@ -76,8 +76,8 @@ BackgroundImg.propTypes = {
 };
 
 export const Avatar = styled(Img)`
-  border-radius: 100%;
+  // border-radius: 100%;
   margin-right: 0.5em;
-  height: 5vh;
-  width: 5vh;
+  height: 5rem;
+  width: 15rem;
 `;

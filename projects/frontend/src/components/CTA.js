@@ -15,11 +15,9 @@ const CTAForm = ({ stack, title }) => (
     <h3>{title}</h3>
 
     <StackWrap>
-      {stack
-        .splice(0, stack.length - 1)
-        .map(({ name, img }) => (
-          <CTAStackIcon title={name} img={img.childImageSharp} key={name} />
-        ))}
+      {stack.splice(0, stack.length - 1).map(({ name, img }) => (
+        <CTAStackIcon title={name} img={img.childImageSharp} key={name} />
+      ))}
     </StackWrap>
 
     <ContactModal>{props => <ContactModalButton {...props} />}</ContactModal>
