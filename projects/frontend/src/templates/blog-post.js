@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StaticQuery, graphql } from 'gatsby';
+import { graphql } from 'gatsby';
 
 import styled from 'styled-components';
 import { DiscussionEmbed } from 'disqus-react';
 import Nav from '../components/Nav';
 import { PropType as SocialPropType } from '../components/SocialIcon';
-import Button from '../components/Button';
 import CTA from '../components/CTA';
-import ContactModal from '../components/ContactModal';
-import { Center, ZDepth1 } from '../components/mixins';
+import { Center } from '../components/mixins';
 import Layout from '../layouts';
 
 import {
@@ -22,6 +20,7 @@ import {
 import PostInfo from '../components/Blog/Info';
 import PostMeta from '../components/Blog/Meta';
 import ShareRow from '../components/Blog/Share';
+import BottomBar from '../components/Blog/BottomBar';
 
 const Post = ({ data: { ctaStack, headshot, post, site } }) => (
   <Layout>
@@ -88,60 +87,14 @@ const Post = ({ data: { ctaStack, headshot, post, site } }) => (
           shortText
         />
       </StickyShare>
-      <BottomBar>
-        <ShareRow
-          siteUrl={site.siteMetadata.siteUrl}
-          slug={post.fields.slug}
-          title={post.frontmatter.title}
-          shortText
-        />
-        <ContactModal>{props => <ContactMobile {...props} />}</ContactModal>
-      </BottomBar>
+      <BottomBar
+        siteUrl={site.siteMetadata.siteUrl}
+        slug={post.fields.slug}
+        title={post.frontmatter.title}
+      />
     </PageWrap>
   </Layout>
 );
-
-const ContactMobile = ({ toggle }) => (
-  <StaticQuery
-    query={graphql`
-      query ContactMobileButton {
-        buttonIcon: file(relativePath: { regex: "/send/" }) {
-          childImageSharp {
-            fluid {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-        }
-      }
-    `}
-    render={({ buttonIcon }) => (
-      <ContactMobileStyle
-        secondary
-        icon={buttonIcon.childImageSharp}
-        onClick={toggle}
-        className="cta-contact-launch"
-      >
-        <span>Contact</span>
-      </ContactMobileStyle>
-    )}
-  />
-);
-
-ContactMobile.propTypes = {
-  toggle: PropTypes.func.isRequired,
-};
-
-const ContactMobileStyle = styled(Button)`
-  & > div {
-    margin-right: 0;
-  }
-
-  span {
-    display: none;
-    height: 3vh;
-    width: 3vh;
-  }
-`;
 
 Post.propTypes = {
   data: PropTypes.shape({
@@ -310,24 +263,6 @@ const StickyShare = styled.div`
     max-width: 7rem;
     bottom: 35vh;
     left: 0;
-  }
-`;
-
-const BottomBar = styled.div`
-  position: fixed;
-  bottom: 0;
-  width: 100vw;
-  height: 10vh;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fff;
-  padding: 0 1em;
-  ${ZDepth1};
-
-  // pure-lg
-  @media screen and (min-width: 64em) {
-    display: none;
   }
 `;
 

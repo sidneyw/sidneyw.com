@@ -7,7 +7,7 @@ const ContactModalButton = ({ toggle, className = '' }) => (
   <StaticQuery
     query={graphql`
       query ContactModalButton {
-        buttonIcon: file(relativePath: { regex: "/send/" }) {
+        buttonIcon: file(relativePath: { regex: "/send.png/" }) {
           childImageSharp {
             fluid {
               ...GatsbyImageSharpFluid_withWebp

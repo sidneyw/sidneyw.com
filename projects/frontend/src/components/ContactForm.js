@@ -12,7 +12,7 @@ const ContactForm = ({ title, endpoint = '/contact', ...rest }) => (
   <StaticQuery
     query={graphql`
       query FormQuery {
-        send: file(relativePath: { regex: "/send/" }) {
+        send: file(relativePath: { regex: "/send.png/" }) {
           childImageSharp {
             fluid {
               ...GatsbyImageSharpFluid_withWebp
