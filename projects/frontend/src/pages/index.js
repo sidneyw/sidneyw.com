@@ -14,7 +14,7 @@ import Layout from '../layouts';
 
 import { Banner } from '../components/';
 
-const IndexPage = () => {
+const IndexPage = ({ data: { serviceContent } }) => {
   return (
     <Layout>
       <div>
@@ -28,14 +28,14 @@ const IndexPage = () => {
         />
 
         <IndexJumbo />
+        <Services
+          content={serviceContent.edges[0].node.childDataJson.services}
+        />
       </div>
     </Layout>
   );
 };
 
-// <Services
-//   services={mergeBy(assetIdx, contentNode.services, svc => svc.img)}
-// />
 // <Banner>
 //   <Callout>The web is mobile and social.</Callout>
 // </Banner>
@@ -80,7 +80,29 @@ const Callout = styled.h1`
   width: 100%;
 `;
 
-// export const pageQuery = graphql`
-// `;
+export const query = graphql`
+  query IndexQuery {
+    serviceContent: allFile(filter: { relativePath: { eq: "fed.json" } }) {
+      edges {
+        node {
+          id
+          childDataJson {
+            services {
+              name
+              text
+              img {
+                childImageSharp {
+                  fluid {
+                    src
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 export default IndexPage;

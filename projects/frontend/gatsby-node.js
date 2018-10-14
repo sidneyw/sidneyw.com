@@ -50,13 +50,8 @@ exports.createPages = async ({
   });
 };
 
-// {
-//     "presets": ["react", "env"],
-//     "plugins": ["transform-runtime", "styled-components"]
-// }
-
-exports.onCreateWebpackConfig = ({ actions, plugins }) => {
-  console.log('PLUGINS', JSON.stringify(plugins, null, 2));
+exports.onCreateWebpackConfig = ({ actions }) => {
+  // console.log('PLUGINS', JSON.stringify(plugins, null, 2));
   actions.setWebpackConfig({
     resolve: {
       modules: [path.resolve(__dirname, 'src'), 'node_modules'],

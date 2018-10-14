@@ -5,10 +5,15 @@ import styled from 'styled-components';
 
 import { BackgroundImg, imgPropTypeShape } from '../Img';
 
-const Services = ({ services }) => (
+const Services = ({ content }) => (
   <ServiceSection id="services">
-    {services.map(({ name, text, img }) => (
-      <ServiceCard name={name} text={text} img={img} key={name} />
+    {content.map(({ name, text, img }) => (
+      <ServiceCard
+        name={name}
+        text={text}
+        img={img.childImageSharp}
+        key={name}
+      />
     ))}
   </ServiceSection>
 );
@@ -20,7 +25,7 @@ const ServiceProps = {
 };
 
 Services.propTypes = {
-  services: PropTypes.arrayOf(PropTypes.shape(ServiceProps)),
+  content: PropTypes.arrayOf(PropTypes.shape(ServiceProps)),
 };
 
 export default Services;

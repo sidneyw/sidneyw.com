@@ -4,17 +4,14 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import debounce from 'lodash.debounce';
 import { Menu } from 'react-feather';
-import SocialIcon, { PropType as SocialPropType } from './SocialIcon';
 import Link from './Link';
 
-import { IconButton } from '.';
 import { Center, ZDepth1 } from './mixins';
+import NavSocials from './NavSocials';
 
 // TODO: Check out: https://github.com/fisshy/react-scroll - 03/04/18 12:42:12 sidneywijngaarde
 export default class Navigation extends React.Component {
   static propTypes = {
-    hamburger: SocialPropType,
-    socialIcons: PropTypes.arrayOf(SocialPropType),
     links: PropTypes.arrayOf(
       PropTypes.shape({
         href: PropTypes.string,
@@ -58,8 +55,6 @@ export default class Navigation extends React.Component {
   }
 
   render() {
-    const { links, socialIcons } = this.props;
-
     return (
       <Nav show={this.state.show}>
         <NavWrap show={this.state.show}>
@@ -72,15 +67,13 @@ export default class Navigation extends React.Component {
           onClick={this.toggleMobile}
           showMobile={this.state.showMobile}
         >
-          {links.map(link => (
+          {this.props.links.map(link => (
             <NavLink {...link} key={link.text}>
               {link.text}
             </NavLink>
           ))}
           <Divider />
-          {/* <SocialWrap>
-                 {socialIcons.map((icon, ind) => <NavSocial {...icon} key={ind} />)}
-               </SocialWrap> */}
+          <NavSocials />
         </NavLinks>
       </Nav>
     );
@@ -194,17 +187,6 @@ const NavWrap = styled.div`
   }
 `;
 
-const SocialWrap = styled.div`
-  ${Center} height: 100%;
-  width: 100%;
-  margin-top: 5px;
-  // pure-md
-  @media screen and (min-width: 48em) {
-    width: initial;
-    margin-top: 0px;
-  }
-`;
-
 const Hamburger = styled.div`
   height: 10vh;
   display: flex;
@@ -214,15 +196,6 @@ const Hamburger = styled.div`
   // pure-md
   @media screen and (min-width: 48em) {
     display: none;
-  }
-`;
-
-const NavSocial = styled(SocialIcon)`
-  margin: 0.5em;
-
-  // pure-md
-  @media screen and (min-width: 48em) {
-    margin: 0.2em;
   }
 `;
 

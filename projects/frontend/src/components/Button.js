@@ -32,7 +32,6 @@ export const UnifiedButton = ({
     rest.href || rest.to
       ? props => <Link {...props} />
       : props => <button {...props} />;
-  console.log('Button rest', rest);
   return (
     <Wrapper {...rest}>
       {icon && icon.fluid && icon.fluid.sizes && <ButtonIcon {...icon} />}

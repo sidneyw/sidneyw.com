@@ -2,6 +2,24 @@ module.exports = {
   siteMetadata: {
     siteUrl: 'https://www.sidneyw.com',
     title: 'Sidney Wijngaarde',
+    social: [
+      {
+        name: 'twitter',
+        href: 'https://twitter.com/sidneywijn',
+      },
+      {
+        name: 'medium',
+        href: 'https://medium.com/@sidneywijngaarde',
+      },
+      {
+        name: 'github',
+        href: 'https://github.com/rcrsvsquid',
+      },
+      {
+        name: 'linkedin',
+        href: 'https://www.linkedin.com/in/swijngaarde',
+      },
+    ],
   },
   proxy: {
     prefix: '/localhost:3000',
@@ -23,7 +41,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'images',
+        name: 'assets',
         path: `${__dirname}/src/assets/`,
       },
     },
