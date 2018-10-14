@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -6,7 +5,7 @@ import styled from 'styled-components';
 import { Center } from '../mixins';
 
 import { Heading } from '..';
-import { BackgroundImg, imgPropTypeShape, mergeByImgProps } from '../Img';
+import { BackgroundImg, imgPropType, imgPropTypeShape } from '../Img';
 
 const StackSection = ({ stack }) => (
   <Stack id="stack">
@@ -20,14 +19,19 @@ const StackSection = ({ stack }) => (
     </p>
     <StackIconWrap>
       {stack.map(({ name, img }) => (
-        <StackIcon title={name} img={img} key={name} />
+        <StackIcon title={name} img={img.childImageSharp} key={name} />
       ))}
     </StackIconWrap>
   </Stack>
 );
 
 StackSection.propTypes = {
-  stack: mergeByImgProps,
+  stack: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      img: imgPropTypeShape,
+    })
+  ),
 };
 
 export default StackSection;
@@ -40,7 +44,7 @@ export const StackIcon = ({ title, img, ...rest }) => (
 );
 
 StackIcon.propTypes = {
-  img: imgPropTypeShape,
+  img: imgPropType,
   title: PropTypes.string,
 };
 

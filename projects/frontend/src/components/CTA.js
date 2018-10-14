@@ -1,49 +1,65 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-// eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
+import { StaticQuery, graphql } from 'gatsby';
 
 import styled from 'styled-components';
 import { StackIcon } from './Lead/Stack';
 import { Card } from '.';
-import { imgPropTypeShape } from '../components/Img';
-import ContactModal, { ContactModalButton } from '../components/ContactModal';
+import ContactModal from '../components/ContactModal';
+import ContactModalButton from '../components/ContactModalButton';
 import Link from './Link';
 
-const CTAForm = ({ headshot, send, times, check, stack, title }) => (
-  <CTACard>
-    <h3>{title}</h3>
+const CTAForm = ({ title }) => (
+  <StaticQuery
+    query={graphql`
+      query ctaQuery {
+        ctaStack: allFile(filter: { relativePath: { eq: "fed.json" } }) {
+          edges {
+            node {
+              childDataJson {
+                stack {
+                  name
+                  img {
+                    childImageSharp {
+                      fluid {
+                        ...GatsbyImageSharpFluid_withWebp
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `}
+    render={({ ctaStack }) => {
+      const { stack } = ctaStack.edges[0].node.childDataJson;
+      return (
+        <CTACard>
+          <h3>{title}</h3>
 
-    <StackWrap>
-      {stack
-        .splice(0, stack.length - 1)
-        .map(({ name, img }) => (
-          <CTAStackIcon title={name} img={img} key={name} />
-        ))}
-    </StackWrap>
+          <StackWrap>
+            {stack.splice(0, stack.length - 1).map(({ name, img }) => (
+              <CTAStackIcon title={name} img={img.childImageSharp} key={name} />
+            ))}
+          </StackWrap>
 
-    <ContactModal headshot={headshot} times={times} send={send} check={check}>
-      {props => <ContactModalButton {...props} />}
-    </ContactModal>
-    <Link to="/cloud">Learn More</Link>
-  </CTACard>
+          <ContactModal>
+            {props => <ContactModalButton {...props} />}
+          </ContactModal>
+          <Link to="/cloud">Learn More</Link>
+        </CTACard>
+      );
+    }}
+  />
 );
 
 CTAForm.propTypes = {
-  check: imgPropTypeShape,
-  headshot: imgPropTypeShape,
-  send: imgPropTypeShape,
-  stack: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      img: imgPropTypeShape,
-    })
-  ),
-  times: imgPropTypeShape,
   title: PropTypes.string,
 };
 
-CTAForm.assets = ContactModal.assets;
 export default CTAForm;
 
 const CTACard = styled(Card)`

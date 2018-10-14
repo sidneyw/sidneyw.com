@@ -10,6 +10,7 @@ import Nav from '../components/Nav';
 import Services from '../components/Lead/Services';
 import Stack from '../components/Lead/Stack';
 import NewsLetterForm from '../components/NewsLetterForm';
+import Layout from '../layouts';
 
 import { Banner } from '../components/';
 
@@ -18,54 +19,56 @@ import { createAssetIdx, matchAssets, mergeBy } from '../components/Img';
 const IndexPage = ({ data: { dataJson, icons, hq, posts } }) => {
   const assetIdx = createAssetIdx(icons, hq);
   return (
-    <div>
-      <Nav
-        {...matchAssets(assetIdx, ['hamburger.png'])}
-        links={[
-          { href: '#services', text: 'Services' },
-          { href: '#stack', text: 'Stack' },
-          { href: '#about', text: 'About' },
-          { to: '/', text: 'Blog' },
-        ]}
-        socialIcons={mergeBy(assetIdx, dataJson.social)}
-      />
-
-      <IndexJumbo {...matchAssets(assetIdx, IndexJumbo.assets)} />
-      <Services
-        services={mergeBy(assetIdx, dataJson.services, svc => svc.img)}
-      />
-      <Banner>
-        <Callout>
-          The Modern Web Runs on Container Tech and Serverless Platforms
-        </Callout>
-      </Banner>
-      <Stack
-        stack={mergeBy(
-          assetIdx,
-          dataJson.stack.map(stack => ({ name: stack }))
-        )}
-      />
-      <Banner>
-        <Callout>
-          get my latest and greatest content delivered straight to your inbox
-        </Callout>
-        <NewsLetterForm
-          {...matchAssets(assetIdx, NewsLetterForm.assets)}
-          secondary
+    <Layout>
+      <div>
+        <Nav
+          {...matchAssets(assetIdx, ['hamburger.png'])}
+          links={[
+            { href: '#services', text: 'Services' },
+            { href: '#stack', text: 'Stack' },
+            { href: '#about', text: 'About' },
+            { to: '/', text: 'Blog' },
+          ]}
+          socialIcons={mergeBy(assetIdx, dataJson.social)}
         />
-      </Banner>
-      <About
-        {...matchAssets(assetIdx, About.assets)}
-        assetIdx={assetIdx}
-        posts={posts}
-      />
-      <Companies
-        companies={mergeBy(
-          assetIdx,
-          dataJson.companies.map(company => ({ name: company }))
-        )}
-      />
-    </div>
+
+        <IndexJumbo {...matchAssets(assetIdx, IndexJumbo.assets)} />
+        <Services
+          services={mergeBy(assetIdx, dataJson.services, svc => svc.img)}
+        />
+        <Banner>
+          <Callout>
+            The Modern Web Runs on Container Tech and Serverless Platforms
+          </Callout>
+        </Banner>
+        <Stack
+          stack={mergeBy(
+            assetIdx,
+            dataJson.stack.map(stack => ({ name: stack }))
+          )}
+        />
+        <Banner>
+          <Callout>
+            get my latest and greatest content delivered straight to your inbox
+          </Callout>
+          <NewsLetterForm
+            {...matchAssets(assetIdx, NewsLetterForm.assets)}
+            secondary
+          />
+        </Banner>
+        <About
+          {...matchAssets(assetIdx, About.assets)}
+          assetIdx={assetIdx}
+          posts={posts}
+        />
+        <Companies
+          companies={mergeBy(
+            assetIdx,
+            dataJson.companies.map(company => ({ name: company }))
+          )}
+        />
+      </div>
+    </Layout>
   );
 };
 
@@ -129,7 +132,7 @@ export const query = graphql`
       companies
     }
 
-    icons: allImageSharp(filter: { id: { regex: "/.*assets/icons/.*/" } }) {
+    icons: allImageSharp {
       edges {
         node {
           id
@@ -140,7 +143,7 @@ export const query = graphql`
       }
     }
 
-    hq: allImageSharp(filter: { id: { regex: "/.*assets/hq/.*/" } }) {
+    hq: allImageSharp {
       edges {
         node {
           id

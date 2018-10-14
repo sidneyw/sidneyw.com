@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Img from 'gatsby-image';
-import { imgPropType } from '.';
+import { imgPropType } from './Img';
 
 const SocialIconStyle = styled.a`
   transition: all 200ms ease;

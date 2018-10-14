@@ -2,6 +2,28 @@ module.exports = {
   siteMetadata: {
     siteUrl: 'https://www.sidneyw.com',
     title: 'Sidney Wijngaarde',
+    social: [
+      {
+        name: 'twitter',
+        href: 'https://twitter.com/sidneywijn',
+      },
+      {
+        name: 'medium',
+        href: 'https://medium.com/@sidneywijngaarde',
+      },
+      {
+        name: 'github',
+        href: 'https://github.com/rcrsvsquid',
+      },
+      {
+        name: 'linkedin',
+        href: 'https://www.linkedin.com/in/swijngaarde',
+      },
+      {
+        name: 'facebook',
+        href: 'https://www.facebook.com',
+      },
+    ],
   },
   proxy: {
     prefix: '/localhost:3000',
@@ -10,7 +32,6 @@ module.exports = {
   plugins: [
     'gatsby-plugin-netlify',
     'gatsby-plugin-react-helmet',
-    'gatsby-plugin-react-next',
     'gatsby-plugin-styled-components',
     'gatsby-transformer-json',
     'gatsby-plugin-sitemap',
@@ -24,7 +45,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'images',
+        name: 'assets',
         path: `${__dirname}/src/assets/`,
       },
     },

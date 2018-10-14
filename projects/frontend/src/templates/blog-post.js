@@ -1,34 +1,32 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
 
 import styled from 'styled-components';
 import { DiscussionEmbed } from 'disqus-react';
 import Nav from '../components/Nav';
 import { PropType as SocialPropType } from '../components/SocialIcon';
-import Button from '../components/Button';
 import CTA from '../components/CTA';
-import ContactModal from '../components/ContactModal';
-import { Center, ZDepth1 } from '../components/mixins';
+import { Center } from '../components/mixins';
+import Layout from '../layouts';
 
 import {
-  Avatar,
   BackgroundImg,
-  createAssetIdx,
   imgPropTypeShape,
   imgListPropType,
-  matchAssets,
-  mergeBy,
 } from '../components/Img';
 
-import PostInfo from '../components/Blog/Info';
-import PostMeta from '../components/Blog/Meta';
-import ShareRow from '../components/Blog/Share';
+import {
+  BottomBar,
+  PostConclusion,
+  PostInfo,
+  PostMeta,
+  PostText,
+  ShareRow,
+} from '../components/Blog/';
 
-const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
-  const assetIdx = createAssetIdx(icons, hq);
-
-  return (
+const Post = ({ data: { post, site } }) => (
+  <Layout>
     <PageWrap>
       <PostMeta
         {...post.frontmatter}
@@ -36,9 +34,7 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
         excerpt={post.excerpt}
       />
       <Nav
-        {...matchAssets(assetIdx, ['hamburger.png'])}
         links={[{ to: '/', text: 'Home' }, { to: '/#about', text: 'About' }]}
-        socialIcons={mergeBy(assetIdx, dataJson.social)}
       />
 
       <PostContent>
@@ -46,7 +42,6 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
         <h5>Sidney Wijngaarde</h5>
 
         <PostInfo
-          {...matchAssets(assetIdx, PostInfo.assets)}
           timeToRead={post.timeToRead}
           date={post.frontmatter.date}
           tags={post.frontmatter.tags}
@@ -54,29 +49,7 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
 
         <PostHeroImage img={post.frontmatter.img.childImageSharp} />
         <PostText dangerouslySetInnerHTML={{ __html: post.html }} />
-        <PostConclusion>
-          <Bio>
-            <Avatar {...assetIdx['headshot.jpg']} />
-            <p>
-              Consectetur eaque velit eligendi eveniet laborum nihil. Illo
-              facilis ut expedita natus voluptatum. Beatae explicabo ipsa eos
-              excepturi ipsa labore similique Quae beatae ad velit distinctio
-              expedita Nam repudiandae ex?
-            </p>
-          </Bio>
-          <ShareRow
-            siteUrl={site.siteMetadata.siteUrl}
-            slug={post.fields.slug}
-            title={post.frontmatter.title}
-            hideMobile
-            socialIcons={mergeBy(assetIdx, [
-              { name: 'twitter' },
-              { name: 'facebook' },
-              { name: 'linkedin' },
-              { name: 'copylink' },
-            ])}
-          />
-        </PostConclusion>
+        <PostConclusion post={post} />
         <DiscussionEmbed
           shortname="sidneyw-com"
           config={{
@@ -87,14 +60,7 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
         />
       </PostContent>
       <Sidebar>
-        <CTA
-          {...matchAssets(assetIdx, CTA.assets)}
-          stack={mergeBy(
-            assetIdx,
-            dataJson.stack.map(stack => ({ name: stack }))
-          )}
-          title="Let's Build Something Together With"
-        />
+        <CTA title="Let's Build Something Together With" />
       </Sidebar>
       <StickyShare>
         <ShareRow
@@ -103,62 +69,12 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
           title={post.frontmatter.title}
           vertical
           shortText
-          socialIcons={mergeBy(assetIdx, [
-            { name: 'twitter' },
-            { name: 'facebook' },
-            { name: 'linkedin' },
-            { name: 'copylink' },
-          ])}
         />
       </StickyShare>
-      <BottomBar>
-        <ShareRow
-          siteUrl={site.siteMetadata.siteUrl}
-          slug={post.fields.slug}
-          title={post.frontmatter.title}
-          shortText
-          socialIcons={mergeBy(assetIdx, [
-            { name: 'twitter' },
-            { name: 'facebook' },
-            { name: 'linkedin' },
-            { name: 'copylink' },
-          ])}
-        />
-        <ContactModal {...matchAssets(assetIdx, ContactModal.assets)}>
-          {props => <ContactMobile {...props} />}
-        </ContactModal>
-      </BottomBar>
+      <BottomBar post={post} />
     </PageWrap>
-  );
-};
-
-const ContactMobile = ({ send, toggle }) => (
-  <ContactMobileStyle
-    secondary
-    icon={send}
-    onClick={toggle}
-    className="cta-contact-launch"
-  >
-    <span>Contact</span>
-  </ContactMobileStyle>
+  </Layout>
 );
-
-ContactMobile.propTypes = {
-  send: imgPropTypeShape,
-  toggle: PropTypes.func.isRequired,
-};
-
-const ContactMobileStyle = styled(Button)`
-  & > div {
-    margin-right: 0;
-  }
-
-  span {
-    display: none;
-    height: 3vh;
-    width: 3vh;
-  }
-`;
 
 Post.propTypes = {
   data: PropTypes.shape({
@@ -251,69 +167,6 @@ const PostHeroImage = styled(BackgroundImg)`
   }
 `;
 
-const PostText = styled.div`
-  p {
-    margin: 1em 0;
-  }
-
-  blockquote {
-    font-style: italic;
-    background-color: ${({ theme }) => theme.em};
-    border-left: 0.2em solid #333;
-    padding: 0.5em;
-  }
-
-  a {
-    /* text-decoration: none; */
-    color: #000;
-  }
-
-  em {
-    background-color: #e8e8e8;
-  }
-
-  .caption {
-    display: block;
-    width: 100%;
-    text-align: center;
-    margin-top: 1em;
-    font-size: 0.6em;
-    color: rgba(0, 0, 0, 0.5);
-  }
-
-  :not(pre) > code[class*='language-'],
-  pre[class*='language-'] {
-    font-size: 0.8em;
-  }
-`;
-
-const PostConclusion = styled.div`
-  display: flex;
-  flex-flow: column;
-  font-size: 0.7em;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  margin-bottom: 1em;
-  padding: 1em 0;
-
-  //pure-lg
-  @media screen and (min-width: 64em) {
-    flex-flow: row;
-    justify-content: space-between;
-  }
-`;
-
-const Bio = styled.div`
-  display: flex;
-  flex-flow: row;
-  width: 100%;
-
-  //pure-lg
-  @media screen and (min-width: 64em) {
-    width: 65%;
-  }
-`;
-
 const StickyShare = styled.div`
   display: none;
   position: fixed;
@@ -327,24 +180,6 @@ const StickyShare = styled.div`
     max-width: 7rem;
     bottom: 35vh;
     left: 0;
-  }
-`;
-
-const BottomBar = styled.div`
-  position: fixed;
-  bottom: 0;
-  width: 100vw;
-  height: 10vh;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fff;
-  padding: 0 1em;
-  ${ZDepth1};
-
-  // pure-lg
-  @media screen and (min-width: 64em) {
-    display: none;
   }
 `;
 
@@ -371,40 +206,9 @@ export const query = graphql`
         }
       }
     }
-
-    dataJson {
-      social {
-        name
-        href
-      }
-      stack
-    }
-
     site {
       siteMetadata {
         siteUrl
-      }
-    }
-
-    icons: allImageSharp(filter: { id: { regex: "/.*assets/icons/.*/" } }) {
-      edges {
-        node {
-          id
-          sizes(maxWidth: 200) {
-            ...GatsbyImageSharpSizes_withWebp
-          }
-        }
-      }
-    }
-
-    hq: allImageSharp(filter: { id: { regex: "/.*assets/hq/.*/" } }) {
-      edges {
-        node {
-          id
-          sizes(maxWidth: 2400) {
-            ...GatsbyImageSharpSizes_withWebp
-          }
-        }
       }
     }
   }

@@ -1,26 +1,19 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { StaticQuery, graphql } from 'gatsby';
 
 import Img from 'gatsby-image';
 import Modal from './Modal';
-import Button from './Button';
 import { Card } from '.';
 import { Center } from './mixins';
 import ContactForm from './ContactForm';
-import { Avatar, imgPropTypeShape } from './Img';
-import { dedupe } from './utils';
+import { Avatar } from './Img';
 
 export default class ContactModal extends React.Component {
   static propTypes = {
-    headshot: imgPropTypeShape,
-    send: imgPropTypeShape,
-    times: imgPropTypeShape,
     children: PropTypes.func.isRequired,
   };
-
-  static assets = dedupe(...ContactForm.assets, 'times.png', 'headshot.jpg');
 
   static defaultProps = {};
 
@@ -40,46 +33,51 @@ export default class ContactModal extends React.Component {
   }
 
   render() {
-    const { children, send, headshot, times, ...rest } = this.props;
     return (
-      <div>
-        <Modal
-          appElement={this.appElement}
-          onRequestClose={this.toggleModal}
-          isOpen={this.state.isOpen}
-        >
-          <FormWrap>
-            <IconButton onClick={this.toggleModal}>
-              <Icon {...times} />
-            </IconButton>
-            <FormHeader>I Don&apos;t Bite</FormHeader>
-            <BorderAvatar {...headshot} />
-            <ContactForm send={send} title="Let's Build Together" {...rest} />
-          </FormWrap>
-        </Modal>
+      <StaticQuery
+        query={graphql`
+          query ContactModal {
+            headshot: file(relativePath: { regex: "/headshot.jpg/" }) {
+              childImageSharp {
+                fluid {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+            times: file(relativePath: { regex: "/times/" }) {
+              childImageSharp {
+                fluid {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+          }
+        `}
+        render={({ headshot, times }) => (
+          <div>
+            <Modal
+              appElement={this.appElement}
+              onRequestClose={this.toggleModal}
+              isOpen={this.state.isOpen}
+            >
+              <FormWrap>
+                <IconButton onClick={this.toggleModal}>
+                  <Icon {...times.childImageSharp} />
+                </IconButton>
+                <FormHeader>I Don&apos;t Bite</FormHeader>
+                <BorderAvatar {...headshot.childImageSharp} />
+                <ContactForm title="Let's Build Together" />
+              </FormWrap>
+            </Modal>
 
-        {children && children({ send, toggle: this.toggleModal })}
-      </div>
+            {/* See ./ContactModalButton.js */}
+            {this.props.children({ toggle: this.toggleModal })}
+          </div>
+        )}
+      />
     );
   }
 }
-
-export const ContactModalButton = ({ send, toggle, className = '' }) => (
-  <Button
-    icon={send}
-    secondary
-    onClick={toggle}
-    className={`cta-contact-launch${className || ''}`}
-  >
-    <span>Contact</span>
-  </Button>
-);
-
-ContactModalButton.propTypes = {
-  className: PropTypes.string,
-  send: imgPropTypeShape,
-  toggle: PropTypes.func.isRequired,
-};
 
 const FormHeader = styled.h1`
   background-color: ${({ theme }) => theme.primary};

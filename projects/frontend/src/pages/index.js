@@ -1,8 +1,8 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { graphql } from 'gatsby';
 import About from '../components/Lead/About';
 import Companies from '../components/Lead/Companies';
 import IndexJumbo from '../components/Lead/IndexJumbo';
@@ -10,67 +10,47 @@ import Nav from '../components/Nav';
 import Services from '../components/Lead/Services';
 import Stack from '../components/Lead/Stack';
 import NewsLetterForm from '../components/NewsLetterForm';
+import Layout from '../layouts';
 
 import { Banner } from '../components/';
 
-import { createAssetIdx, matchAssets, mergeBy } from '../components/Img';
+const IndexPage = ({ data: { posts, serviceContent } }) => {
+  const pageContent = serviceContent.edges[0].node.childDataJson;
 
-const IndexPage = ({ data: { content, icons, hq, posts } }) => {
-  const assetIdx = createAssetIdx(icons, hq);
-  const contentNode = content.edges[0].node;
   return (
-    <div>
-      <Nav
-        {...matchAssets(assetIdx, ['hamburger.png'])}
-        links={[
-          { href: '#services', text: 'Services' },
-          { href: '#stack', text: 'Stack' },
-          { href: '/about', text: 'About' },
-          { to: '/blog', text: 'Blog' },
-        ]}
-        socialIcons={mergeBy(assetIdx, contentNode.social)}
-      />
-
-      <IndexJumbo {...matchAssets(assetIdx, IndexJumbo.assets)} />
-      <Services
-        services={mergeBy(assetIdx, contentNode.services, svc => svc.img)}
-      />
-      <Banner>
-        <Callout>The web is mobile and social.</Callout>
-      </Banner>
-      <Stack
-        stack={mergeBy(
-          assetIdx,
-          contentNode.stack.map(stack => ({ name: stack }))
-        )}
-      />
-      <Banner>
-        <Callout>
-          get my latest and greatest content delivered straight to your inbox
-        </Callout>
-        <NewsLetterForm
-          {...matchAssets(assetIdx, NewsLetterForm.assets)}
-          secondary
+    <Layout>
+      <div>
+        <Nav
+          links={[
+            { href: '#services', text: 'Services' },
+            { href: '#stack', text: 'Stack' },
+            { to: '/about', text: 'About' },
+            { to: '/blog', text: 'Blog' },
+          ]}
         />
-      </Banner>
-      <About
-        {...matchAssets(assetIdx, About.assets)}
-        assetIdx={assetIdx}
-        posts={posts}
-      />
-      <Companies
-        companies={mergeBy(
-          assetIdx,
-          contentNode.companies.map(company => ({ name: company }))
-        )}
-      />
-    </div>
+
+        <IndexJumbo />
+        <Services content={pageContent.services} />
+        <Banner>
+          <Callout>The web is mobile and social.</Callout>
+        </Banner>
+        <Stack stack={pageContent.stack} />
+        <Banner>
+          <Callout>
+            get my latest and greatest content delivered straight to your inbox
+          </Callout>
+          <NewsLetterForm secondary />
+        </Banner>
+        <About posts={posts} />
+        <Companies companies={pageContent.companies} />
+      </div>
+    </Layout>
   );
 };
 
 IndexPage.propTypes = {
   data: PropTypes.shape({
-    allMarkdownRemark: PropTypes.shape({
+    posts: PropTypes.shape({
       edges: PropTypes.array,
     }),
   }),
@@ -85,9 +65,48 @@ const Callout = styled.h1`
 
 export const query = graphql`
   query IndexQuery {
+    serviceContent: allFile(filter: { relativePath: { eq: "fed.json" } }) {
+      edges {
+        node {
+          id
+          childDataJson {
+            companies {
+              name
+              img {
+                childImageSharp {
+                  fluid {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+            services {
+              name
+              text
+              img {
+                childImageSharp {
+                  fluid {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+            stack {
+              name
+              img {
+                childImageSharp {
+                  fluid {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     posts: allMarkdownRemark(
       sort: { fields: [frontmatter___date], order: DESC }
-      limit: 3
     ) {
       edges {
         node {
@@ -109,46 +128,6 @@ export const query = graphql`
                 }
               }
             }
-          }
-        }
-      }
-    }
-
-    content: allDataJson(filter: { id: { regex: "/fed.json/" } }) {
-      edges {
-        node {
-          social {
-            name
-            href
-          }
-          services {
-            name
-            text
-            img
-          }
-          stack
-          companies
-        }
-      }
-    }
-
-    icons: allImageSharp(filter: { id: { regex: "/.*assets/icons/.*/" } }) {
-      edges {
-        node {
-          id
-          sizes(maxWidth: 200) {
-            ...GatsbyImageSharpSizes_withWebp
-          }
-        }
-      }
-    }
-
-    hq: allImageSharp(filter: { id: { regex: "/.*assets/hq/.*/" } }) {
-      edges {
-        node {
-          id
-          sizes(maxWidth: 2400) {
-            ...GatsbyImageSharpSizes_withWebp
           }
         }
       }

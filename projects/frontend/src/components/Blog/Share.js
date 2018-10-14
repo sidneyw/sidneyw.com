@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { StaticQuery, graphql } from 'gatsby';
 
 import SocialIcon from '../SocialIcon';
 
@@ -16,61 +17,100 @@ const qs = {
     ),
 };
 
-const ShareRow = ({
-  noText,
-  hideMobile,
-  shortText,
-  socialIcons,
-  siteUrl,
-  slug,
-  title,
-  vertical,
-}) => {
-  const socialMap = socialIcons.reduce(
-    (accum, curr) => ({
-      ...accum,
-      [curr.name]: curr.img,
-    }),
-    {}
-  );
+const ShareRow = ({ hideMobile, noText, shortText, slug, title, vertical }) => (
+  <StaticQuery
+    query={graphql`
+      query ShareQuery {
+        site {
+          siteMetadata {
+            siteUrl
+          }
+        }
+        socialLinks: site {
+          siteMetadata {
+            social {
+              name
+              href
+            }
+          }
+        }
+        socialImages: allFile(filter: { relativeDirectory: { eq: "social" } }) {
+          edges {
+            node {
+              name
+              childImageSharp {
+                fluid {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+          }
+        }
+      }
+    `}
+    render={({ site, socialLinks, socialImages }) => {
+      const socialLookup = socialImages.edges.reduce(
+        (accum, { node: { name, childImageSharp } }) => {
+          accum[name] = {
+            childImageSharp,
+            href: socialLinks.siteMetadata.social.find(
+              social => social.name === name
+            ).href,
+          };
+          return accum;
+        }
+      );
 
-  return (
-    <ShareRowStyle hideMobile={hideMobile}>
-      <ShareText noText={noText} shortText={shortText}>
-        Share <span>This Post</span>
-      </ShareText>
-      <ShareButtonWrap vertical={vertical}>
-        <SocialIcon
-          img={socialMap.twitter}
-          href={`https://twitter.com/intent/tweet?${qs.stringify({
-            text: `Check out ${title} at ${siteUrl}${slug}`,
-          })}`}
-        />
+      const { siteUrl } = site.siteMetadata;
 
-        <SocialIcon
-          img={socialMap.facebook}
-          href={`https://www.facebook.com/sharer/sharer.php?${qs.stringify({
-            u: `${siteUrl}${slug}`,
-          })}`}
-        />
+      return (
+        <ShareRowStyle hideMobile={hideMobile}>
+          <ShareText noText={noText} shortText={shortText}>
+            Share <span>This Post</span>
+          </ShareText>
+          <ShareButtonWrap vertical={vertical}>
+            <SocialIcon
+              img={socialLookup.twitter.childImageSharp}
+              href={`https://twitter.com/intent/tweet?${qs.stringify({
+                text: `Check out ${title} at ${siteUrl}${slug}`,
+              })}`}
+            />
 
-        <SocialIcon
-          img={socialMap.linkedin}
-          href={`https://www.linkedin.com/shareArticle?${qs.stringify({
-            mini: true,
-            source: siteUrl,
-            title,
-            url: `${siteUrl}${slug}`,
-          })}`}
-        />
-      </ShareButtonWrap>
-    </ShareRowStyle>
-  );
+            <SocialIcon
+              img={socialLookup.node.childImageSharp}
+              href={`https://www.facebook.com/sharer/sharer.php?${qs.stringify({
+                u: `${siteUrl}${slug}`,
+              })}`}
+            />
+
+            <SocialIcon
+              img={socialLookup.linkedin.childImageSharp}
+              href={`https://www.linkedin.com/shareArticle?${qs.stringify({
+                mini: true,
+                source: siteUrl,
+                title,
+                url: `${siteUrl}${slug}`,
+              })}`}
+            />
+          </ShareButtonWrap>
+        </ShareRowStyle>
+      );
+    }}
+  />
+);
+ShareRow.propTypes = {
+  hideMobile: PropTypes.bool,
+  noText: PropTypes.bool,
+  shortText: PropTypes.bool,
+  slug: PropTypes.string,
+  title: PropTypes.string,
+  vertical: PropTypes.bool,
 };
 
-ShareRow.propTypes = {};
-
 export default ShareRow;
+
+const shareDisplay = ({ vertical, shortText }) =>
+  vertical || shortText ? 'none' : 'initial';
 
 const ShareRowStyle = styled.div`
   display: ${({ hideMobile }) => (hideMobile ? 'none' : 'flex')};
@@ -88,8 +128,7 @@ const ShareText = styled.p`
     display: block;
     margin-bottom: 0.5em;
     span {
-      display: ${({ vertical, shortText }) =>
-        vertical || shortText ? 'none' : 'initial'};
+      display: ${shareDisplay};
     }
 
     ${({ noText }) => noText && `display: none;`};

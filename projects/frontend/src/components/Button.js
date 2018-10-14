@@ -21,15 +21,21 @@ const ButtonIcon = styled(Img)`
   }
 `;
 
-export const UnifiedButton = ({ children, icon, ...rest }) => {
+export const UnifiedButton = ({
+  children,
+  icon,
+  secondary,
+  fullwidth,
+  ...rest
+}) => {
   const Wrapper =
     rest.href || rest.to
       ? props => <Link {...props} />
       : props => <button {...props} />;
   return (
     <Wrapper {...rest}>
-      {icon && icon.sizes && <ButtonIcon {...icon} />}
-      {icon && !icon.sizes && icon}
+      {icon && icon.fluid && icon.fluid.sizes && <ButtonIcon {...icon} />}
+      {icon && !icon.fluid && icon}
       {children && children}
     </Wrapper>
   );
@@ -38,6 +44,8 @@ export const UnifiedButton = ({ children, icon, ...rest }) => {
 UnifiedButton.propTypes = {
   children: PropTypes.node,
   icon: PropTypes.oneOfType([imgPropTypeShape, PropTypes.node]),
+  secondary: PropTypes.bool,
+  fullwidth: PropTypes.bool,
 };
 
 const getColor = ({ theme, secondary, disabled }) => {
