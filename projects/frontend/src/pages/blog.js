@@ -6,20 +6,24 @@ import PostPreview from '../components/Blog/Preview';
 import NewsLetterForm from '../components/NewsLetterForm';
 import Layout from '../layouts';
 
-import {
-  createAssetIdx,
-  imgListPropType,
-  imgPropTypeShape,
-  matchAssets,
-  mergeBy,
-} from '../components/Img';
+import { imgListPropType, imgPropTypeShape } from '../components/Img';
 
 import SocialIcon, {
   PropType as SocialPropType,
 } from '../components/SocialIcon';
 
-const BlogPage = ({ data: { dataJson, posts, icons } }) => {
-  const assetIdx = createAssetIdx(icons);
+const BlogPage = ({ data: { socialLinks, socialImages, posts } }) => {
+  const socialLookup = socialImages.edges.reduce(
+    (accum, { node: { name, childImageSharp } }) => {
+      accum[name] = {
+        img: childImageSharp,
+        href: socialLinks.siteMetadata.social.find(
+          social => social.name === name
+        ).href,
+      };
+      return accum;
+    }
+  );
 
   return (
     <Layout>
@@ -27,16 +31,16 @@ const BlogPage = ({ data: { dataJson, posts, icons } }) => {
         <h1>SIDNEY WIJNGAARDE</h1>
         <h3>Sometimes I Code Things...</h3>
         <Socials>
-          {mergeBy(assetIdx, dataJson.social).map(social => (
-            <SocialIcon {...social} key={social.name} />
-          ))}
+          <SocialIcon {...socialLookup.twitter} />
+          <SocialIcon {...socialLookup.medium} />
+          <SocialIcon {...socialLookup.github} />
+          <SocialIcon {...socialLookup.linkedin} />
         </Socials>
         <h3>Stay Updated</h3>
-        <NewsLetterForm {...matchAssets(assetIdx, NewsLetterForm.assets)} />
+        <NewsLetterForm />
         <Posts>
           {posts.edges.map(({ node }) => (
             <PostPreview
-              {...matchAssets(assetIdx, PostPreview.assets)}
               excerpt={node.excerpt}
               timeToRead={node.timeToRead}
               key={node.id}
@@ -139,8 +143,8 @@ export const query = graphql`
             tags
             img {
               childImageSharp {
-                sizes(maxWidth: 2400) {
-                  ...GatsbyImageSharpSizes_withWebp
+                fluid {
+                  ...GatsbyImageSharpFluid_withWebp
                 }
               }
             }
@@ -148,22 +152,24 @@ export const query = graphql`
         }
       }
     }
-
-    icons: allImageSharp {
-      edges {
-        node {
-          id
-          sizes(maxWidth: 200) {
-            ...GatsbyImageSharpSizes_withWebp
-          }
+    socialLinks: site {
+      siteMetadata {
+        social {
+          name
+          href
         }
       }
     }
-
-    dataJson {
-      social {
-        name
-        href
+    socialImages: allFile(filter: { relativeDirectory: { eq: "social" } }) {
+      edges {
+        node {
+          name
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
       }
     }
   }
