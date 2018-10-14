@@ -8,9 +8,13 @@ import ContactModal from '../ContactModal';
 import Button from '../Button';
 import ShareRow from './Share';
 
-const BottomBar = ({ siteUrl, slug, title }) => (
+const BottomBar = ({ post }) => (
   <BottomBarStyle>
-    <ShareRow siteUrl={siteUrl} slug={slug} title={title} shortText />
+    <ShareRow
+      slug={post.fields.slug}
+      title={post.frontmatter.title}
+      shortText
+    />
     <ContactModal>{props => <ContactMobile {...props} />}</ContactModal>
   </BottomBarStyle>
 );
@@ -59,7 +63,6 @@ const ContactMobile = ({ toggle }) => (
         onClick={toggle}
         className="cta-contact-launch"
       >
-        {console.log(buttonIcon)}
         <span>Contact</span>
       </ContactMobileStyle>
     )}

@@ -17,18 +17,15 @@ const qs = {
     ),
 };
 
-const ShareRow = ({
-  hideMobile,
-  noText,
-  shortText,
-  siteUrl,
-  slug,
-  title,
-  vertical,
-}) => (
+const ShareRow = ({ hideMobile, noText, shortText, slug, title, vertical }) => (
   <StaticQuery
     query={graphql`
       query ShareQuery {
+        site {
+          siteMetadata {
+            siteUrl
+          }
+        }
         socialLinks: site {
           siteMetadata {
             social {
@@ -51,7 +48,7 @@ const ShareRow = ({
         }
       }
     `}
-    render={({ socialLinks, socialImages }) => {
+    render={({ site, socialLinks, socialImages }) => {
       const socialLookup = socialImages.edges.reduce(
         (accum, { node: { name, childImageSharp } }) => {
           accum[name] = {
@@ -63,6 +60,8 @@ const ShareRow = ({
           return accum;
         }
       );
+
+      const { siteUrl } = site.siteMetadata;
 
       return (
         <ShareRowStyle hideMobile={hideMobile}>
@@ -103,7 +102,6 @@ ShareRow.propTypes = {
   hideMobile: PropTypes.bool,
   noText: PropTypes.bool,
   shortText: PropTypes.bool,
-  siteUrl: PropTypes.string,
   slug: PropTypes.string,
   title: PropTypes.string,
   vertical: PropTypes.bool,

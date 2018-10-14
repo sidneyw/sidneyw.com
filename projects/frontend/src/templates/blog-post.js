@@ -11,18 +11,21 @@ import { Center } from '../components/mixins';
 import Layout from '../layouts';
 
 import {
-  Avatar,
   BackgroundImg,
   imgPropTypeShape,
   imgListPropType,
 } from '../components/Img';
 
-import PostInfo from '../components/Blog/Info';
-import PostMeta from '../components/Blog/Meta';
-import ShareRow from '../components/Blog/Share';
-import BottomBar from '../components/Blog/BottomBar';
+import {
+  BottomBar,
+  PostConclusion,
+  PostInfo,
+  PostMeta,
+  PostText,
+  ShareRow,
+} from '../components/Blog/';
 
-const Post = ({ data: { ctaStack, headshot, post, site } }) => (
+const Post = ({ data: { post, site } }) => (
   <Layout>
     <PageWrap>
       <PostMeta
@@ -46,23 +49,7 @@ const Post = ({ data: { ctaStack, headshot, post, site } }) => (
 
         <PostHeroImage img={post.frontmatter.img.childImageSharp} />
         <PostText dangerouslySetInnerHTML={{ __html: post.html }} />
-        <PostConclusion>
-          <Bio>
-            <Avatar {...headshot.childImageSharp} />
-            <p>
-              Consectetur eaque velit eligendi eveniet laborum nihil. Illo
-              facilis ut expedita natus voluptatum. Beatae explicabo ipsa eos
-              excepturi ipsa labore similique Quae beatae ad velit distinctio
-              expedita Nam repudiandae ex?
-            </p>
-          </Bio>
-          <ShareRow
-            siteUrl={site.siteMetadata.siteUrl}
-            slug={post.fields.slug}
-            title={post.frontmatter.title}
-            hideMobile
-          />
-        </PostConclusion>
+        <PostConclusion post={post} />
         <DiscussionEmbed
           shortname="sidneyw-com"
           config={{
@@ -73,10 +60,7 @@ const Post = ({ data: { ctaStack, headshot, post, site } }) => (
         />
       </PostContent>
       <Sidebar>
-        <CTA
-          stack={ctaStack.edges[0].node.childDataJson.stack}
-          title="Let's Build Something Together With"
-        />
+        <CTA title="Let's Build Something Together With" />
       </Sidebar>
       <StickyShare>
         <ShareRow
@@ -87,11 +71,7 @@ const Post = ({ data: { ctaStack, headshot, post, site } }) => (
           shortText
         />
       </StickyShare>
-      <BottomBar
-        siteUrl={site.siteMetadata.siteUrl}
-        slug={post.fields.slug}
-        title={post.frontmatter.title}
-      />
+      <BottomBar post={post} />
     </PageWrap>
   </Layout>
 );
@@ -187,69 +167,6 @@ const PostHeroImage = styled(BackgroundImg)`
   }
 `;
 
-const PostText = styled.div`
-  p {
-    margin: 1em 0;
-  }
-
-  blockquote {
-    font-style: italic;
-    background-color: ${({ theme }) => theme.em};
-    border-left: 0.2em solid #333;
-    padding: 0.5em;
-  }
-
-  a {
-    /* text-decoration: none; */
-    color: #000;
-  }
-
-  em {
-    background-color: #e8e8e8;
-  }
-
-  .caption {
-    display: block;
-    width: 100%;
-    text-align: center;
-    margin-top: 1em;
-    font-size: 0.6em;
-    color: rgba(0, 0, 0, 0.5);
-  }
-
-  :not(pre) > code[class*='language-'],
-  pre[class*='language-'] {
-    font-size: 0.8em;
-  }
-`;
-
-const PostConclusion = styled.div`
-  display: flex;
-  flex-flow: column;
-  font-size: 0.7em;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  margin-bottom: 1em;
-  padding: 1em 0;
-
-  //pure-lg
-  @media screen and (min-width: 64em) {
-    flex-flow: row;
-    justify-content: space-between;
-  }
-`;
-
-const Bio = styled.div`
-  display: flex;
-  flex-flow: row;
-  width: 100%;
-
-  //pure-lg
-  @media screen and (min-width: 64em) {
-    width: 65%;
-  }
-`;
-
 const StickyShare = styled.div`
   display: none;
   position: fixed;
@@ -289,34 +206,6 @@ export const query = graphql`
         }
       }
     }
-
-    headshot: file(relativePath: { regex: "/headshot.jpg/" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp
-        }
-      }
-    }
-
-    ctaStack: allFile(filter: { relativePath: { eq: "fed.json" } }) {
-      edges {
-        node {
-          childDataJson {
-            stack {
-              name
-              img {
-                childImageSharp {
-                  fluid {
-                    ...GatsbyImageSharpFluid_withWebp
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
     site {
       siteMetadata {
         siteUrl
