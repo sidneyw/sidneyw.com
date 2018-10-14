@@ -19,6 +19,10 @@ module.exports = {
         name: 'linkedin',
         href: 'https://www.linkedin.com/in/swijngaarde',
       },
+      {
+        name: 'facebook',
+        href: 'https://www.facebook.com',
+      },
     ],
   },
   proxy: {

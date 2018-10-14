@@ -1,8 +1,8 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
+import PropTypes from 'prop-types';
 import Img from 'gatsby-image';
 import styled from 'styled-components';
-import { mergeByImgProps } from '../Img';
+import { imgPropTypeShape } from '../Img';
 
 const CompanySection = ({ companies }) => (
   <CompanyWrap>
@@ -13,7 +13,12 @@ const CompanySection = ({ companies }) => (
 );
 
 CompanySection.propTypes = {
-  companies: mergeByImgProps,
+  companies: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      img: imgPropTypeShape,
+    })
+  ),
 };
 
 const CompanyWrap = styled.section`

@@ -1,6 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
+import { StaticQuery, graphql } from 'gatsby';
 
 import styled from 'styled-components';
 import { DiscussionEmbed } from 'disqus-react';
@@ -10,25 +10,21 @@ import Button from '../components/Button';
 import CTA from '../components/CTA';
 import ContactModal from '../components/ContactModal';
 import { Center, ZDepth1 } from '../components/mixins';
+import Layout from '../layouts';
 
 import {
   Avatar,
   BackgroundImg,
-  createAssetIdx,
   imgPropTypeShape,
   imgListPropType,
-  matchAssets,
-  mergeBy,
 } from '../components/Img';
 
 import PostInfo from '../components/Blog/Info';
 import PostMeta from '../components/Blog/Meta';
 import ShareRow from '../components/Blog/Share';
 
-const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
-  const assetIdx = createAssetIdx(icons, hq);
-
-  return (
+const Post = ({ data: { ctaStack, headshot, post, site } }) => (
+  <Layout>
     <PageWrap>
       <PostMeta
         {...post.frontmatter}
@@ -36,9 +32,7 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
         excerpt={post.excerpt}
       />
       <Nav
-        {...matchAssets(assetIdx, ['hamburger.png'])}
         links={[{ to: '/', text: 'Home' }, { to: '/#about', text: 'About' }]}
-        socialIcons={mergeBy(assetIdx, dataJson.social)}
       />
 
       <PostContent>
@@ -46,7 +40,6 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
         <h5>Sidney Wijngaarde</h5>
 
         <PostInfo
-          {...matchAssets(assetIdx, PostInfo.assets)}
           timeToRead={post.timeToRead}
           date={post.frontmatter.date}
           tags={post.frontmatter.tags}
@@ -56,7 +49,7 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
         <PostText dangerouslySetInnerHTML={{ __html: post.html }} />
         <PostConclusion>
           <Bio>
-            <Avatar {...assetIdx['headshot.jpg']} />
+            <Avatar {...headshot.childImageSharp} />
             <p>
               Consectetur eaque velit eligendi eveniet laborum nihil. Illo
               facilis ut expedita natus voluptatum. Beatae explicabo ipsa eos
@@ -69,12 +62,6 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
             slug={post.fields.slug}
             title={post.frontmatter.title}
             hideMobile
-            socialIcons={mergeBy(assetIdx, [
-              { name: 'twitter' },
-              { name: 'facebook' },
-              { name: 'linkedin' },
-              { name: 'copylink' },
-            ])}
           />
         </PostConclusion>
         <DiscussionEmbed
@@ -88,11 +75,7 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
       </PostContent>
       <Sidebar>
         <CTA
-          {...matchAssets(assetIdx, CTA.assets)}
-          stack={mergeBy(
-            assetIdx,
-            dataJson.stack.map(stack => ({ name: stack }))
-          )}
+          stack={ctaStack.edges[0].node.childDataJson.stack}
           title="Let's Build Something Together With"
         />
       </Sidebar>
@@ -103,12 +86,6 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
           title={post.frontmatter.title}
           vertical
           shortText
-          socialIcons={mergeBy(assetIdx, [
-            { name: 'twitter' },
-            { name: 'facebook' },
-            { name: 'linkedin' },
-            { name: 'copylink' },
-          ])}
         />
       </StickyShare>
       <BottomBar>
@@ -117,34 +94,40 @@ const Post = ({ data: { dataJson, hq, icons, post, site } }) => {
           slug={post.fields.slug}
           title={post.frontmatter.title}
           shortText
-          socialIcons={mergeBy(assetIdx, [
-            { name: 'twitter' },
-            { name: 'facebook' },
-            { name: 'linkedin' },
-            { name: 'copylink' },
-          ])}
         />
-        <ContactModal {...matchAssets(assetIdx, ContactModal.assets)}>
-          {props => <ContactMobile {...props} />}
-        </ContactModal>
+        <ContactModal>{props => <ContactMobile {...props} />}</ContactModal>
       </BottomBar>
     </PageWrap>
-  );
-};
+  </Layout>
+);
 
-const ContactMobile = ({ send, toggle }) => (
-  <ContactMobileStyle
-    secondary
-    icon={send}
-    onClick={toggle}
-    className="cta-contact-launch"
-  >
-    <span>Contact</span>
-  </ContactMobileStyle>
+const ContactMobile = ({ toggle }) => (
+  <StaticQuery
+    query={graphql`
+      query ContactMobileButton {
+        buttonIcon: file(relativePath: { regex: "/send/" }) {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+      }
+    `}
+    render={({ buttonIcon }) => (
+      <ContactMobileStyle
+        secondary
+        icon={buttonIcon.childImageSharp}
+        onClick={toggle}
+        className="cta-contact-launch"
+      >
+        <span>Contact</span>
+      </ContactMobileStyle>
+    )}
+  />
 );
 
 ContactMobile.propTypes = {
-  send: imgPropTypeShape,
   toggle: PropTypes.func.isRequired,
 };
 
@@ -372,38 +355,36 @@ export const query = graphql`
       }
     }
 
-    dataJson {
-      social {
-        name
-        href
+    headshot: file(relativePath: { regex: "/headshot.jpg/" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid_withWebp
+        }
+      }
+    }
+
+    ctaStack: allFile(filter: { relativePath: { eq: "fed.json" } }) {
+      edges {
+        node {
+          childDataJson {
+            stack {
+              name
+              img {
+                childImageSharp {
+                  fluid {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
 
     site {
       siteMetadata {
         siteUrl
-      }
-    }
-
-    icons: allImageSharp {
-      edges {
-        node {
-          id
-          sizes(maxWidth: 200) {
-            ...GatsbyImageSharpSizes_withWebp
-          }
-        }
-      }
-    }
-
-    hq: allImageSharp {
-      edges {
-        node {
-          id
-          sizes(maxWidth: 2400) {
-            ...GatsbyImageSharpSizes_withWebp
-          }
-        }
       }
     }
   }

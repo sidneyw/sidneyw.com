@@ -105,7 +105,9 @@ const TemplateWrapper = ({ children }) => (
   />
 );
 
-TemplateWrapper.propTypes = {};
+TemplateWrapper.propTypes = {
+  children: PropTypes.node,
+};
 
 const GlobalStyles = styled.div`
   font-size: 1em;

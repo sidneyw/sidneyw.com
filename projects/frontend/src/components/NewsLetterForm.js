@@ -6,8 +6,6 @@ import { StaticQuery, graphql } from 'gatsby';
 import FormState from './FormState';
 import { formFieldStyle, Loader } from '.';
 
-import { imgPropTypeShape } from './Img';
-
 import { LoaderButton } from './Button';
 
 const NewsLetterForm = ({ secondary, endpoint = '/signup ' }) => (

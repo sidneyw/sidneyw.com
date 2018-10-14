@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-// eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -7,10 +6,11 @@ import styled from 'styled-components';
 import { StackIcon } from './Lead/Stack';
 import { Card } from '.';
 import { imgPropTypeShape } from '../components/Img';
-import ContactModal, { ContactModalButton } from '../components/ContactModal';
+import ContactModal from '../components/ContactModal';
+import ContactModalButton from '../components/ContactModalButton';
 import Link from './Link';
 
-const CTAForm = ({ headshot, send, times, check, stack, title }) => (
+const CTAForm = ({ stack, title }) => (
   <CTACard>
     <h3>{title}</h3>
 
@@ -18,32 +18,25 @@ const CTAForm = ({ headshot, send, times, check, stack, title }) => (
       {stack
         .splice(0, stack.length - 1)
         .map(({ name, img }) => (
-          <CTAStackIcon title={name} img={img} key={name} />
+          <CTAStackIcon title={name} img={img.childImageSharp} key={name} />
         ))}
     </StackWrap>
 
-    <ContactModal headshot={headshot} times={times} send={send} check={check}>
-      {props => <ContactModalButton {...props} />}
-    </ContactModal>
+    <ContactModal>{props => <ContactModalButton {...props} />}</ContactModal>
     <Link to="/cloud">Learn More</Link>
   </CTACard>
 );
 
 CTAForm.propTypes = {
-  check: imgPropTypeShape,
-  headshot: imgPropTypeShape,
-  send: imgPropTypeShape,
   stack: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
       img: imgPropTypeShape,
     })
   ),
-  times: imgPropTypeShape,
   title: PropTypes.string,
 };
 
-CTAForm.assets = ContactModal.assets;
 export default CTAForm;
 
 const CTACard = styled(Card)`

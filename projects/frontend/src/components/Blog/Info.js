@@ -10,7 +10,7 @@ import { imgPropTypeShape } from '../Img';
 import Tag from './Tag';
 import { formatDate } from '../utils';
 
-const PostInfo = ({ calendar, date, clock, timeToRead, tag, tags }) => (
+const PostInfo = ({ date, timeToRead, tags }) => (
   <StaticQuery
     query={graphql`
       query PostInfo {

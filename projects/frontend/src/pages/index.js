@@ -16,7 +16,6 @@ import { Banner } from '../components/';
 
 const IndexPage = ({ data: { posts, serviceContent } }) => {
   const pageContent = serviceContent.edges[0].node.childDataJson;
-  console.log(pageContent);
 
   return (
     <Layout>
@@ -25,7 +24,7 @@ const IndexPage = ({ data: { posts, serviceContent } }) => {
           links={[
             { href: '#services', text: 'Services' },
             { href: '#stack', text: 'Stack' },
-            { href: '/about', text: 'About' },
+            { to: '/about', text: 'About' },
             { to: '/blog', text: 'Blog' },
           ]}
         />
@@ -51,7 +50,7 @@ const IndexPage = ({ data: { posts, serviceContent } }) => {
 
 IndexPage.propTypes = {
   data: PropTypes.shape({
-    allMarkdownRemark: PropTypes.shape({
+    posts: PropTypes.shape({
       edges: PropTypes.array,
     }),
   }),
