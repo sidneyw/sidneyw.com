@@ -28,5 +28,9 @@
     { "name": "golang", "img": "../assets/icons/golang.png" },
     { "name": "kubernetes", "img": "../assets/icons/kubernetes.png" }
   ],
-  "companies": ["magic-leap", "ibm", "dali"]
+  "companies": [
+    { "name": "magic-leap", "img": "../assets/hq/magic-leap.png" },
+    { "name": "ibm", "img": "../assets/hq/ibm.png" },
+    { "name": "dali", "img": "../assets/hq/dali.png" }
+  ]
 }

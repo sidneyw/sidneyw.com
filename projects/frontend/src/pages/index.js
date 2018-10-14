@@ -16,6 +16,7 @@ import { Banner } from '../components/';
 
 const IndexPage = ({ data: { posts, serviceContent } }) => {
   const pageContent = serviceContent.edges[0].node.childDataJson;
+  console.log(pageContent);
 
   return (
     <Layout>
@@ -42,17 +43,12 @@ const IndexPage = ({ data: { posts, serviceContent } }) => {
           <NewsLetterForm secondary />
         </Banner>
         <About posts={posts} />
+        <Companies companies={pageContent.companies} />
       </div>
     </Layout>
   );
 };
 
-// <Companies
-//   companies={mergeBy(
-//     assetIdx,
-//     contentNode.companies.map(company => ({ name: company }))
-//   )}
-// />
 IndexPage.propTypes = {
   data: PropTypes.shape({
     allMarkdownRemark: PropTypes.shape({
@@ -75,7 +71,7 @@ export const query = graphql`
         node {
           id
           childDataJson {
-            stack {
+            companies {
               name
               img {
                 childImageSharp {
@@ -88,6 +84,16 @@ export const query = graphql`
             services {
               name
               text
+              img {
+                childImageSharp {
+                  fluid {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+            stack {
+              name
               img {
                 childImageSharp {
                   fluid {

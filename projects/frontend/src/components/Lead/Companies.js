@@ -6,7 +6,9 @@ import { mergeByImgProps } from '../Img';
 
 const CompanySection = ({ companies }) => (
   <CompanyWrap>
-    {companies.map(({ img }, ind) => <CompanyImg {...img} key={ind} />)}
+    {companies.map(({ name, img }) => (
+      <CompanyImg {...img.childImageSharp} key={name} />
+    ))}
   </CompanyWrap>
 );
 
