@@ -33,9 +33,7 @@ const Post = ({ data: { post, site } }) => (
         slug={post.fields.slug}
         excerpt={post.excerpt}
       />
-      <Nav
-        links={[{ to: '/', text: 'Home' }, { to: '/#about', text: 'About' }]}
-      />
+      <Nav links={[]} />
 
       <PostContent>
         <h1>{post.frontmatter.title}</h1>
@@ -113,9 +111,10 @@ const Sidebar = styled.div`
 
   //pure-lg
   @media screen and (min-width: 64em) {
-    margin-top: 8rem;
-    margin-right: 5vw;
     width: 30vw;
+    position: fixed;
+    right: 5vw;
+    top: 8rem;
   }
 `;
 
@@ -150,7 +149,8 @@ const PostContent = styled.div`
 
   // pure-xl
   @media screen and (min-width: 80em) {
-    width: 45vw;
+    width: 50vw;
+    margin-left: 10vw;
   }
 `;
 
@@ -199,8 +199,8 @@ export const query = graphql`
         tags
         img {
           childImageSharp {
-            sizes(maxWidth: 2400) {
-              ...GatsbyImageSharpSizes_withWebp
+            fluid(maxWidth: 2400) {
+              ...GatsbyImageSharpFluid_withWebp
             }
           }
         }

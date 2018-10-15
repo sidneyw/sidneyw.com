@@ -9,7 +9,7 @@ import { BackgroundImg, imgPropType, imgPropTypeShape } from '../Img';
 
 const StackSection = ({ stack }) => (
   <Stack id="stack">
-    <Heading>A Stack for Scale</Heading>
+    <Heading>Built to Last</Heading>
     <p>
       Benefit from software built on a battle tested stack used by leaders in
       industry to serve clients at an unprecedented scale. The cloud space is
@@ -57,7 +57,7 @@ const Stack = styled.section`
   padding: 5vh 0;
   h1 {
     width: 75%;
-    margin-bottom: 1em;
+    margin-bottom: 0.2em;
     font-size: 2em;
   }
 

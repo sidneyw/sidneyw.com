@@ -16,7 +16,7 @@ const AboutSection = ({ posts }) => (
   <StaticQuery
     query={graphql`
       query AboutQuery {
-        chauoanShot: file(relativePath: { regex: "/chauoan-shot.jpg/" }) {
+        chauoanShot: file(relativePath: { regex: "/chauoanShot.jpg/" }) {
           childImageSharp {
             fluid {
               ...GatsbyImageSharpFluid_withWebp
@@ -31,10 +31,10 @@ const AboutSection = ({ posts }) => (
           <AboutCard
             img={chauoanShot.childImageSharp}
             title="About Me"
-            text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
-        vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-        no sea takimata sanctus est Lorem ipsum dolor sit amet."
+            text="I'm a full-stack web developer at IBM in Raleigh, NC. I build
+            web experiences tailored to my clients business needs. I've been
+            tinkering with the web since 2013 and have worked for startups and
+            enterprises alike since then. Connect with me - I'm sure we can build something great together."
           />
         </AboutSidney>
         <Posts>
@@ -74,6 +74,11 @@ const BlogButton = styled(Button)`
 const AboutSidney = styled.div`
   display: flex;
   justify-content: center;
+
+  // pure-md
+  @media screen and (min-width: 48em) {
+    font-size: 1rem;
+  }
 `;
 
 const Posts = styled.div`
@@ -143,7 +148,6 @@ const AboutCard = ({ img, title, text }) => (
       <h2>{title}</h2>
       <p>{text}</p>
       <ButtonWrap>
-        <Button to="/about">Learn More</Button>
         <ContactModal>
           {props => <ContactModalButton {...props} />}
         </ContactModal>

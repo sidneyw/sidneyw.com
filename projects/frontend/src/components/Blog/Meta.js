@@ -27,7 +27,7 @@ const Meta = ({
     <meta property="og:url" content={`${siteRoot}/${slug}`} />
     <meta
       property="og:image"
-      content={`${siteRoot}${img.childImageSharp.sizes.srcWebp}`}
+      content={`${siteRoot}${img.childImageSharp.fluid.srcWebp}`}
     />
     <meta property="article:published_time" content={yearMonthDay(date)} />
     {/* <meta property="article:author" content="https://www.sidneyw.com/about" /> */}

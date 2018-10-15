@@ -49,7 +49,7 @@ const CTAForm = ({ title }) => (
           <ContactModal>
             {props => <ContactModalButton {...props} />}
           </ContactModal>
-          <Link to="/cloud">Learn More</Link>
+          <Link to="/">Learn More</Link>
         </CTACard>
       );
     }}
