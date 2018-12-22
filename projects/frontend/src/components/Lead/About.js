@@ -49,7 +49,7 @@ const AboutSection = ({ posts }) => (
               img={node.frontmatter.img.childImageSharp}
             />
           ))}
-          <BlogButton to="/">All Posts</BlogButton>
+          <BlogButton to="/blog">All Posts</BlogButton>
         </Posts>
       </SplitSection>
     )}

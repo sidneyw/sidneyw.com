@@ -14,7 +14,7 @@ const IndexJumboSection = () => (
       query IndexJumboQuery {
         background: file(relativePath: { regex: "/headshot.jpg/" }) {
           childImageSharp {
-            fluid {
+            fluid(maxWidth: 2400) {
               ...GatsbyImageSharpFluid_withWebp
             }
           }

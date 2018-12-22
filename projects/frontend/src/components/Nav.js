@@ -32,7 +32,7 @@ export default class Navigation extends React.Component {
     this.toggleMobile = this.toggleMobile.bind(this);
   }
 
-  state = { show: true, showMobile: false, lastY: 0 };
+  state = { show: false, showMobile: false, lastY: 0 };
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
