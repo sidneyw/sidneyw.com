@@ -3,11 +3,7 @@ const Webpack = require('webpack');
 const path = require('path');
 const { createFilePath } = require('gatsby-source-filesystem');
 
-exports.onCreateNode = ({
-  node,
-  getNode,
-  boundActionCreators: { createNodeField },
-}) => {
+exports.onCreateNode = ({ node, getNode, actions: { createNodeField } }) => {
   if (node.internal.type === 'MarkdownRemark') {
     const slug = createFilePath({ node, getNode });
     console.log('\n\n', slug, '\n');
@@ -15,10 +11,7 @@ exports.onCreateNode = ({
   }
 };
 
-exports.createPages = async ({
-  graphql,
-  boundActionCreators: { createPage },
-}) => {
+exports.createPages = async ({ graphql, actions: { createPage } }) => {
   // Query the nodes that we added slugs to in the onCreateNode function
   const {
     data: {
