@@ -16,6 +16,13 @@ const AboutSection = ({ posts }) => (
   <StaticQuery
     query={graphql`
       query AboutQuery {
+        site {
+          siteMetadata {
+            about {
+              short
+            }
+          }
+        }
         chauoanShot: file(relativePath: { regex: "/chauoanShot.jpg/" }) {
           childImageSharp {
             fluid {
@@ -25,16 +32,13 @@ const AboutSection = ({ posts }) => (
         }
       }
     `}
-    render={({ chauoanShot }) => (
+    render={({ chauoanShot, site }) => (
       <SplitSection>
         <AboutSidney>
           <AboutCard
             img={chauoanShot.childImageSharp}
             title="About Me"
-            text="I'm a full-stack web developer at IBM in Raleigh, NC. I build
-            web experiences tailored to my clients business needs. I've been
-            tinkering with the web since 2013 and have worked for startups and
-            enterprises alike since then. Connect with me - I'm sure we can build something great together."
+            text={site.siteMetadata.about.short}
           />
         </AboutSidney>
         <Posts>
@@ -63,7 +67,6 @@ AboutSection.propTypes = {
   }),
 };
 
-AboutSection.assets = ['terminal.png', 'chauoanShot.jpg', 'newyork.png'];
 export default AboutSection;
 
 const BlogButton = styled(Button)`

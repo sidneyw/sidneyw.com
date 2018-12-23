@@ -10,6 +10,13 @@ const PostConclustion = ({ post }) => (
   <StaticQuery
     query={graphql`
       query PostConclusion {
+        site {
+          siteMetadata {
+            about {
+              short
+            }
+          }
+        }
         headshot: file(relativePath: { regex: "/headshot.jpg/" }) {
           childImageSharp {
             fluid {
@@ -19,16 +26,11 @@ const PostConclustion = ({ post }) => (
         }
       }
     `}
-    render={({ headshot }) => (
+    render={({ headshot, site }) => (
       <PostConclusion>
         <Bio>
           <Avatar {...headshot.childImageSharp} />
-          <p>
-            Consectetur eaque velit eligendi eveniet laborum nihil. Illo facilis
-            ut expedita natus voluptatum. Beatae explicabo ipsa eos excepturi
-            ipsa labore similique Quae beatae ad velit distinctio expedita Nam
-            repudiandae ex?
-          </p>
+          <p>{site.siteMetadata.about.short}</p>
         </Bio>
         <ShareRow
           slug={post.fields.slug}
