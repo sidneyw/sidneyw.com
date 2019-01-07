@@ -14,7 +14,7 @@ import Layout from '../layouts';
 
 import { Banner } from '../components/';
 
-const IndexPage = ({ data: { posts, serviceContent } }) => {
+const CloudPage = ({ data: { posts, serviceContent } }) => {
   const pageContent = serviceContent.edges[0].node.childDataJson;
 
   return (
@@ -47,7 +47,7 @@ const IndexPage = ({ data: { posts, serviceContent } }) => {
   );
 };
 
-IndexPage.propTypes = {
+CloudPage.propTypes = {
   data: PropTypes.shape({
     posts: PropTypes.shape({
       edges: PropTypes.array,
@@ -63,8 +63,8 @@ const Callout = styled.h1`
 `;
 
 export const query = graphql`
-  query IndexQuery {
-    serviceContent: allFile(filter: { relativePath: { eq: "fed.json" } }) {
+  query CloudQuery {
+    serviceContent: allFile(filter: { relativePath: { eq: "cloud.json" } }) {
       edges {
         node {
           id
@@ -134,4 +134,4 @@ export const query = graphql`
   }
 `;
 
-export default IndexPage;
+export default CloudPage;

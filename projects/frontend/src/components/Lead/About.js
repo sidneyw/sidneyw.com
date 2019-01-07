@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -33,7 +32,7 @@ const AboutSection = ({ posts }) => (
       }
     `}
     render={({ chauoanShot, site }) => (
-      <SplitSection>
+      <SplitSection id="about">
         <AboutSidney>
           <AboutCard
             img={chauoanShot.childImageSharp}
