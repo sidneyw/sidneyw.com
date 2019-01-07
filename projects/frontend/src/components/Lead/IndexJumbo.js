@@ -34,7 +34,7 @@ const IndexJumboSection = () => (
           </ContactModal>
         </Introduction>
         <FormWrap>
-          <ContactForm title="Let's build something together" />
+          <ContactForm title="Let's Connect" />
         </FormWrap>
       </IndexJumbo>
     )}

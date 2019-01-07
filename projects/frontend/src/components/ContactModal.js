@@ -44,7 +44,7 @@ export default class ContactModal extends React.Component {
                 }
               }
             }
-            times: file(relativePath: { regex: "/times/" }) {
+            times: file(relativePath: { regex: "/times.png/" }) {
               childImageSharp {
                 fluid {
                   ...GatsbyImageSharpFluid_withWebp

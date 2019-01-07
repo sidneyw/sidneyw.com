@@ -15,12 +15,8 @@ const AboutSection = ({ posts }) => (
   <StaticQuery
     query={graphql`
       query AboutQuery {
-        site {
-          siteMetadata {
-            about {
-              short
-            }
-          }
+        content: markdownRemark(fileAbsolutePath: { regex: "/about/" }) {
+          html
         }
         chauoanShot: file(relativePath: { regex: "/chauoanShot.jpg/" }) {
           childImageSharp {
@@ -31,13 +27,13 @@ const AboutSection = ({ posts }) => (
         }
       }
     `}
-    render={({ chauoanShot, site }) => (
+    render={({ chauoanShot, content }) => (
       <SplitSection id="about">
         <AboutSidney>
           <AboutCard
             img={chauoanShot.childImageSharp}
             title="About Me"
-            text={site.siteMetadata.about.short}
+            html={content.html}
           />
         </AboutSidney>
         <Posts>
@@ -52,7 +48,7 @@ const AboutSection = ({ posts }) => (
               img={node.frontmatter.img.childImageSharp}
             />
           ))}
-          <BlogButton to="/blog">All Posts</BlogButton>
+          <BlogButton to="/">All Posts</BlogButton>
         </Posts>
       </SplitSection>
     )}
@@ -143,12 +139,12 @@ const ButtonWrap = styled.div`
   }
 `;
 
-const AboutCard = ({ img, title, text }) => (
+const AboutCard = ({ img, title, html }) => (
   <AboutStyle>
     <AboutImg img={img} />
     <AboutContent>
       <h2>{title}</h2>
-      <p>{text}</p>
+      <div dangerouslySetInnerHTML={{ __html: html }} />
       <ButtonWrap>
         <ContactModal>
           {props => <ContactModalButton {...props} />}

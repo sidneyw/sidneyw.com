@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { DiscussionEmbed } from 'disqus-react';
 import Nav from '../components/Nav';
 import { PropType as SocialPropType } from '../components/SocialIcon';
-import CTA from '../components/CTA';
 import { Center } from '../components/mixins';
 import Layout from '../layouts';
 
@@ -57,9 +56,6 @@ const Post = ({ data: { post, site } }) => (
           }}
         />
       </PostContent>
-      <Sidebar>
-        <CTA title="Let's Build Something Together With" />
-      </Sidebar>
       <StickyShare>
         <ShareRow
           siteUrl={site.siteMetadata.siteUrl}
@@ -97,25 +93,11 @@ const PageWrap = styled.div`
   padding-bottom: 15vh;
 
   //pure-lg
-  @media screen and (min-width: 64em) {
-    flex-flow: row;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-`;
-
-const Sidebar = styled.div`
-  display: flex;
-  flex-flow: column;
-  width: 100vw;
-
-  //pure-lg
-  @media screen and (min-width: 64em) {
-    width: 30vw;
-    position: fixed;
-    right: 5vw;
-    top: 8rem;
-  }
+  // @media screen and (min-width: 64em) {
+  //   flex-flow: row;
+  //   justify-content: space-between;
+  //   align-items: flex-start;
+  // }
 `;
 
 const PostContent = styled.div`
@@ -143,14 +125,12 @@ const PostContent = styled.div`
       font-weight: 400;
     }
     font-size: 1em;
-    width: 50vw;
-    margin-left: 15vw;
+    width: 60vw;
   }
 
   // pure-xl
   @media screen and (min-width: 80em) {
-    width: 50vw;
-    margin-left: 10vw;
+    // width: 50vw;
   }
 `;
 

@@ -26,9 +26,9 @@ module.exports = {
     ],
     about: {
       short:
-        "I'm a full-stack web developer at IBM in Raleigh, NC. I build web experiences tailored to my clients business needs. I've been tinkering with the web since 2013 and have worked for startups and enterprises alike since then. Connect with me - I'm sure we can build something great together.",
+        "I’m a full-stack web developer work at [determined.ai](https://determined.ai) in San Francisco CA. Our platform enables users to build and collaborate on A.I. based applications faster. I've been tinkering with the web since 2013 and have worked for startups and enterprises alike since then. Reach out and definitely check out my blog!",
       full:
-        "I'm a full-stack web developer at IBM in Raleigh, NC. I build web experiences tailored to my clients business needs. I've been tinkering with the web since 2013 and have worked for startups and enterprises alike since then. Connect with me - I'm sure we can build something great together.",
+        "I’m a full-stack web developer work at determined.ai in San Francisco CA. Our platform enables users to build and collaborate on A.I. based applications faster. I've been tinkering with the web since 2013 and have worked for startups and enterprises alike since then. Reach out and definitely check out my blog!",
     },
   },
   proxy: {
