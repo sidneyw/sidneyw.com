@@ -3,7 +3,7 @@ title: Creating a Weave Scope Plugin
 author: Sidney
 date: 1528652578
 tags: ['tech']
-img: "./assets/weave-scope-plugin-header.png"
+img: "./assets/weave-scope-plugin-header1.png"
 ---
 Let’s extend Weave Scope by adding links to a Kubernetes resource dashboard.
 

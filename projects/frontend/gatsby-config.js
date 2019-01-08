@@ -24,12 +24,6 @@ module.exports = {
         href: 'https://www.facebook.com',
       },
     ],
-    about: {
-      short:
-        "I'm a full-stack web developer at IBM in Raleigh, NC. I build web experiences tailored to my clients business needs. I've been tinkering with the web since 2013 and have worked for startups and enterprises alike since then. Connect with me - I'm sure we can build something great together.",
-      full:
-        "I'm a full-stack web developer at IBM in Raleigh, NC. I build web experiences tailored to my clients business needs. I've been tinkering with the web since 2013 and have worked for startups and enterprises alike since then. Connect with me - I'm sure we can build something great together.",
-    },
   },
   proxy: {
     prefix: '/localhost:3000',

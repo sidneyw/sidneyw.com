@@ -24,13 +24,6 @@ const TemplateWrapper = ({ children }) => (
   <StaticQuery
     query={graphql`
       query TemplateQuery {
-        dataJson {
-          social {
-            name
-            href
-          }
-        }
-
         favicons: allFile {
           edges {
             node {
