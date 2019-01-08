@@ -12,7 +12,7 @@ import Layout from '../layouts';
 
 import { Banner } from '../components/';
 
-const IndexPage = ({ data: { posts, serviceContent } }) => {
+const AboutPage = ({ data: { posts, serviceContent } }) => {
   const pageContent = serviceContent.edges[0].node.childDataJson;
 
   return (
@@ -33,7 +33,7 @@ const IndexPage = ({ data: { posts, serviceContent } }) => {
   );
 };
 
-IndexPage.propTypes = {
+AboutPage.propTypes = {
   data: PropTypes.shape({
     posts: PropTypes.shape({
       edges: PropTypes.array,
@@ -100,4 +100,4 @@ export const query = graphql`
   }
 `;
 
-export default IndexPage;
+export default AboutPage;

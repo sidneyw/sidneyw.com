@@ -16,7 +16,7 @@ const AboutSection = ({ posts }) => (
     query={graphql`
       query AboutQuery {
         content: markdownRemark(
-          fileAbsolutePath: { regex: "/description.md/" }
+          fileAbsolutePath: { glob: "**/*description*" }
         ) {
           html
         }
