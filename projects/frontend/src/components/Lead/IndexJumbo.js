@@ -27,8 +27,6 @@ const IndexJumboSection = () => (
           <TagLine>I&apos;m Sidney,</TagLine>
           <TagLine>but they call me</TagLine>
           <Squid>Squid.</Squid>
-          <TagLine>I build web solutions for</TagLine>
-          <TagLine>clients just like you.</TagLine>
           <ContactModal>
             {Props => <ContactMobileOnlyBtn {...Props} />}
           </ContactModal>
@@ -40,10 +38,6 @@ const IndexJumboSection = () => (
     )}
   />
 );
-
-// IndexJumboSection.propTypes = {
-//   headshot: PropTypes.shape({ imgPropType }),
-// };
 
 const ContactMobileOnlyBtn = styled(ContactModalButton)`
   //pure-lg

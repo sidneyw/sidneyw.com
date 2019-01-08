@@ -15,7 +15,9 @@ const AboutSection = ({ posts }) => (
   <StaticQuery
     query={graphql`
       query AboutQuery {
-        content: markdownRemark(fileAbsolutePath: { regex: "/about.md/" }) {
+        content: markdownRemark(
+          fileAbsolutePath: { regex: "/description.md/" }
+        ) {
           html
         }
         chauoanShot: file(relativePath: { regex: "/chauoanShot.jpg/" }) {
