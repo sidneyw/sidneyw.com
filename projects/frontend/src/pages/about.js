@@ -65,27 +65,6 @@ export const query = graphql`
                 }
               }
             }
-            services {
-              name
-              text
-              img {
-                childImageSharp {
-                  fluid {
-                    ...GatsbyImageSharpFluid_withWebp
-                  }
-                }
-              }
-            }
-            stack {
-              name
-              img {
-                childImageSharp {
-                  fluid {
-                    ...GatsbyImageSharpFluid_withWebp
-                  }
-                }
-              }
-            }
           }
         }
       }
