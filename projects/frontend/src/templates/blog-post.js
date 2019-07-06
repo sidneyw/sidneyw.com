@@ -32,7 +32,7 @@ const Post = ({ data: { post, site } }) => (
         slug={post.fields.slug}
         excerpt={post.excerpt}
       />
-      <Nav links={[{ to: '/about', text: 'About' }]} />
+      <Nav links={[]} />
 
       <PostContent>
         <h1>{post.frontmatter.title}</h1>

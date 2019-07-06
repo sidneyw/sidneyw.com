@@ -72,7 +72,7 @@ export default class Navigation extends React.Component {
               {link.text}
             </NavLink>
           ))}
-          <Divider />
+          {this.props.links.length > 0 && <Divider />}
           <NavSocials />
         </NavLinks>
       </Nav>
