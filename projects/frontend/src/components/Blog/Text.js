@@ -19,6 +19,7 @@ export default styled.div`
 
   em {
     background-color: #e8e8e8;
+    font-style: normal;
   }
 
   .caption {
