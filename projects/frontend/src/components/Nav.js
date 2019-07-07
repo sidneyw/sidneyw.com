@@ -109,7 +109,7 @@ const NavStyles = css`
   background-color: #fff;
   width: 100vw;
   height: ${NavHeight}vh;
-  max-height: 200px;
+  max-height: 80px;
   padding: 0 10px;
 `;
 
