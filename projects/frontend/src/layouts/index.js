@@ -56,6 +56,10 @@ const TemplateWrapper = ({ children }) => (
               name="viewport"
               content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
             />
+            <meta
+              name="p:domain_verify"
+              content="71725b308a0aacc619097159653c9e9a"
+            />
             <link
               href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Montserrat:400,400i,700"
               rel="stylesheet"
