@@ -10,30 +10,28 @@ I had to capture metrics from a service I couldn’t directly access. Here’s h
 
 At [determined.ai](https://determined.ai) we enable teams of engineers to train deep learning models frictionlessly. With that said, how do models go from trained on our platform to available over the web for inference? One of our clients wanted to know exactly that. Enter the demo I was asked to build. In a single command, pull, deploy, and record response metrics from a model trained on our platform. Once the service comes online, visualize relevant metrics in  [Grafana](https://grafana.com/).
 
-We chose a TensorFlow model for our example. I pulled the checkpoint and wrapped it in a web service via [Tensorflow Serving](https://www.tensorflow.org/tfx/guide/serving)  in an afternoon which just left visualizing the model metrics. Turns out TensorFlow Serving doesn’t record the response metrics we were hoping to capture. I was running TensorFlow Serving as is, in it’s own process. For all intents and purposes I didn’t have access to the source for the service, so how could I record the metrics we needed?
+We chose a TensorFlow model for our example. I pulled the checkpoint and wrapped it in a web service via [Tensorflow Serving](https://www.tensorflow.org/tfx/guide/serving)  in an afternoon, which just left visualizing the model metrics. Turns out TensorFlow Serving doesn’t record the response metrics we were hoping to capture. I was running TensorFlow Serving as is, in it’s own process. For all intents and purposes I didn’t have access to the source for the service, so how could I record the metrics we needed?
 
-Since the model is used over the web, clients could access the service via a reverse proxy. The proxy could then record metrics before responding to clients with their inference results. From there exporting metrics to [Prometheus](https://prometheus.io) and rendering some graphs in [Grafana](https://grafana.com/) would be pretty simple.
+Since the model is used over the web, clients could access the service via a reverse proxy. The proxy could then record metrics before responding to clients with their inference results. From there, exporting metrics to [Prometheus](https://prometheus.io) and rendering some graphs in [Grafana](https://grafana.com/) would be pretty simple.
 
 ## What is a Reverse Proxy?
 > ”In [computer networks](https://en.wikipedia.org/wiki/Computer_network) , a reverse proxy is a type of [proxy server](https://en.wikipedia.org/wiki/Proxy_server) that retrieves resources on behalf of a client from one or more servers. These resources are then returned to the client, appearing as if they originated from the proxy server itself. “
 >
 > From [Wikipedia](https://en.wikipedia.org/wiki/Reverse_proxy)
 
-Essentially, a reverse proxy forwards traffic from a client to a set of servers behind the proxy. There are many applications for reverse proxies. Load balancing, TLS termination, and A/B testing are just a few.  Reverse proxies also useful for inserting instrumentation around an HTTP service without having to modify the service itself. 
+Essentially, a reverse proxy forwards traffic from a client to a set of servers behind the proxy. There are many applications for reverse proxies. Load balancing, TLS termination, and A/B testing are just a few.  Reverse proxies are also useful for inserting instrumentation around an HTTP service without having to modify the service itself.
 
 ![Reverse Proxy Network](./assets/proxy.png)
 
 If you’d like to learn more about proxying I recommend checking out  [Introduction to modern network load balancing and proxying](https://blog.envoyproxy.io/introduction-to-modern-network-load-balancing-and-proxying-a57f6ff80236)  by Matt Klein. Matt is the creator of [Envoy Proxy](https://www.envoyproxy.io/), a robust proxy server that powers service mesh tools like [Istio](https://istio.io/). His post does a great job of outlining the approaches used by modern load balancers and proxies.
 
 ## Simple Go Reverse Proxy
-Go is one of my favorite programming languages for many reasons. Simplicity, practicality, and performance were key focus areas for the designers of the language. These considerations, in my opinion, make Go a joy to use. The language shines with networking tasks. Part of the reason for this is the incredibly comprehensive standard library, which among other common implementations includes a reverse proxy 🤯.
+Go is one of my favorite programming languages for many reasons. The designers of the language focused on Simplicity, practicality, and performance. These considerations make Go a joy to use. The language shines with networking tasks. Part of the reason for this is the incredibly comprehensive standard library, which among other common implementations includes a reverse proxy 🤯.
 
 Rolling your own proxy in go is as simple as
-
 ```go
 proxy := httputil.NewSingleHostReverseProxy(url)
 ```
-
 Yep, that’s it. Let’s dig in here. The _[httputil.NewSingleHostReverseProxy](https://golang.org/pkg/net/http/httputil/#NewSingleHostReverseProxy)_ method returns a _[ReverseProxy](https://golang.org/pkg/net/http/httputil/#ReverseProxy)_ struct containing the following method.
 
 ```go
@@ -94,7 +92,7 @@ Let’s extend our simple proxy to read and report metrics about the downstream 
 ModifyResponse func(*net/http.Response) error
 ```
 
-HTTP bodies in go are implemented as _io.Reader_’s and therefore they can only be read once. If you would like to parse them before forwarding the request/response you will need to copy the body into a byte buffer and the reset the request/response body. An obvious drawback is that we buffer the entire response in memory without limit. This could lead to memory issues in production if you received a large response but for our use case this wasn’t an issue. Here’s a quick implementation to parse and reset the response body.
+HTTP bodies in go are implemented as _io.Reader_’s and, therefore, can only be read once. If you would like to parse them before forwarding the request/response you will need to copy the body into a byte buffer and reset the request/response body. An obvious drawback is that we buffer the entire response in memory without limit. This could lead to memory issues in production if you received a large response but for our use case this wasn’t an issue. Here’s a quick implementation to parse and reset the response body.
 
 ```go
 func parseResponse(res *http.Response, unmarshalStruct interface{}) error {
