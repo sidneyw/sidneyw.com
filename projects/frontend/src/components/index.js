@@ -54,7 +54,7 @@ export const formFieldStyle = css`
   ${Rounded} ${ZDepth1} padding: 0.5rem 1rem;
   font-size: 1em;
   min-height: 5vh;
-  max-height: 2em;
+  max-height: 1em;
   width: 100%;
 `;
 
