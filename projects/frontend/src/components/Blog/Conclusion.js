@@ -15,7 +15,7 @@ const PostConclustion = ({ post }) => (
         ) {
           html
         }
-        headshot: file(relativePath: { regex: "/headshot.jpg/" }) {
+        headshot: file(relativePath: { regex: "/avatar.png/" }) {
           childImageSharp {
             fluid {
               ...GatsbyImageSharpFluid_withWebp
@@ -27,7 +27,7 @@ const PostConclustion = ({ post }) => (
     render={({ headshot, content }) => (
       <PostConclusion>
         <Bio>
-          <Avatar {...headshot.childImageSharp} />
+          <StyledAvatar {...headshot.childImageSharp} />
           <div dangerouslySetInnerHTML={{ __html: content.html }} />
         </Bio>
         <ShareRow
@@ -45,6 +45,10 @@ PostConclustion.propTypes = {
   slug: PropTypes.string,
   title: PropTypes.string,
 };
+
+const StyledAvatar = styled(Avatar)`
+  margin-right: 0.7em;
+`;
 
 const PostConclusion = styled.div`
   display: flex;

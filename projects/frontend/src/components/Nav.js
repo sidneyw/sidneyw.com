@@ -83,7 +83,7 @@ export default class Navigation extends React.Component {
 // ------------------------------------
 // Style Components
 // ------------------------------------
-const NavHeight = 10;
+const NavHeight = 5;
 
 const LogoLink = styled(Link)`
   font-size: 1.5em;
@@ -108,7 +108,7 @@ const NavStyles = css`
   align-items: center;
   background-color: #fff;
   width: 100vw;
-  height: ${NavHeight}vh;
+  height: ${NavHeight}rem;
   max-height: 80px;
   padding: 0 10px;
 `;
