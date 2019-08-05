@@ -35,7 +35,7 @@ proxy := httputil.NewSingleHostReverseProxy(url)
 Yep, that’s it. Let’s dig in here. The _[httputil.NewSingleHostReverseProxy](https://golang.org/pkg/net/http/httputil/#NewSingleHostReverseProxy)_ method returns a _[ReverseProxy](https://golang.org/pkg/net/http/httputil/#ReverseProxy)_ struct containing the following method.
 
 ```go
-func (p *ReverseProxy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
+func (p *ReverseProxy) ServeHTTP(rw http.ResponseWriter, req *http.Request)
 ```
 
 All we need to do is configure the proxy and wire it up to a standard go HTTP server to have a working reverse proxy as shown below.
@@ -76,24 +76,18 @@ func main() {
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(*port), nil))
 }
 ```
-
-That’s it! This server can now handle proxying HTTP requests and web socket connections. You’ll notice that I’ve configured the _proxy.Director_ field. The _ReverseProxy.Director_ is a function that modifies the incoming request before it is forwarded. The signature is as follows:
-
+That’s it! This server can proxy HTTP requests and web socket connections. You’ll notice that I’ve configured the _proxy.Director_ field. The _ReverseProxy.Director_ is a function that modifies the incoming request before it is forwarded. The signature is as follows:
 ```go
 Director func(*http.Request)
 ```
-
-A common use case for the director function is modifying request headers. One of the principles of the Go programming language is that types should have sane defaults and be immediately useable. Following this principle, the default director implementation returned by _httputil.NewSingleHostReverseProxy_ takes care of setting the request Scheme, Host, and Path. I didn’t want to duplicate the code, so I wrapped that implementation. __Note__: I had to reset the _req.Host_ field to handle HTTPS endpoints. I’ve also included an example of setting a request header via _[req.Header.Set](https://golang.org/pkg/net/http/#Header.Set)_ which will override the header value with the value passed into the method.
+A common use case for the director function is modifying request headers. One of the principles of the Go programming language is that types should have sane defaults and be immediately usable. Following this principle, the default director implementation returned by _httputil.NewSingleHostReverseProxy_ takes care of setting the request Scheme, Host, and Path. I didn’t want to duplicate the code, so I wrapped that implementation. __Note__: I had to reset the _req.Host_ field to handle HTTPS endpoints. I’ve also included an example of setting a request header via _[req.Header.Set](https://golang.org/pkg/net/http/#Header.Set)_ which will override the header value with the value passed into the method.
 
 ## Capturing Metrics
-Let’s extend our simple proxy to read and report metrics about the downstream service responses. To do this we’ll return to the  _httputil.ReverseProxy_ struct once more. It exposes a  struct field _ReverseProxy.ModifyResponse_ which gives us access to the HTTP response before it goes back to the client.
-
+Let’s extend our simple proxy to read and report metrics about the downstream service responses. To do this we’ll return to the _httputil.ReverseProxy_ struct once more. It exposes a struct field _ReverseProxy.ModifyResponse_ which gives us access to the HTTP response before it goes back to the client.
 ```go
 ModifyResponse func(*net/http.Response) error
 ```
-
-HTTP bodies in go are implemented as _io.Reader_’s and, therefore, can only be read once. If you would like to parse them before forwarding the request/response you will need to copy the body into a byte buffer and reset the request/response body. An obvious drawback is that we buffer the entire response in memory without limit. This could lead to memory issues in production if you received a large response but for our use case this wasn’t an issue. Here’s a quick implementation to parse and reset the response body.
-
+Go implements HTTP bodies as _io.Reader_’s and, therefore, you may only read them once. If you would like to parse a request or response before forwarding it you will need to copy the body into a byte buffer and reset the body. An obvious drawback is that we buffer the entire response in memory without limit. This could lead to memory issues in production if you received a large response but for our use case this wasn’t an issue. Here’s a quick implementation to parse and reset the response body.
 ```go
 func parseResponse(res *http.Response, unmarshalStruct interface{}) error {
 	body, err := ioutil.ReadAll(res.Body)
@@ -106,7 +100,6 @@ func parseResponse(res *http.Response, unmarshalStruct interface{}) error {
 	return json.Unmarshal(body, unmarshalStruct)
 }
 ```
-
 With the request body problem solved, capturing metrics is simple.
 ```go
 proxy := httputil.NewSingleHostReverseProxy(u)
@@ -124,7 +117,7 @@ proxy.ModifyResponse = func(res *http.Response) error {
 }
 ```
 
-And that’s it! The capture metrics function was pretty specific to my use case so I’ll leave it up to you to implement. I ended up using the [Prometheus client](https://github.com/prometheus/client_golang) library to record the labels predicted by the model we were serving.
+And that’s it! The capture metrics function was pretty specific to my use case so I’ll leave it up to you to implement. I ended up using the [Prometheus client](https://github.com/prometheus/client_golang) library to predicted labels.
 
 The full code for the metrics capturing proxy is as follows
 ```go
