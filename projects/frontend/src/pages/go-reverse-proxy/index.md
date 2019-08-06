@@ -1,5 +1,5 @@
 ---
-title: Go HTTP Reverse Proxy
+title: Capturing Metrics with Go's Reverse Proxy
 author: Sidney
 date: 1562204746
 tags: ['go']
@@ -186,6 +186,4 @@ func main() {
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(*port), nil))
 }
 ```
-With the final piece completed the demo went off without a hitch. Thanks Go.
-
-Hopefully you’ve left this post as excited as I am about the go standard library for networking tasks. If you found this at all useful or have any questions please leave a comment below.
+Go's standard library did all the heavy lifting necessary to get the demo up and running. From here you could extend the proxy to any number of use cases. Hopefully, you're as excited as I am about the practically of the go standard library. If you found this at all useful leave a comment below.
