@@ -112,7 +112,7 @@ const PostContent = styled.div`
   }
 
   h5 {
-    margin-top: 0.5rem;
+    margin: 0.5rem 0;
   }
 
   //pure-lg

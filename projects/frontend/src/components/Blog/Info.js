@@ -7,10 +7,9 @@ import styled from 'styled-components';
 import Img from 'gatsby-image';
 
 import { imgPropTypeShape } from '../Img';
-import Tag from './Tag';
 import { formatDate } from '../utils';
 
-const PostInfo = ({ date, timeToRead, tags }) => (
+const PostInfo = ({ date, timeToRead }) => (
   <StaticQuery
     query={graphql`
       query PostInfo {
@@ -37,7 +36,7 @@ const PostInfo = ({ date, timeToRead, tags }) => (
         }
       }
     `}
-    render={({ calendar, clock, tag }) => (
+    render={({ calendar, clock }) => (
       <PostInfoStyle>
         <div>
           <PostInfoIcon {...calendar.childImageSharp} />
@@ -46,7 +45,6 @@ const PostInfo = ({ date, timeToRead, tags }) => (
           <PostInfoIcon {...clock.childImageSharp} />
           <PostInfoText>{`${timeToRead} mins`}</PostInfoText>
         </div>
-        {tags && <Tag icon={tag.childImageSharp}>{tags[0]}</Tag>}
       </PostInfoStyle>
     )}
   />

@@ -110,4 +110,5 @@ const PreviewText = styled.div`
 const PostExcerpt = styled.p`
   width: 100%;
   font-size: 0.7em;
+  margin: 0.5em 0;
 `;
