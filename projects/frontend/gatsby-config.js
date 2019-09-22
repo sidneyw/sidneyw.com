@@ -36,10 +36,16 @@ module.exports = {
     'gatsby-transformer-json',
     'gatsby-plugin-sitemap',
     {
+      // Exclude page component folders
+      resolve: 'gatsby-plugin-exclude',
+      options: { paths: [`**/_*`] },
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'pages',
         path: `${__dirname}/src/pages/`,
+        ignore: [`**/_*/**`],
       },
     },
     {
@@ -54,12 +60,6 @@ module.exports = {
       options: {
         name: 'data',
         path: `${__dirname}/src/data/`,
-      },
-    },
-    {
-      resolve: 'gatsby-source-medium',
-      options: {
-        username: '@sidneywijngaarde',
       },
     },
     {
