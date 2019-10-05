@@ -6,27 +6,21 @@ tags: ['go']
 img: "./assets/header2.png"
 ---
 
-I had to capture metrics from a service I couldn’t directly access. Here’s how the go standard library solved my problem.
-
-At [determined.ai](https://determined.ai) we enable teams of engineers to train deep learning models frictionlessly. With that said, how do models go from trained on our platform to available over the web for inference? One of our clients wanted to know exactly that. Enter the demo I was asked to build. In a single command, pull, deploy, and record response metrics from a model trained on our platform. Once the service comes online, visualize relevant metrics in  [Grafana](https://grafana.com/).
-
-We chose a TensorFlow model for our example. I pulled the checkpoint and wrapped it in a web service via [Tensorflow Serving](https://www.tensorflow.org/tfx/guide/serving)  in an afternoon, which just left visualizing the model metrics. Turns out TensorFlow Serving doesn’t record the response metrics we were hoping to capture. I was running TensorFlow Serving as is, in it’s own process. For all intents and purposes I didn’t have access to the source for the service, so how could I record the metrics we needed?
-
-Since the model is used over the web, clients could access the service via a reverse proxy. The proxy could then record metrics before responding to clients with their inference results. From there, exporting metrics to [Prometheus](https://prometheus.io) and rendering some graphs in [Grafana](https://grafana.com/) would be pretty simple.
+I had to capture metrics from a service I couldn’t directly access. The go standard library ships with a reverse proxy implementation 🤯. By proxying client requests to the service I was able to capture metrics without modifying the service itself.
 
 ## What is a Reverse Proxy?
 > ”In [computer networks](https://en.wikipedia.org/wiki/Computer_network) , a reverse proxy is a type of [proxy server](https://en.wikipedia.org/wiki/Proxy_server) that retrieves resources on behalf of a client from one or more servers. These resources are then returned to the client, appearing as if they originated from the proxy server itself. “
 >
 > From [Wikipedia](https://en.wikipedia.org/wiki/Reverse_proxy)
 
-Essentially, a reverse proxy forwards traffic from a client to a set of servers behind the proxy. There are many applications for reverse proxies. Load balancing, TLS termination, and A/B testing are just a few.  Reverse proxies are also useful for inserting instrumentation around an HTTP service without having to modify the service itself.
+Essentially, a reverse proxy forwards traffic from a client to a set of servers behind the proxy. There are many applications for reverse proxies. Load balancing, TLS termination, and A/B testing are just a few.  Reverse proxies also useful for inserting instrumentation around an HTTP service without having to modify the service itself.
 
 ![Reverse Proxy Network](./assets/proxy.png)
 
 If you’d like to learn more about proxying I recommend checking out  [Introduction to modern network load balancing and proxying](https://blog.envoyproxy.io/introduction-to-modern-network-load-balancing-and-proxying-a57f6ff80236)  by Matt Klein. Matt is the creator of [Envoy Proxy](https://www.envoyproxy.io/), a robust proxy server that powers service mesh tools like [Istio](https://istio.io/). His post does a great job of outlining the approaches used by modern load balancers and proxies.
 
 ## Simple Go Reverse Proxy
-Go is one of my favorite programming languages for many reasons. The designers of the language focused on Simplicity, practicality, and performance. These considerations make Go a joy to use. The language shines with networking tasks. Part of the reason for this is the incredibly comprehensive standard library, which among other common implementations includes a reverse proxy 🤯.
+Go is one of my favorite programming languages for many reasons. Simplicity, practicality, and performance were key focus areas for the designers of the language. These considerations, in my opinion, make Go a joy to use. The language shines with networking tasks. Part of the reason for this is the incredibly comprehensive standard library, which among other tools includes a reverse proxy.
 
 Rolling your own proxy in go is as simple as
 ```go
@@ -76,7 +70,9 @@ func main() {
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(*port), nil))
 }
 ```
-That’s it! This server can proxy HTTP requests and web socket connections. You’ll notice that I’ve configured the _proxy.Director_ field. The _ReverseProxy.Director_ is a function that modifies the incoming request before it is forwarded. The signature is as follows:
+
+That's it! This server can proxy HTTP requests and web socket connections. You'll notice that I've configured the _proxy.Director_ field. The _ReverseProxy.Director_ is a function that modifies the incoming request before it is forwarded. The signature is as follows:
+
 ```go
 Director func(*http.Request)
 ```
@@ -84,10 +80,13 @@ A common use case for the director function is modifying request headers. One of
 
 ## Capturing Metrics
 Let’s extend our simple proxy to read and report metrics about the downstream service responses. To do this we’ll return to the _httputil.ReverseProxy_ struct once more. It exposes a struct field _ReverseProxy.ModifyResponse_ which gives us access to the HTTP response before it goes back to the client.
+
 ```go
 ModifyResponse func(*net/http.Response) error
 ```
+
 Go implements HTTP bodies as _io.Reader_’s and, therefore, you may only read them once. If you would like to parse a request or response before forwarding it you will need to copy the body into a byte buffer and reset the body. An obvious drawback is that we buffer the entire response in memory without limit. This could lead to memory issues in production if you received a large response but for our use case this wasn’t an issue. Here’s a quick implementation to parse and reset the response body.
+
 ```go
 func parseResponse(res *http.Response, unmarshalStruct interface{}) error {
 	body, err := ioutil.ReadAll(res.Body)
@@ -100,7 +99,9 @@ func parseResponse(res *http.Response, unmarshalStruct interface{}) error {
 	return json.Unmarshal(body, unmarshalStruct)
 }
 ```
+
 With the request body problem solved, capturing metrics is simple.
+
 ```go
 proxy := httputil.NewSingleHostReverseProxy(u)
 // Configure proxy.Director ...
@@ -120,6 +121,7 @@ proxy.ModifyResponse = func(res *http.Response) error {
 And that’s it! The capture metrics function was pretty specific to my use case so I’ll leave it up to you to implement. I ended up using the [Prometheus client](https://github.com/prometheus/client_golang) library to predicted labels.
 
 The full code for the metrics capturing proxy is as follows
+
 ```go
 package main
 
@@ -186,4 +188,6 @@ func main() {
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(*port), nil))
 }
 ```
-Go's standard library did all the heavy lifting necessary to get the demo up and running. From here you could extend the proxy to any number of use cases. Hopefully, you're as excited as I am about the practically of the go standard library. If you found this at all useful leave a comment below.
+
+Go's standard library did all the heavy lifting. From here you could extend the proxy to any number of use cases. 
+If you found this at all useful leave a comment below.
