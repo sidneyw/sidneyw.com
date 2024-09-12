@@ -13,7 +13,7 @@ module.exports = {
       },
       {
         name: 'github',
-        href: 'https://github.com/rcrsvsquid',
+        href: 'https://github.com/sidneyw',
       },
       {
         name: 'linkedin',
